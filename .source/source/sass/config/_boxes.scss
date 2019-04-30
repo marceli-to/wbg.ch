@@ -6,3 +6,17 @@
 
 $box-height-sm: 280px;
 $box-height-lg: 320px;
+
+$box-heights-sm: (
+    null:  220px,
+    sm:    240px,
+    md:    280px,
+    lg:    320px
+);
+
+$box-heights-lg: (
+    null:  250px,
+    sm:    275px,
+    md:    320px,
+    lg:    365px
+);

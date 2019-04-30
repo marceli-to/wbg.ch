@@ -1,94 +1,87 @@
-<!doctype html>
-<html class="no-js" lang="de">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>wbg.ch</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="/assets/css/app.css" rel="stylesheet">
-<script src="/assets/js/modernizr.min.js"></script>
-</head>
-<body>
-<header class="page-header grid-header">
-    <div class="header-item span">
-        <a href="/" class="logo">WBG</a>
-    </div>
-    <div class="header-item span">
-        <nav class="page-nav">
-            <ul>
-                <li>
-                    <a href="" title="Team">Team</a>
-                </li>
-                <li>
-                    <a href="" title="Kontakt">Kontakt</a>
-                </li>
-                <li>
-                    <a href="" title="Profil">Profil</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</header>
+<?php require('_header.php'); ?>
 <main class="page">
     <section class="page-content">
         <div class="box-text">
             <p>Wir überarbeiten unsere Webseite und sind im Sommer wieder in vollem Umfang online.</p>
         </div>
         <div class="box-image-wide js-overlay">
-            <a href="/assets/media/technorama.jpg" title="Technorama Winterthur">
+            <a href="/assets/media/technorama-2.jpg" data-fancybox="technorama" title="Technorama Winterthur / Signaletik ">
                 <figure class="preview-lg" style="background-image:url(/assets/media/technorama-sm.jpg)">
-                    <figcaption>Technorama Winterthur</figcaption>
+                    <figcaption>Technorama Winterthur / Signaletik </figcaption>
                 </figure>
             </a>
+            <a href="/assets/media/technorama-3.jpg" data-fancybox="technorama" title="Technorama Winterthur / Signaletik "></a>
+            <a href="/assets/media/technorama-4.jpg" data-fancybox="technorama" title="Technorama Winterthur / Signaletik "></a>
+            <a href="/assets/media/technorama-5.jpg" data-fancybox="technorama" title="Technorama Winterthur / Signaletik "></a>
+            <a href="/assets/media/technorama-6.jpg" data-fancybox="technorama" title="Technorama Winterthur / Signaletik "></a>
         </div>
         <div class="grid-box">
             <div class="span">
                 <div class="box-image js-overlay">
-                    <a href="https://nightnurse.ch" rel="noopener" target="_blank" title="Nightnurse">
+                    <a href="https://nightnurse.ch" rel="noopener" target="_blank" title="Nightnurse Images / Website ">
                         <figure class="preview-sm" style="background-image:url(/assets/media/nightnurse-sm.jpg)">
-                            <figcaption>Nightnurse images</figcaption>
+                            <figcaption>Nightnurse Images / Website </figcaption>
                         </figure>
                     </a>
                 </div>
             </div>
             <div class="span">
                 <div class="box-image js-overlay">
-                    <a href="/assets/media/allreal.jpg" title="Allreal - Grünhof">
+                    <a href="/assets/media/allreal.jpg" data-fancybox="allreal" title="Allreal-Gruppe / Corporate Identity ">
                         <figure class="preview-sm" style="background-image:url(/assets/media/allreal-sm.jpg)">
-                            <figcaption>Allreal - Grünhof</figcaption>
+                            <figcaption>Allreal-Gruppe / Corporate Identity </figcaption>
                         </figure>
                     </a>
+                    <a href="/assets/media/allreal-2.jpg" data-fancybox="allreal" title="Allreal-Gruppe / Corporate Identity "></a>
+                    <a href="/assets/media/allreal-3.jpg" data-fancybox="allreal" title="Allreal-Gruppe / Corporate Identity "></a>
+                    <a href="/assets/media/allreal-4.jpg" data-fancybox="allreal" title="Allreal-Gruppe / Corporate Identity "></a>
+                    <a href="/assets/media/allreal-5.jpg" data-fancybox="allreal" title="Allreal-Gruppe / Corporate Identity "></a>
+                    <a href="/assets/media/allreal-6.jpg" data-fancybox="allreal" title="Allreal-Gruppe / Corporate Identity "></a>
+                    <a href="/assets/media/allreal-7.jpg" data-fancybox="allreal" title="Allreal-Gruppe / Corporate Identity "></a>
                 </div>
             </div>
         </div>
         <div class="grid-box">
             <div class="span">
                 <div class="box-image js-overlay">
-                    <a href="/assets/media/haus-capitol.jpg" title="Haus Capitol">
+                    <a href="/assets/media/haus-capitol.jpg" data-fancybox="haus-capitol" title="Haus Capitol / Lichtinstallation ">
                         <figure class="preview-sm" style="background-image:url(/assets/media/haus-capitol-sm.jpg)">
-                            <figcaption>Haus Capitol</figcaption>
+                            <figcaption>Haus Capitol / Lichtinstallation </figcaption>
                         </figure>
                     </a>
+                    <a href="/assets/media/haus-capitol-2.jpg" data-fancybox="haus-capitol" title="Haus Capitol / Lichtinstallation "></a>
+                    <a href="/assets/media/haus-capitol-3.jpg" data-fancybox="haus-capitol" title="Haus Capitol / Lichtinstallation "></a>
+                    <a href="/assets/media/haus-capitol-4.jpg" data-fancybox="haus-capitol" title="Haus Capitol / Lichtinstallation "></a>
+                    <a href="/assets/media/haus-capitol-5.jpg" data-fancybox="haus-capitol" title="Haus Capitol / Lichtinstallation "></a>
                 </div>
             </div>
             <div class="span">
                 <div class="box-image js-overlay">
-                    <a href="/assets/media/zuerisack.jpg" title="Züri-Sack">
+                    <a href="/assets/media/zuerisack.jpg" data-fancybox="zueri-sack" title="Züri-Sack / Design">
                         <figure class="preview-sm" style="background-image:url(/assets/media/zuerisack-sm.jpg)">
-                            <figcaption>Züri-Sack</figcaption>
+                            <figcaption>Züri-Sack / Design</figcaption>
                         </figure>
                     </a>
+                    <a href="/assets/media/zuerisack-2.jpg" data-fancybox="zueri-sack" title="Züri-Sack / Design"></a>
+                    <a href="/assets/media/zuerisack-3.jpg" data-fancybox="zueri-sack" title="Züri-Sack / Design"></a>
+                    <a href="/assets/media/zuerisack-4.jpg" data-fancybox="zueri-sack" title="Züri-Sack / Design"></a>
                 </div>
             </div>
         </div>
         <div class="grid-box">
             <div class="span">
                 <div class="box-image js-overlay">
-                    <a href="/assets/media/kunstmuseum-chur.jpg" title="Kunstmuseum Chur">
+                    <a href="/assets/media/kunstmuseum-chur.jpg" data-fancybox="kunstmuseum-chur" title="Bündner Kunstmuseum Chur / Corporate Identity, Signaletik ">
                         <figure class="preview-sm" style="background-image:url(/assets/media/kunstmuseum-chur-sm.jpg)">
-                            <figcaption>Kunstmuseum Chur</figcaption>
+                            <figcaption>Bündner Kunstmuseum Chur / Corporate Identity, Signaletik </figcaption>
                         </figure>
                     </a>
+                    <a href="/assets/media/kunstmuseum-chur-2.jpg" data-fancybox="kunstmuseum-chur" title="Bündner Kunstmuseum Chur / Corporate Identity, Signaletik "></a>
+                    <a href="/assets/media/kunstmuseum-chur-3.jpg" data-fancybox="kunstmuseum-chur" title="Bündner Kunstmuseum Chur / Corporate Identity, Signaletik "></a>
+                    <a href="/assets/media/kunstmuseum-chur-4.jpg" data-fancybox="kunstmuseum-chur" title="Bündner Kunstmuseum Chur / Corporate Identity, Signaletik "></a>
+                    <a href="/assets/media/kunstmuseum-chur-5.jpg" data-fancybox="kunstmuseum-chur" title="Bündner Kunstmuseum Chur / Corporate Identity, Signaletik "></a>
+                    <a href="/assets/media/kunstmuseum-chur-6.jpg" data-fancybox="kunstmuseum-chur" title="Bündner Kunstmuseum Chur / Corporate Identity, Signaletik "></a>
+                    <a href="/assets/media/kunstmuseum-chur-7.jpg" data-fancybox="kunstmuseum-chur" title="Bündner Kunstmuseum Chur / Corporate Identity, Signaletik "></a>
                 </div>
             </div>
             <div class="span">
@@ -100,17 +93,16 @@
             </div>
         </div>
         <div class="box-image-wide js-overlay">
-            <a href="/assets/media/eth-hoenggerberg.jpg" title="ETH Hönggerberg">
+            <a href="/assets/media/eth-hoenggerberg-1.jpg" data-fancybox="eth-hoenggerberg" title="ETH Zürich, Hönggerberg / Signaletik ">
                 <figure class="preview-lg" style="background-image:url(/assets/media/eth-hoenggerberg-sm.jpg)">
-                    <figcaption>ETH Hönggerberg</figcaption>
+                    <figcaption>ETH Zürich, Hönggerberg / Signaletik </figcaption>
                 </figure>
             </a>
+            <a href="/assets/media/eth-hoenggerberg-2.jpg" data-fancybox="eth-hoenggerberg" title="ETH Zürich, Hönggerberg / Signaletik "></a>
+            <a href="/assets/media/eth-hoenggerberg-3.jpg" data-fancybox="eth-hoenggerberg" title="ETH Zürich, Hönggerberg / Signaletik "></a>
+            <a href="/assets/media/eth-hoenggerberg-4.jpg" data-fancybox="eth-hoenggerberg" title="ETH Zürich, Hönggerberg / Signaletik "></a>
+            <a href="/assets/media/eth-hoenggerberg-5.jpg" data-fancybox="eth-hoenggerberg" title="ETH Zürich, Hönggerberg / Signaletik "></a>
         </div>
     </section>
 </main>
-<footer class="page-footer">
-    WBG AG - Visuelle Kommunikation<br>Binzstrasse 39, CH-8045 Zürich, +41 44 269 43 43, <a href="mailto:mail@wbg.ch">mail@wbg.ch</a>
-</footer>
-<script src="/assets/js/app.js"></script>
-</body>
-</html>
+<?php require('_footer.php'); ?>

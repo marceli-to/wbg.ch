@@ -14,8 +14,15 @@
     @extend %v-center;
     @include font-size($fs-lg);
     @include font-light();
-    height: $box-height-sm;
+    @include responsive-prop('height', $box-heights-sm);
     margin-top: 0;
+}
+
+.box-team,
+.box-profile,
+.box-contact {
+    @extend %box;
+    padding-top: 60px;
 }
 
 .box-image,
@@ -34,9 +41,9 @@
     div {
         background-color: $color--blue;
         color: $color--white;
-        height: $box-height-sm;
-        padding: $space-sm;
         @include font-size($fs-md);
+        @include responsive-prop('height', $box-heights-sm);
+        padding: $space-sm;
     }
 }
 

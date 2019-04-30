@@ -6,7 +6,6 @@
  * Global settings and variables
  *
  */
-
  
 /* Box shadows
  * -------------------- */
@@ -14,12 +13,10 @@
 $box-shadow: 0 2px 6px rgba(100, 100, 100, 0.3);
 $box-shadow-sm: 0 0 2px 0 rgba(100, 100, 100, 0.3);
 
-
 /* Default easing
  * -------------------- */
 
 $easing: cubic-bezier(0.980, 0.310, 0.940, 0.840);
-
 
 /* Urls
  * -------------------- */
@@ -27,7 +24,6 @@ $easing: cubic-bezier(0.980, 0.310, 0.940, 0.840);
 $url-images: '../img/';
 $url-icons:  '../img/icons/';
 $url-svg:    '../img/svg/';
-
 
 /* Breakpoints
  * -------------------- */
@@ -40,26 +36,4 @@ $breakpoints: (
   sm: $bp-sm,
   md: $bp-md,
   lg: $bp-lg  
-);
-
-/* Grid settings
- * -------------------- */
-
-$grid-gap-sm: 30px;
-$grid-gap-md: 40px;
-
-
-/* Global element dimensions
- * ---------------------- */
-
-$max-width-page:      520px;
-$max-width-page-sm:   660px;
-$max-width-page-md:   980px;
-$max-width-page-lg:  1380px;
-
-$max-width-page: (
-  null:  $max-width-page,
-  sm:    $max-width-page-sm,
-  md:    $max-width-page-md,
-  lg:    $max-width-page-lg
 );

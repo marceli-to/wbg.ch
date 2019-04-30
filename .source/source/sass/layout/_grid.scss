@@ -61,3 +61,39 @@
 		}
 	}
 }
+
+.grid-team {
+	@extend %clearfix;
+	display: block;
+	width: 100%;
+
+	@include bp-sm() {
+		margin-bottom: $space-lg;
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.span {
+
+		margin-bottom: $space-lg;
+
+		@include bp-sm() {
+			float: left;
+			margin-bottom: 0 !important;
+			width: calc(33.3333% - 8px);
+
+			&:nth-child(1) {
+				margin-right: 8px;
+			}
+
+			&:nth-child(2) {
+				margin-left: 8px;
+			}
+
+			&:nth-child(3) {
+				margin-left: 8px;
+			}
+		}
+	}
+}

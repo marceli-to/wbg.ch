@@ -16,7 +16,7 @@ body {
 
 body {
 	color: $color--black;
-	//@include font-smoothing();
+	@include font-smoothing();
 	@include font-regular();
 	display: flex;
 	flex-direction: column;

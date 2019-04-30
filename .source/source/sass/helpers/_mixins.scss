@@ -277,7 +277,7 @@
  *
  */
 
- @mixin responsive-prop($prop, $map, $addProp: '', $breakpoints: $breakpoints) {
+@mixin responsive-prop($prop, $map, $addProp: '', $breakpoints: $breakpoints) {
 	@each $breakpoint, $size in $map {
 		@if $breakpoint == null {
 			#{$prop}: nth($size, 1) #{$addProp};

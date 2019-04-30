@@ -34,10 +34,10 @@
 
 figure.preview-sm {
     @extend %is-preview;
-    height: $box-height-sm;
+    @include responsive-prop('height', $box-heights-sm);
 }
 
 figure.preview-lg {
     @extend %is-preview;
-    height: $box-height-lg;
+    @include responsive-prop('height', $box-heights-lg);
 }
