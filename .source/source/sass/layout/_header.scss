@@ -1,0 +1,14 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: layout/header
+ * -----------------------------------------------------------------------------
+ */
+
+header.page-header {
+
+    .header-item {
+        @include font-size($fs-sm);
+        line-height: 1 !important;
+        padding: $space-sm 0;
+    }
+}

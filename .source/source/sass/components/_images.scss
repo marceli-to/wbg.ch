@@ -1,0 +1,43 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/images
+ * -----------------------------------------------------------------------------
+ *
+ * Various classes for image elements
+ */
+
+%is-responsive,
+.is-responsive {
+    display: block;
+    height: auto;
+    max-width: 100%;
+    width: 100%;
+}
+
+%is-preview,
+.is-preview {
+    @include background-cover();
+    display: block;
+    position: relative;
+    width: 100%;
+
+    figcaption {
+        color: $color--white;
+        @include font-size($fs-sm);
+        @include font-regular();
+        left: $space-sm;
+        line-height: 1;
+        position: absolute;
+        top: $space-sm;
+    }
+}
+
+figure.preview-sm {
+    @extend %is-preview;
+    height: $box-height-sm;
+}
+
+figure.preview-lg {
+    @extend %is-preview;
+    height: $box-height-lg;
+}

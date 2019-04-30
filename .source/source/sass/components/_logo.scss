@@ -1,0 +1,12 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/logo
+ * -----------------------------------------------------------------------------
+ */
+
+.logo {
+    color: $color--red;
+    @include font-regular();
+    text-decoration: none;
+    text-transform: uppercase;
+}

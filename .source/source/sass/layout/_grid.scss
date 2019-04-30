@@ -1,0 +1,63 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: component/grid
+ * -----------------------------------------------------------------------------
+ *
+ */
+
+// Header grid
+.grid-header {
+	@extend %clearfix;
+
+	.span {
+		border-bottom: 1px solid $color--dark-grey;
+		
+		&:last-child {
+			display: none;
+		}
+
+		@include bp-sm() {
+			display: block;
+			float: left;
+				
+			&:first-child {
+				margin-right: 8px;
+				width: calc(25% - 8px);
+			}
+	
+			&:last-child {
+				display: block;
+				margin-left: 8px;
+				width: calc(75% - 8px);
+			}
+		}
+	}
+}
+
+// Box grid
+.grid-box {
+	@extend %clearfix;
+	margin-bottom: $space-lg;
+	
+	.span {
+
+		&:first-child {
+			margin-bottom: $space-lg;
+		}
+
+		@include bp-sm() {
+			float: left;
+			margin-bottom: 0;
+			width: calc(50% - 8px);
+
+			&:first-child {
+				margin-bottom: 0;
+				margin-right: 8px;
+			}
+
+			&:last-child {
+				margin-left: 8px;
+			}
+		}
+	}
+}

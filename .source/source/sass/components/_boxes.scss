@@ -1,0 +1,87 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: component/boxes
+ * -----------------------------------------------------------------------------
+ */
+
+%box,
+.box {
+    display: block;
+}
+
+.box-text {
+    @extend %box;
+    @extend %v-center;
+    @include font-size($fs-lg);
+    @include font-light();
+    height: $box-height-sm;
+    margin-top: 0;
+}
+
+.box-image,
+.box-image-wide,
+.box-quote {
+    @extend %box;
+    border-top: 1px solid $color--dark-grey;
+    padding-top: $space-sm;
+}
+
+.box-image-wide {
+    margin-bottom: $space-lg;
+}
+
+.box-quote {
+    div {
+        background-color: $color--blue;
+        color: $color--white;
+        height: $box-height-sm;
+        padding: $space-sm;
+        @include font-size($fs-md);
+    }
+}
+
+// Overlay
+.box-image,
+.box-image-wide {
+    position: relative;
+
+    &.has-overlay {
+        &:after {
+            opacity: 1;
+            z-index: 10;
+        }
+    }
+
+    &:after {
+        background-color: rgba(255,255,255,.7);
+        content: '';
+        display: block;
+        height: 100%;
+        left: 0;
+        opacity: 0;
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: -1;
+        @include transition(opacity .1s ease-out);
+    }
+}
+/*
+Aspect ratio boxes:
+.box-image,
+.box-image-wide {
+    overflow: hidden;
+    height: 0;
+    padding-top: 56.25%;
+    position: relative;
+}
+
+.box-image__inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+*/
