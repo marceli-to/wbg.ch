@@ -5,7 +5,7 @@
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <title>WBG AG - VISUELLE KOMMUNIKATION</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="/assets/css/app.css" rel="stylesheet">
+<link href="/assets/css/app.css?v=<?php echo time(); ?>" rel="stylesheet">
 <script src="/assets/js/modernizr.min.js"></script>
 </head>
 <body>
