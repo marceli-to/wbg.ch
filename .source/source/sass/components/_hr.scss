@@ -1,0 +1,29 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: component/hr
+ * -----------------------------------------------------------------------------
+ *
+ *
+ */
+
+hr {
+    display: block;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-bottom: 1px solid $color--dark-grey;
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    bottom: -50%;
+    left: -50%;
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+    z-index: -1;
+
+    &.is-before {
+        border-top: 1px solid $color--dark-grey;
+        border-bottom: none;
+    }
+}

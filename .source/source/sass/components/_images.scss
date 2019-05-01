@@ -32,12 +32,24 @@
     }
 }
 
-figure.preview-sm {
-    @extend %is-preview;
-    @include responsive-prop('height', $box-heights-sm);
+.preview-sm,
+.preview-lg {
+    overflow: hidden;
+    height: 0;
+    padding-top: 36.571%;
+    position: relative;
 }
 
-figure.preview-lg {
+.preview-sm {
+    padding-top: 65.116%;
+}
+
+.preview {
     @extend %is-preview;
-    @include responsive-prop('height', $box-heights-lg);
+    //@include responsive-prop('height', $box-heights-lg);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }

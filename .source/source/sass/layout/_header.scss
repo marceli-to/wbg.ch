@@ -10,5 +10,6 @@ header.page-header {
         @include font-size($fs-sm);
         line-height: 1 !important;
         padding: $space-sm 0;
+        position: relative;
     }
 }

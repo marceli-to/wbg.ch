@@ -7,6 +7,7 @@
 %box,
 .box {
     display: block;
+    position: relative;
 }
 
 .box-text {
@@ -29,7 +30,6 @@
 .box-image-wide,
 .box-quote {
     @extend %box;
-    border-top: 1px solid $color--dark-grey;
     padding-top: $space-sm;
 }
 
@@ -40,10 +40,21 @@
 .box-quote {
     div {
         background-color: $color--blue;
+    }
+    p {
         color: $color--white;
         @include font-size($fs-md);
-        @include responsive-prop('height', $box-heights-sm);
-        padding: $space-sm;
+        margin-left: $space-sm;
+        margin-right: $space-sm;
+        margin-top: $space-sm;
+
+        @include bp-sm() {
+            @include font-size($fs-sm);
+        }
+
+        @include bp-md() {
+            @include font-size($fs-md);
+        }
     }
 }
 
@@ -74,21 +85,3 @@
         @include transition(opacity .1s ease-out);
     }
 }
-/*
-Aspect ratio boxes:
-.box-image,
-.box-image-wide {
-    overflow: hidden;
-    height: 0;
-    padding-top: 56.25%;
-    position: relative;
-}
-
-.box-image__inner {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-*/

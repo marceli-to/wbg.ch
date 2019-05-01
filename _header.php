@@ -10,8 +10,11 @@
 </head>
 <body>
 <header class="page-header grid-header">
-    <div class="header-item span">
-        <a href="/" class="logo" title="WBG - Home">WBG</a>
+    <div class="span">
+        <div class="header-item">
+            <a href="/" class="logo" title="WBG - Home">WBG</a>
+            <hr>
+        </div>
     </div>
     <div class="header-item span">
         <nav class="page-nav">
@@ -27,5 +30,6 @@
                 </li>
             </ul>
         </nav>
+        <hr>
     </div>
 </header>
