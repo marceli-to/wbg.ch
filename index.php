@@ -6,13 +6,14 @@
         </div>
         <div class="box-image-wide js-overlay">
             <hr class="is-before">
-            <a href="/assets/media/technorama-2.jpg" data-fancybox="technorama" title="Technorama Winterthur / Signaletik ">
+            <a href="/assets/media/technorama.jpg" data-fancybox="technorama" title="Technorama Winterthur / Signaletik ">
                 <div class="preview-lg">
                     <figure class="preview" style="background-image:url(/assets/media/technorama-sm.jpg)">
                         <figcaption>Technorama Winterthur / Signaletik </figcaption>
                     </figure>
                 </div>
             </a>
+            <a href="/assets/media/technorama-2.jpg" data-fancybox="technorama" title="Technorama Winterthur / Signaletik "></a>
             <a href="/assets/media/technorama-3.jpg" data-fancybox="technorama" title="Technorama Winterthur / Signaletik "></a>
             <a href="/assets/media/technorama-4.jpg" data-fancybox="technorama" title="Technorama Winterthur / Signaletik "></a>
             <a href="/assets/media/technorama-5.jpg" data-fancybox="technorama" title="Technorama Winterthur / Signaletik "></a>
