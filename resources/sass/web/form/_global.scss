@@ -1,0 +1,46 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: form/global
+ * -----------------------------------------------------------------------------
+ */
+
+input[type=text],
+input[type=email],
+input[type=number],
+input[type=password],
+textarea,
+select,
+button {
+	background-color: transparent;
+	border-radius: 0;
+	border: 2px solid $color--black;
+	color: $color--black;
+	display: block;
+	line-height: 1;
+	padding: 5px 10px;
+	position: relative;
+	outline: none !important;
+	width: 100%;
+	z-index: 1;
+	-webkit-appearance: none;
+	-webkit-tap-highlight-color: $color--white;
+}
+
+textarea {
+	height: 160px;
+}
+
+select {
+	appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+}
+
+select::-ms-expand {
+	display: none;
+}
+
+input[type=submit],
+button {
+
+}

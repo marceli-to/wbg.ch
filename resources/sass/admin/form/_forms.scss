@@ -1,0 +1,44 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: form/forms
+ * -----------------------------------------------------------------------------
+ */
+
+form {
+	a {
+		color: $color--dark;
+		display: inline-block;
+		text-decoration: underline;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
+
+// Form: Post
+form.post {
+	> div.span {
+		
+		@include bp-sm() {
+			display: grid;
+			grid-template-columns: auto 180px;
+			@include responsive-prop('grid-gap', $space-lg);	
+		}
+
+		@include bp-md() {
+			grid-template-columns: 3fr 1fr;
+		}
+	}
+
+	> div.span-images {
+		max-width: 800px;
+	}
+
+	.sidebar {
+		> div {
+			background-color: $color--light;
+			padding: 15px;
+		}
+	}
+}

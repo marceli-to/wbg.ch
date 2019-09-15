@@ -1,0 +1,82 @@
+<?php
+
+use Illuminate\Http\Request;
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!
+|
+*/
+
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+Route::middleware('auth:api')->group(function() {
+    
+    // Team routes
+    Route::get('team/get', 'Backend\Team\TeamController@get');
+    Route::post('team/create', 'Backend\Team\TeamController@store');
+    Route::get('team/edit/{id}', 'Backend\Team\TeamController@edit');
+    Route::post('team/update/{id}', 'Backend\Team\TeamController@update');
+    Route::get('team/clone/{id}', 'Backend\Team\TeamController@clone');
+    Route::get('team/status/{id}', 'Backend\Team\TeamController@status');
+    Route::delete('team/destroy/{id}', 'Backend\Team\TeamController@destroy');
+    Route::post('team/order', 'Backend\Team\TeamController@order');
+    Route::delete('team/delete/file/{file}', 'Backend\Team\TeamController@unlink');
+
+    // Client routes
+    Route::get('clients/get', 'Backend\Client\ClientController@get');
+    Route::post('client/create', 'Backend\Client\ClientController@store');
+    Route::get('client/edit/{id}', 'Backend\Client\ClientController@edit');
+    Route::post('client/update/{id}', 'Backend\Client\ClientController@update');
+    Route::get('client/clone/{id}', 'Backend\Client\ClientController@clone');
+    Route::get('client/status/{id}', 'Backend\Client\ClientController@status');
+    Route::delete('client/destroy/{id}', 'Backend\Client\ClientController@destroy');
+
+    // Category routes
+    Route::get('categories/get', 'Backend\Category\CategoryController@get');
+    Route::post('category/create', 'Backend\Category\CategoryController@store');
+    Route::get('category/edit/{id}', 'Backend\Category\CategoryController@edit');
+    Route::post('category/update/{id}', 'Backend\Category\CategoryController@update');
+    Route::get('category/clone/{id}', 'Backend\Category\CategoryController@clone');
+    Route::get('category/status/{id}', 'Backend\Category\CategoryController@status');
+    Route::post('category/order', 'Backend\Category\CategoryController@order');
+    Route::delete('category/destroy/{id}', 'Backend\Category\CategoryController@destroy');
+
+    // Competence routes
+    Route::get('competences/get', 'Backend\Competence\CompetenceController@get');
+    Route::post('competence/create', 'Backend\Competence\CompetenceController@store');
+    Route::get('competence/edit/{id}', 'Backend\Competence\CompetenceController@edit');
+    Route::post('competence/update/{id}', 'Backend\Competence\CompetenceController@update');
+    Route::get('competence/clone/{id}', 'Backend\Competence\CompetenceController@clone');
+    Route::get('competence/status/{id}', 'Backend\Competence\CompetenceController@status');
+    Route::post('competence/order', 'Backend\Competence\CompetenceController@order');
+    Route::delete('competence/destroy/{id}', 'Backend\Competence\CompetenceController@destroy');
+
+    // Media routes
+    Route::post('media/upload','MediaController@upload');
+    Route::post('media/upload/document','MediaController@uploadDocument');
+    Route::get('media/{file}/{size?}', 'MediaController@resize');
+
+});
+
+Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
+});
+
+Route::fallback(function(){
+    return response()->json(
+        ['message' => 'Page Not Found. If error persists, contact m@marceli.to'],
+        404
+    );
+});
+

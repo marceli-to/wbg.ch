@@ -1,0 +1,21 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/icons/close
+ * -----------------------------------------------------------------------------
+ */
+
+.icon-close {
+    @extend %icon-dashboard;
+    background-image: url($url-icons + 'close.svg');
+    //right: 20px;
+    @include responsive-prop('left', $space-md);
+    position: absolute;
+    top: auto;
+}
+
+.icon-close-overlay {
+    background-image: url($url-icons + 'close-dark.svg');
+    top: -15px;
+    left: auto;
+    right: 20px;
+}

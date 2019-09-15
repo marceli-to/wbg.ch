@@ -1,0 +1,45 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: layout/footer
+ * -----------------------------------------------------------------------------
+ */
+
+footer.site-footer {
+
+}
+
+footer.data-footer {
+    background-color: $color--light;
+    bottom: 0;
+    left: 0;
+    @include responsive-prop('height', $footer-heights);
+    position: fixed;
+    width: 100%;
+    z-index: 90;
+
+    > div {
+        @extend %page-block;
+        @extend %v-center;
+        @include responsive-prop('height', $footer-heights);
+    }
+
+    .filter {
+        align-items: center;
+        display: grid;
+        grid-template-columns: auto 100px auto;
+        grid-gap: 20px;
+
+        .select-wrapper {
+            width: 100%;
+        }
+
+        a {
+            color: $color--dark;
+            @include font-size($fs-xs);
+            text-decoration: underline;
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+}

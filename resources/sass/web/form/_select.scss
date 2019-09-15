@@ -1,0 +1,38 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: form/select
+ * -----------------------------------------------------------------------------
+ */
+
+.select-wrapper {
+    background-color: transparent;
+    display: inline-block;
+	position: relative;
+    width: auto;
+
+	&:after {
+		@include background-default();
+		//background-image: url($url-icons + 'chevron-down-primary.svg');
+		background-repeat: no-repeat;
+		background-position: center center;
+		background-size: 16px 8px;
+		content: '';
+		height: 8px;
+		right: 10px;
+		position: absolute;
+		top: 13px;
+		width: 16px;
+		z-index: 0;
+
+	}
+
+	select {
+        background-color: transparent !important;
+        display: block;
+        text-transform: uppercase;
+        width: 100%;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

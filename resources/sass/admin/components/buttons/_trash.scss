@@ -1,0 +1,14 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/buttons/trash
+ * -----------------------------------------------------------------------------
+ */
+
+.btn-trash {
+    @extend %btn-ib;
+    @extend %btn-icon;
+    @extend %btn-danger;
+    background-image: url($url-icons + 'trash-light.svg');
+    margin-bottom: 15px;
+    margin-top: 5px;
+}

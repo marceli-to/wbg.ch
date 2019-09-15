@@ -1,0 +1,25 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/buttons/primary
+ * -----------------------------------------------------------------------------
+ */
+
+.btn-primary {
+	background-color: $color--light;
+	border-radius: 2px;
+    color: $color--white;
+    background-color: $color--info;
+    border: 2px solid color--info;
+
+	display: inline-block;
+	@include font-size($fs-sm);
+	@include font-bold();
+	padding: 10px 25px;
+	width: auto;
+	@include transition(background-color .1s ease-out, border-color .1s ease-out);
+
+	&:hover {
+		background-color: $color--light-grey;
+		border-color: $color--light-grey;
+	}
+}

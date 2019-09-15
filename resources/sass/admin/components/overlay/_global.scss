@@ -1,0 +1,39 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: component/overlay/global
+ * -----------------------------------------------------------------------------
+ *
+ */
+
+html.has-overlay {
+    overflow: hidden;
+}
+
+.overlay {
+    background-color: rgba(255, 255, 255, 1);
+    color: $color--dark;
+    display: block;
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    overflow-y: auto;
+    padding: 40px;
+    position: fixed;
+    pointer-events: none;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+    -webkit-transition: opacity .24s ease-out;
+    transition: opacity .24s ease-out;
+
+    &.is-visible {
+        opacity: 1;
+        pointer-events: all;
+        z-index: 101;
+    }
+
+    > div {
+        @extend %page-block;
+    }
+  
+}

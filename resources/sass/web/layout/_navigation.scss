@@ -1,0 +1,126 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: layout/navigation
+ * -----------------------------------------------------------------------------
+ */
+
+nav.site-nav {
+    background-color: $color--white;
+    left: 0;
+    opacity: 0;
+    overflow-y: scroll;
+    padding-bottom: 10px;
+    pointer-events: none;
+    position: absolute;
+    top: $header-height;
+    transition: opacity 0s ease-in;
+    width: 100%;
+    z-index: -1;
+    -webkit-overflow-scrolling: touch;
+
+    &.is-visible {
+        height: calc(100vh - 80px);
+        opacity: 1;
+        pointer-events: all;
+        z-index: 10;
+        transition: opacity .16s ease-in;
+    }
+
+    > div {
+        @extend %page-block;
+    }
+
+    a {
+        color: $color--black;
+        text-decoration: none;
+
+        &:hover,
+        &.is-active {
+            text-decoration: underline;
+        }
+
+        &.is-inactive {
+            color: $color--grey;
+        }
+    }
+
+    ul {
+
+        &.has-indent {
+            padding-left: 25px;
+        }
+
+        li {
+            display: block;
+            &.is-inline {
+                display: inline-block;
+            }
+        }
+
+        a {
+            @include font-size($fs-nav);
+        }
+    }
+    
+    ul ul {
+        display: none;
+    }
+
+    ul ul ul {
+        display: none;
+        a {
+            @include font-size($fs-subnav);
+        }
+    }
+}
+
+@include bp-md() {
+    nav.site-nav {
+        background-color: $color--white;
+        height: 40px;
+        opacity: 1;
+        overflow: visible;
+        padding-bottom: 0;
+        pointer-events: all;
+        position: relative;
+        top: 0;
+        width: 100%;
+        z-index: 10;
+
+        &.is-visible {
+            height: 40px;
+        }
+
+        ul {
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: top;
+
+            li {
+                display: inline-block;
+                margin-right: 20px; //@check
+
+                &.is-language {
+                    margin-right: 5px; //@check
+                }
+            }
+
+            ul {
+                display: none;
+                left: auto;
+                position: absolute;
+
+                li {
+                    display: block;
+                    margin-right: 0;
+                    width: 100%;
+                }
+
+                ul {
+                    display: none;
+                    position: relative;
+                }
+            }
+        }
+    }
+}

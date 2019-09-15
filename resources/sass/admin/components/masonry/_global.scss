@@ -1,0 +1,161 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: component/masonry/global
+ * -----------------------------------------------------------------------------
+ *
+ */
+
+.grid-row {
+    border-top: 2px solid $color--dark;
+    @include responsive-prop('padding-top', $space-xs);
+    @include responsive-prop('margin-bottom', $space-md);
+    
+    &.grid-row--highlight {
+        @include responsive-prop('margin-bottom', $space-lg); 
+    }
+}
+
+.grid-layout-selector {
+
+    position: relative;
+
+    ul {
+        background-color: $color--white;
+        //box-shadow: $box-shadow-sm;
+        border-top: 2px solid $color--dark;
+        display: none;
+        //left: 0;
+        margin: 0;
+        padding: 0;
+        //position: absolute;
+        //top: 40px;
+
+        &.is-visible {
+            display: block;
+            display: grid;
+            grid-template-columns: repeat(5, 102px);
+            grid-gap: 10px;
+        }
+
+        li {
+            display: block;
+        }
+    
+        a {
+            display: block;
+            padding: 15px 15px 15px 10px;
+            width: 102px;
+
+            img {
+                display: block;
+                height: auto;
+                width: 100%;
+            }
+    
+            &:hover {
+                background-color: $color--light-grey;
+            }
+        }
+    }
+}
+
+.grids {
+    
+    .span {
+        border: 2px dashed #999;
+        display: flex;
+        align-items: center;
+        justify-content:center;
+        min-height: 200px;
+
+        div {
+            text-align: center;
+            width: 100%;
+        }
+
+        figure {
+            padding: 0;
+            position: relative;
+
+            .btn-trash {
+                margin: 0;
+                position: absolute;
+                right: 10px;
+                top: 10px;
+            }
+
+            figcaption {
+                background-color: $color--light;
+                display: block;
+                padding: 10px;
+                text-align: left;
+            }
+        }
+
+        img {
+            display: block;
+            height: auto;
+            width: 100%;
+        }
+    }
+    
+    .grid-1fr {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    
+    .grid-2fr {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 20px;
+    }
+    
+    .grid-3fr {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 20px;
+    }
+    
+    .grid-2fr1fr {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-gap: 20px;
+    }
+    
+    .grid-2fr1fr-stacked {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-gap: 20px;
+    }
+    
+    .grid-2fr1fr-stacked .span {
+        min-height: 200px;
+    }
+    
+    .grid-stacked {
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+    
+    .grid-stacked .span {
+        min-height: 100px;
+        width: 100%;
+    }
+
+    .grid-1fr-highlight {
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(180px, .5fr));
+        padding: 10px;
+
+        .span {
+            border: none;
+            display: block;
+            min-height: auto;
+            padding: 0;
+        }
+    }
+}
+
