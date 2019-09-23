@@ -7,7 +7,7 @@ Add admin user:
 DB
 --
 
-nmd_mto_wbgch | gpOks9BzOXkNrp+mHIvk18bNWbhGlRhH
+nmd_mto_wbg | WldtwD4d+GVXeFLqlUdB57sHfiAkNZyk
 
 nine: 494c93b3239a8f474bc166c685500735:ae5f2c1af3e432704b70898a0ff8de6b
 

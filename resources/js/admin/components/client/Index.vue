@@ -46,7 +46,14 @@
           </div>
           <footer class="form-footer">
             <div>
-              <input type="text" class="search" v-model="search" placeholder="Filter nach Name oder Ort">
+              <div class="search-wrapper">
+                <a href="javascript:;" 
+                   class="icon-delete" v-if="search"
+                   @click.prevent="clearSearch()"
+                >
+                </a>
+                <input type="text" class="search" v-model="search" placeholder="Filter nach Projektname, Auftraggeber, Kunde oder Kategorie">
+              </div>
             </div>
           </footer>
         </div>
@@ -108,6 +115,10 @@ export default {
         this.clients[index].publish = response.data;
         this.$notify({ type: "success", text: "Status angepasst" });
       });
+    },
+    
+    clearSearch() {
+      this.search = '';
     }
   },
   computed: {
