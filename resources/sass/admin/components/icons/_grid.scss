@@ -1,0 +1,8 @@
+.icon-grid {
+  @extend %icon-dashboard;
+  background-image: url($url-icons + 'grid.svg');
+
+  &.is-disabled {
+    background-image: url($url-icons + 'grid-off.svg');
+  }
+}

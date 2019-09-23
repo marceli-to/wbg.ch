@@ -7,7 +7,11 @@ class Category extends Model
 {
     protected $table = 'categories';
 
-    protected $fillable = ['name', 'order', 'publish'];
+    protected $fillable = [
+        'name',
+        'order',
+        'publish'
+    ];
 
     /**
      * Relation 'competence'

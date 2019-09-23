@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\Competence;
 
 use App\Services\MediaService;
 use App\Models\Competence;
+use App\Models\CompetenceMedia;
 use App\Http\Resources\CompetenceCollection;
 
 use App\Http\Controllers\Controller;
@@ -14,18 +15,26 @@ class CompetenceController extends Controller
     protected $mediaService;
 
     protected $competence;
+
+    protected $competenceMedia;
     
     /**
      * Constructor
      * 
      * @param MediaService $mediaService
      * @param Competence $competence
+     * @param CompetenceMedia $competenceMedia
      */
 
-    public function __construct(MediaService $mediaService, Competence $competence)
+    public function __construct(
+        MediaService $mediaService, 
+        Competence $competence,
+        CompetenceMedia $competenceMedia
+    )
     {
-        $this->mediaService = $mediaService;
-        $this->competence = $competence;
+        $this->mediaService     = $mediaService;
+        $this->competence       = $competence;
+        $this->competenceMedia  = $competenceMedia;
     }
 
     /**
@@ -57,6 +66,21 @@ class CompetenceController extends Controller
             'category_id'   => $request->input('category_id') ? $request->input('category_id') : null,
         ]);
         $competence->save();
+
+        if (!empty($request->media))
+        {
+            foreach($request->media as $i)
+            {
+                $media = new CompetenceMedia([
+                    'competence_id' => $competence->id,
+                    'name'          => $i['name'],
+                    'caption'       => $i['caption'],
+                    'publish'       => $i['publish'],
+                ]);
+                $media->save();
+            }
+        }
+
         return response()->json(['competenceId' => $competence->id]);
     }
 
@@ -69,8 +93,8 @@ class CompetenceController extends Controller
     public function edit($id)
     {
         $competence = $this->competence->with('category')
+                                       ->with('media')
                                        ->findOrFail($id);
-
         return response()->json($competence);
     }
 
@@ -88,6 +112,23 @@ class CompetenceController extends Controller
         $competence->description = $request->input('description');
         $competence->category_id = $request->input('category_id') ? $request->input('category_id') : null;
         $competence->save();
+
+        if (!empty($request->media))
+        {
+            foreach($request->media as $i)
+            {
+                $image = $this->competenceMedia->updateOrCreate(
+                    ['id' => $i['id']], 
+                    [
+                        'competence_id' => $competence->id,
+                        'name'          => $i['name'],
+                        'caption'       => $i['caption'],
+                        'publish'       => $i['publish']
+                    ]
+                );
+            }
+        }
+
         return response()->json('successfully updated');
     }
 
@@ -148,9 +189,19 @@ class CompetenceController extends Controller
      */
     public function destroy($id)
     {
-        $competence = $this->competence->find($id);
+        $competence = $this->competence->with('media')->find($id);
+        
         if ($competence)
         {
+            // Delete media
+            if (isset($competence->media))
+            {
+                foreach($competence->media as $i)
+                {
+                    $this->mediaService->delete($i->name);
+                    $i->delete();
+                }
+            }
             $competence->delete();
         }
         return response()->json('successfully deleted');

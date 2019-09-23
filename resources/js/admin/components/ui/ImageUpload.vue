@@ -8,7 +8,7 @@
         :options="dropzoneConfig"
         @vdropzone-complete="afterUpload"
       ></vue-dropzone>
-      <span class="dz-restrictions">{{labelRestrictions}}</span>
+      <span class="bubble is-restriction">{{labelRestrictions}}</span>
     </div>
     <div class="form-row" v-if="asset">
       <label>{{labelExisting}}</label>

@@ -1,0 +1,55 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: modules/project-selector
+ * -----------------------------------------------------------------------------
+ *
+ */
+
+ .project-selector__item {
+
+  &.is-multi {
+    border-radius: 2px;
+    border: 2px solid $color--dark;
+    @include responsive-prop('margin-bottom', $space-sm);
+    @include responsive-prop('padding', $space-xs);
+    padding-bottom: 5px !important;
+  }
+
+  h2 {
+    @include font-size($fs-sm);
+    @include font-bold();
+  }
+
+  .project-selector__media {
+
+    figure {
+      display: inline-block;
+      line-height: 1 !important;
+      margin-bottom: 2px;
+      margin-right: 8px;
+
+      a {
+        display: block;
+      }
+
+      img {
+        background-color: $color--light-grey;
+        padding: 5px;
+        display: block;
+        height: 100%;
+        width: auto;
+        opacity: 1;
+        -webkit-transition: opacity .1s ease-out;
+        transition: opacity .1s ease-out;
+      }
+
+      &:hover {
+        img {
+          opacity: .7;
+          -webkit-transition: opacity .1s ease-out;
+          transition: opacity .1s ease-out;
+        }
+      }
+    }
+  }
+}

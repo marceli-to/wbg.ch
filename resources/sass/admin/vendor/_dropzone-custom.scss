@@ -111,7 +111,9 @@
         img {
             display: block;
             height: auto;
+            opacity: 1;
             width: 100%;
+            transition: opacity .12s ease-out;
         }
 
         &.is-image {
@@ -124,6 +126,12 @@
         &.is-draggable {
             &:hover {
                 cursor: move;
+            }
+        }
+
+        &.is-disabled {
+            img {
+                opacity: 0.6;
             }
         }
 
@@ -200,21 +208,4 @@
     padding-left: 20px;
     padding-top: 2px;
     min-height: 16px;
-}
-
-.dz-restrictions {
-    background-color: $color--dark;
-    border-radius: 2px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    color: $color--white;
-    display: inline-block;
-    @include font-mono();
-    font-size: 12px;
-    line-height: 1 !important;
-    padding: 6px 8px 6px 8px;
-    position: relative;
-    line-height: 1;
-    text-transform: uppercase;
-    top: -1px;
 }

@@ -23,7 +23,7 @@
               >
                 <div class="list-item-body">
                   <h3>{{ competence.title }}</h3>
-                  <span class="bubble is-info" v-if="competence.category">{{competence.category.name}}</span>
+                  <span class="bubble is-info" v-if="competence.category">Verweis: <strong>{{competence.category.name}}</strong></span>
                 </div>
                 <div class="list-item-action">
                   <a
@@ -82,7 +82,6 @@ export default {
       let uri = "/api/competences/get";
       this.axios.get(uri).then(response => {
         this.competences = response.data.data;
-        console.log(this.competences);
       });
     },
 

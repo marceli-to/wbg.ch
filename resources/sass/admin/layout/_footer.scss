@@ -4,12 +4,9 @@
  * -----------------------------------------------------------------------------
  */
 
-footer.site-footer {
-
-}
-
-footer.data-footer {
-    background-color: $color--light;
+footer.form-footer {
+    background-color: $color--white;
+    box-shadow: $box-shadow-lg;
     bottom: 0;
     left: 0;
     @include responsive-prop('height', $footer-heights);
@@ -21,6 +18,10 @@ footer.data-footer {
         @extend %page-block;
         @extend %v-center;
         @include responsive-prop('height', $footer-heights);
+    }
+
+    a {
+        @include responsive-prop('margin-left', $space-md);
     }
 
     .filter {
@@ -41,5 +42,27 @@ footer.data-footer {
                 text-decoration: none;
             }
         }
+    }
+
+    .search-wrapper {
+        position: relative;
+        width: 100%;
+
+        .icon-delete {
+            @include background-default();
+            background-image: url($url-icons +'x-circle.svg');
+            background-size: 24px auto;
+            background-position: center center;
+            height: 46px;
+            right: 0;
+            position: absolute;
+            top: 0;
+            width: 46px;
+            z-index: 10;
+        }
+    }
+
+    input[type=text].search {
+        border: 2px solid $color--medium-grey;
     }
 }

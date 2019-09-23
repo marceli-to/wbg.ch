@@ -7,6 +7,12 @@ class Client extends Model
 {
     protected $table = 'clients';
 
-    protected $fillable = ['name', 'location', 'website', 'publish', 'project_id'];
+    protected $fillable = [
+        'name',
+        'location',
+        'website',
+        'publish',
+        'project_id'
+    ];
 
 }

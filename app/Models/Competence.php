@@ -7,7 +7,13 @@ class Competence extends Model
 {
     protected $table = 'competences';
 
-    protected $fillable = ['title', 'description', 'publish', 'order', 'category_id'];
+    protected $fillable = [
+        'title',
+        'description',
+        'publish',
+        'order',
+        'category_id'
+    ];
 
     /**
      * Relation 'category'
@@ -15,5 +21,13 @@ class Competence extends Model
     public function category()
     {
         return $this->belongsTo('App\Models\Category');
+    }
+
+    /**
+     * Relation 'media'
+     */
+    public function media()
+    {
+        return $this->hasMany('App\Models\CompetenceMedia');
     }
 }

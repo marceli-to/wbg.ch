@@ -31,12 +31,6 @@
 	}
 }
 
-.form-buttons {
-	a {
-		@include responsive-prop('margin-left', $space-md);
-	}
-}
-
 .form-helper {
 	color: $color--medium-grey;
 	@include font-size($fs-xs);

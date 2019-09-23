@@ -12,7 +12,7 @@
           <div class="list-items" v-if="clients.length">
             <div
               :class="[client.publish == 0 ? 'is-disabled' : '', 'list-item']"
-              v-for="client in clients"
+              v-for="client in filteredList"
               :key="client.id"
             >
               <div class="list-item-body">
@@ -44,6 +44,11 @@
           <div v-else>
             <p>Es sind keine Kunden vorhanden...</p>
           </div>
+          <footer class="form-footer">
+            <div>
+              <input type="text" class="search" v-model="search" placeholder="Filter nach Name oder Ort">
+            </div>
+          </footer>
         </div>
       </main>
     </div>
@@ -61,6 +66,7 @@ export default {
   data() {
     return {
       clients: [],
+      search: '',
       debounce: false
     };
   },
@@ -74,7 +80,6 @@ export default {
       let uri = "/api/clients/get";
       this.axios.get(uri).then(response => {
         this.clients = response.data.data;
-        console.table(this.clients);
       });
     },
 
@@ -103,6 +108,19 @@ export default {
         this.clients[index].publish = response.data;
         this.$notify({ type: "success", text: "Status angepasst" });
       });
+    }
+  },
+  computed: {
+    filteredList() {
+      return this.clients.filter(client => {
+        let name = client.name, location = client.location;
+        if (
+            name.toLowerCase().includes(this.search.toLowerCase()) || 
+            location.toLowerCase().includes(this.search.toLowerCase())
+        ) {
+          return client;
+        }
+      })
     }
   }
 };

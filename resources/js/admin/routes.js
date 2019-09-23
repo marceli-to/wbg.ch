@@ -13,10 +13,18 @@ import CategoryIndex from '@/components/category/Index.vue';
 import CategoryCreate from '@/components/category/Create.vue';
 import CategoryEdit from '@/components/category/Edit.vue';
 
-// Categories
+// Competences
 import CompetenceIndex from '@/components/competence/Index.vue';
 import CompetenceCreate from '@/components/competence/Create.vue';
 import CompetenceEdit from '@/components/competence/Edit.vue';
+
+// Projects
+import ProjectIndex from '@/components/project/Index.vue';
+import ProjectCreate from '@/components/project/Create.vue';
+import ProjectEdit from '@/components/project/Edit.vue';
+
+// Project Grids
+import ProjectGridIndex from '@/components/project/grid/Index.vue';
 
 // Page
 import PageComponent from '@/layout/Page.vue';
@@ -130,6 +138,32 @@ const routes = [
         name: 'competence-edit',
         path: '/admin/competence/edit/:id',
         component: CompetenceEdit,
+        meta: { requiresAuth: true },
+    },
+
+    // Projects
+    {
+        name: 'projects',
+        path: '/admin/projects',
+        component: ProjectIndex,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'project-create',
+        path: '/admin/project/create',
+        component: ProjectCreate,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'project-edit',
+        path: '/admin/project/edit/:id',
+        component: ProjectEdit,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'project-grids',
+        path: '/admin/project/grid/:id',
+        component: ProjectGridIndex,
         meta: { requiresAuth: true },
     },
 ];

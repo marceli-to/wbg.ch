@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 class MediaService
 {
@@ -18,6 +19,11 @@ class MediaService
      * Path for uploads
      */
     protected $path_uploads;
+
+    /**
+     * Path for small images
+     */
+    protected $path_xsmall;
 
     /**
      * Path for small images
@@ -45,12 +51,22 @@ class MediaService
     protected $size_sm = 600;
 
     /**
-     * Maximum width for large landscape images
+     * Maximum width for extra small landscape images
+     */    
+    protected $max_width_xs = 160;    
+
+    /**
+     * Maximum height for extra small portrait images
+     */    
+    protected $max_height_xs = 90;
+
+    /**
+     * Maximum width for small landscape images
      */    
     protected $max_width_sm = 900;    
 
     /**
-     * Maximum height for large portrait images
+     * Maximum height for small portrait images
      */    
     protected $max_height_sm = 500;
 
@@ -67,12 +83,13 @@ class MediaService
     /**
      * Image prefix
      */
-    protected $prefix = 'wbg.ch';
+    protected $prefix = 'strut.ch';
     
     public function __construct()
     {
         $this->path_source    = storage_path('app/public/media/');
         $this->path_large     = storage_path('app/public/media/large/');
+        $this->path_xsmall    = storage_path('app/public/media/xsmall/');
         $this->path_small     = storage_path('app/public/media/small/');
         $this->path_thumbs    = storage_path('app/public/media/thumbs/');
         $this->path_downloads = storage_path('app/public/media/downloads');
@@ -134,13 +151,16 @@ class MediaService
         {
             $image = \Image::make($this->path_source . $image)->fit($this->size_thumbs);
             $image->save($this->path_thumbs . $image->basename);
+            return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
         }
         else
         {
-            $image = \Image::make($this->path_thumbs . $image);
+            $filename = $image;
+            $img = \Image::cache(function($image) use ($filename) {
+                return $image->make($this->path_thumbs . $filename);
+            }, 300, false);
+            return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
         }
-
-        return $image->response();
     }
 
     /**
@@ -155,6 +175,33 @@ class MediaService
     {
         if ($image != NULL)
         {
+            // Generate small images
+            if ($size == 'xs')
+            {
+                if (!File::exists($this->path_xsmall . $image))
+                {
+                    // Create image instance
+                    $image = \Image::make($this->path_source . $image);
+                    
+                    // Resize image
+                    $image->resize(null, $this->max_height_xs, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+
+                    $image->save($this->path_xsmall . $image->basename);
+                    return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
+                }
+                else
+                {   
+                    $filename = $image;
+                    $img = \Image::cache(function($image) use ($filename) {
+                        return $image->make($this->path_xsmall . $filename);
+                    }, 300, false);
+                    
+                    return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
+                }
+            }
+
             // Generate small images
             if ($size == 'sm')
             {
@@ -182,13 +229,17 @@ class MediaService
                     }
 
                     $image->save($this->path_small . $image->basename);
+                    return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
                 }
                 else
                 {   
-                    $image = \Image::make(file_get_contents($this->path_small . $image));
+                    $filename = $image;
+                    $img = \Image::cache(function($image) use ($filename) {
+                        return $image->make($this->path_small . $filename);
+                    }, 300, false);
+                    
+                    return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
                 }
-
-                return $image->response();
             }
 
             // Generate large images
@@ -216,13 +267,19 @@ class MediaService
                             $constraint->aspectRatio();
                         });
                     }
+
+                    $image->save($this->path_large . $image->basename);
+                    return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
                 }
                 else
                 {   
-                    $image = \Image::make(file_get_contents($this->path_large . $image));
+                    $filename = $image;
+                    $img = \Image::cache(function($image) use ($filename) {
+                        return $image->make($this->path_large . $filename);
+                    }, 300, false);
+                    
+                    return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
                 }
-
-                return $image->response();
             }
         }
     }
@@ -284,6 +341,11 @@ class MediaService
         if (!File::isDirectory($this->path_thumbs))
         {
             File::makeDirectory($this->path_thumbs, 0775, true, true);
+        }
+        
+        if (!File::isDirectory($this->path_xsmall))
+        {
+            File::makeDirectory($this->path_xsmall, 0775, true, true);
         }
 
         if (!File::isDirectory($this->path_small))

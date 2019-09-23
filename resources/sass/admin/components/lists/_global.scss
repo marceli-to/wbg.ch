@@ -42,8 +42,7 @@
         padding-bottom: 0 !important;
     }
 
-
-    &.list-item--sortable {
+    &.is-sortable {
         cursor: move;
     }
 }
@@ -89,7 +88,7 @@
     text-align: right;
 
     &[data-icons="5"] {
-        grid-template-columns: repeat(5, 18px);
+        grid-template-columns: repeat(6, 18px);
     }
 }
 

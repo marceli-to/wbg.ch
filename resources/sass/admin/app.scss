@@ -14,14 +14,12 @@
 @import 'config/spaces';
 @import 'config/typo';
 
-
 // Helpers 
 @import 'helpers/normalize';
 @import 'helpers/flexbox';
 @import 'helpers/functions';
 @import 'helpers/mixins';
 @import 'helpers/utilities';
-
 
 // Typo
 @import 'typo/webfonts';
@@ -54,6 +52,7 @@
 @import 'components/icons/edit';
 @import 'components/icons/eye';
 @import 'components/icons/external-link';
+@import 'components/icons/grid';
 @import 'components/icons/logout';
 @import 'components/icons/plus';
 @import 'components/icons/trash';
@@ -79,7 +78,6 @@
 @import 'navigation/site';
 @import 'navigation/tabs';
 
-
 // Layout
 @import 'layout/base';
 @import 'layout/container';
@@ -89,14 +87,14 @@
 @import 'layout/header';
 @import 'layout/sidebar';
 
-
 // Theme
 @import 'theme/brand';
-
 
 // UI
 @import 'ui';
 
+// Modules
+@import 'modules/project-selector';
 
 // Vendor - Dropzone
 @import 'vendor/dropzone';

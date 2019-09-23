@@ -200,7 +200,6 @@ export default {
     // FileUpload Callback
     afterUpload(file) {
       if (file.status == "error" && file.accepted == false) {
-        console.log(file);
         this.$notify({ type: "error", text: "Ungültiges Dateiformat." });
       } else {
         let file_response = JSON.parse(file.xhr.response);

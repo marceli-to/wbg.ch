@@ -13,6 +13,13 @@
                 :class="[tabs.data.active ? 'is-active' : '', tabs.data.error ? 'has-error' : '']"
               >Daten</a>
             </li>
+            <li>
+              <a
+                href="javascript:;"
+                @click="changeTab('media')"
+                :class="tabs.media.active ? 'is-active' : ''"
+              >Bilder</a>
+            </li>
           </ul>
         </nav>
         <form @submit.prevent="submit">
@@ -49,6 +56,19 @@
               </div>
             </div>
           </div>
+          <div v-show="tabs.media.active">
+            <multi-image-upload
+              :labelNew="'Bilder hochladen'"
+              :labelExisting="'Vorhandene Bilder'"
+              :labelRestrictions="'jpg, png | max. 8 MB'"
+              :maxFiles="99"
+              :maxFilesize="8"
+              :assets="competence.media"
+              :assetType="'image'"
+              :acceptedFiles="'.png,.jpg'"
+              :uploadUrl="'/api/media/upload'"
+            ></multi-image-upload>
+          </div>
           <form-buttons :route="'competences'"></form-buttons>
         </form>
       </div>
@@ -57,12 +77,14 @@
 </template>
 <script>
 import PageHeader from "@/layout/PageHeader.vue";
+import MultiImageUpload from "@/components/ui/MultiImageUpload.vue";
 import FormButtons from "@/components/ui/buttons/FormButtons.vue";
 import Helpers from "@/mixins/helpers";
 
 export default {
   components: {
-    FormButtons: FormButtons
+    FormButtons: FormButtons,
+    MultiImageUpload: MultiImageUpload
   },
 
   props: {
@@ -83,13 +105,18 @@ export default {
         data: {
           active: true,
           error: false
+        },
+        media: {
+          active: false,
+          error: false
         }
       },
 
       competence: {
         title: null,
         description: null,
-        category_id: null
+        category_id: null,
+        media: []
       },
 
       categories: []
@@ -97,6 +124,8 @@ export default {
   },
 
   created() {
+
+    // Get record while in edit mode
     if (this.$props.type == "edit") {
       let uri = `/api/competence/edit/${this.$route.params.id}`;
       this.axios.get(uri).then(response => {
@@ -104,6 +133,7 @@ export default {
       });
     }
 
+    // Get categories for dropdown
     let uri = `/api/categories/get`;
     this.axios.get(uri).then(response => {
       this.categories = response.data.data;
@@ -141,7 +171,7 @@ export default {
       }
     },
 
-    // Add the client
+    // Store the data
     store() {
       let uri = "/api/competence/create";
       this.axios.post(uri, this.competence).then(response => {
@@ -149,13 +179,52 @@ export default {
       });
     },
 
-    // Update the client
+    // Update the data
     update() {
       let uri = `/api/competence/update/${this.$route.params.id}`;
       this.axios.post(uri, this.competence).then(response => {
         this.$router.push({ name: "competences" });
       });
-    }
+    },
+
+    // Upload & asset methods
+    afterUpload(file) {
+      if (file.status == "error" && file.accepted == false) {
+        this.$notify({type: "error", text: "Ungültiges Dateiformat."});
+      } 
+      else {
+        let file_response = JSON.parse(file.xhr.response);
+        file_response.id = null;
+        file_response.caption = null;
+        file_response.order = -1;
+        file_response.publish = 1;
+        this.competence.media.push(file_response);
+      }
+    },
+
+    // Delete a single file by its name
+    deleteUpload(file) {
+      if(confirm('Bitte löschen bestätigen!')) {
+        let uri = `/api/competence/media/delete/${file}`;
+        this.axios.delete(uri).then(response => {
+          this.competence.media.splice(this.competence.media.indexOf(file), 1);
+        });
+      }
+    },
+
+    toggleAsset(asset) {
+      if (asset.id === null) {
+          const index = this.competence.media.findIndex(x => x.name === asset.name);
+          this.competence.media[index].publish = asset.publish == 1 ? 0 : 1;
+      }
+      else {
+        let uri = `/api/competence/media/status/${asset.id}`;
+        this.axios.get(uri).then(response => {
+          const index = this.competence.media.findIndex(x => x.id === asset.id);
+          this.competence.media[index].publish = response.data;
+        });
+      }
+    },
   },
 
   computed: {

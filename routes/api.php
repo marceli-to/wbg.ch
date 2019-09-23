@@ -19,7 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::middleware('auth:api')->group(function() {
     
-    // Team routes
+    /**
+     * Team routes
+     */
+
     Route::get('team/get', 'Backend\Team\TeamController@get');
     Route::post('team/create', 'Backend\Team\TeamController@store');
     Route::get('team/edit/{id}', 'Backend\Team\TeamController@edit');
@@ -30,7 +33,10 @@ Route::middleware('auth:api')->group(function() {
     Route::post('team/order', 'Backend\Team\TeamController@order');
     Route::delete('team/delete/file/{file}', 'Backend\Team\TeamController@unlink');
 
-    // Client routes
+    /**
+     * Client routes
+     */
+
     Route::get('clients/get', 'Backend\Client\ClientController@get');
     Route::post('client/create', 'Backend\Client\ClientController@store');
     Route::get('client/edit/{id}', 'Backend\Client\ClientController@edit');
@@ -39,7 +45,10 @@ Route::middleware('auth:api')->group(function() {
     Route::get('client/status/{id}', 'Backend\Client\ClientController@status');
     Route::delete('client/destroy/{id}', 'Backend\Client\ClientController@destroy');
 
-    // Category routes
+    /**
+     * Category routes
+     */
+
     Route::get('categories/get', 'Backend\Category\CategoryController@get');
     Route::post('category/create', 'Backend\Category\CategoryController@store');
     Route::get('category/edit/{id}', 'Backend\Category\CategoryController@edit');
@@ -49,7 +58,10 @@ Route::middleware('auth:api')->group(function() {
     Route::post('category/order', 'Backend\Category\CategoryController@order');
     Route::delete('category/destroy/{id}', 'Backend\Category\CategoryController@destroy');
 
-    // Competence routes
+    /**
+     * Competence routes
+     */
+
     Route::get('competences/get', 'Backend\Competence\CompetenceController@get');
     Route::post('competence/create', 'Backend\Competence\CompetenceController@store');
     Route::get('competence/edit/{id}', 'Backend\Competence\CompetenceController@edit');
@@ -58,8 +70,40 @@ Route::middleware('auth:api')->group(function() {
     Route::get('competence/status/{id}', 'Backend\Competence\CompetenceController@status');
     Route::post('competence/order', 'Backend\Competence\CompetenceController@order');
     Route::delete('competence/destroy/{id}', 'Backend\Competence\CompetenceController@destroy');
+    Route::delete('competence/media/delete/{file}', 'Backend\Competence\CompetenceMediaController@unlink');
+    Route::get('competence/media/status/{id}', 'Backend\Competence\CompetenceMediaController@status');
+ 
+    /**
+     * Project routes
+     */
+    Route::get('projects/get', 'Backend\Project\ProjectController@all');
+    Route::get('projects/fetch/{publish?}/{order?}', 'Backend\Project\ProjectController@fetch');
+    Route::get('project/get/{id}', 'Backend\Project\ProjectController@get');
+    Route::post('project/create', 'Backend\Project\ProjectController@store');
+    Route::get('project/edit/{id}', 'Backend\Project\ProjectController@edit');
+    Route::post('project/update/{id}', 'Backend\Project\ProjectController@update');
+    Route::get('project/clone/{id}', 'Backend\Project\ProjectController@clone');
+    Route::get('project/status/{id}', 'Backend\Project\ProjectController@status');
+    Route::post('project/order', 'Backend\Project\ProjectController@order');
+    Route::delete('project/destroy/{id}', 'Backend\Project\ProjectController@destroy');
+    
+    Route::get('project/image/get/{projectId}', 'Backend\Project\ProjectImageController@get');
+    Route::delete('project/image/delete/{file}', 'Backend\Project\ProjectImageController@unlink');
+    Route::get('project/image/status/{id}', 'Backend\Project\ProjectImageController@status');
+    
+    Route::get('project/grids/{id}', 'Backend\Project\GridController@get');
+    Route::post('project/grids/order', 'Backend\Project\GridController@order');
+    Route::get('project/grid/store/{projectId}/{layoutId}', 'Backend\Project\GridController@store');
+    Route::delete('project/grid/delete/{id}', 'Backend\Project\GridController@destroy');
+    Route::get('project/grid/layouts', 'Backend\Project\GridLayoutController@get');
+    Route::get('project/grid/images/{gridId}', 'Backend\Project\GridElementController@get');
+    Route::post('project/grid/image/store', 'Backend\Project\GridElementController@store');
+    Route::delete('project/grid/image/delete/{id}', 'Backend\Project\GridElementController@destroy');
 
-    // Media routes
+    /**
+     * Media routes
+     */
+
     Route::post('media/upload','MediaController@upload');
     Route::post('media/upload/document','MediaController@uploadDocument');
     Route::get('media/{file}/{size?}', 'MediaController@resize');
