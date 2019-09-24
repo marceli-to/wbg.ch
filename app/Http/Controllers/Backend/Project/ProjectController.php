@@ -93,8 +93,8 @@ class ProjectController extends Controller
         $project = new Project([
             'name'              => $request->input('name'),
             'principal'         => $request->input('principal'),
-            'description_short' => $request->input('description_short'),
             'description'       => $request->input('description'),
+            'meta_description'  => $request->input('meta_description'),
             'category_id'       => $request->input('category_id') ? $request->input('category_id') : null,
             'client_id'         => $request->input('client_id') ? $request->input('client_id') : null,
         ]);
@@ -144,8 +144,8 @@ class ProjectController extends Controller
         $project = $this->project->findOrFail($id);
         $project->name              = $request->input('name');
         $project->principal         = $request->input('principal');
-        $project->description_short = $request->input('description_short');
         $project->description       = $request->input('description');
+        $project->meta_description  = $request->input('meta_description');
         $project->category_id       = $request->input('category_id') ? $request->input('category_id') : null;
         $project->client_id         = $request->input('client_id') ? $request->input('client_id') : null;
         $project->save();

@@ -52,7 +52,7 @@
                    @click.prevent="clearSearch()"
                 >
                 </a>
-                <input type="text" class="search" v-model="search" placeholder="Filter nach Projektname, Auftraggeber, Kunde oder Kategorie">
+                <input type="text" class="search" v-model="search" placeholder="Filter nach Name oder Ort">
               </div>
             </div>
           </footer>

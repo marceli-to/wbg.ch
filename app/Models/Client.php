@@ -10,7 +10,6 @@ class Client extends Model
     protected $fillable = [
         'name',
         'location',
-        'website',
         'publish',
         'project_id'
     ];

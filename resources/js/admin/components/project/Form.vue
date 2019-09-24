@@ -42,21 +42,26 @@
                 v-model="project.principal"
               >
             </div>
-            <div class="form-row" :class="errors.description_short ? 'has-error': ''">
-              <label>Kurzbeschreibung</label>
-              <textarea
-                @focus="removeError('description_short')"
-                v-model="project.description_short"
-                :class="errors.description_short ? 'has-error': ''"
-                rows="15"
-              ></textarea>
-            </div>
             <div class="form-row" :class="errors.description ? 'has-error': ''">
               <label>Beschreibung</label>
-              <textarea
+              <!-- <textarea
                 @focus="removeError('description')"
                 v-model="project.description"
                 :class="errors.description ? 'has-error': ''"
+                rows="15"
+              ></textarea> -->
+              <tinymce-editor
+                api-key="vuaywur9klvlt3excnrd9xki1a5lj25v18b2j0d0nu5tbwro"
+                :init="tinyConfig"
+                v-model="project.description"
+              ></tinymce-editor>
+            </div>
+            <div class="form-row" :class="errors.meta_description ? 'has-error': ''">
+              <label>SEO-Text</label>
+              <textarea
+                @focus="removeError('meta_description')"
+                v-model="project.meta_description"
+                :class="errors.meta_description ? 'has-error': ''"
                 rows="15"
               ></textarea>
             </div>
@@ -112,12 +117,15 @@
 import PageHeader from "@/layout/PageHeader.vue";
 import MultiImageUpload from "@/components/ui/MultiImageUpload.vue";
 import FormButtons from "@/components/ui/buttons/FormButtons.vue";
+import tinyConfig from "@/config/tinyconfig.js";
+import Editor from "@tinymce/tinymce-vue";
 import Helpers from "@/mixins/helpers";
 
 export default {
   components: {
     FormButtons: FormButtons,
-    MultiImageUpload: MultiImageUpload
+    MultiImageUpload: MultiImageUpload,
+    tinymceEditor: Editor,
   },
 
   props: {
@@ -150,8 +158,8 @@ export default {
       project: {
         name: null,
         principal: null,
-        description_short: null,
         description: null,
+        meta_description: null,
         category_id: null,
         client_id: null,
         publish: null,
@@ -159,7 +167,10 @@ export default {
       },
 
       categories: [],
-      clients: []
+      clients: [],
+
+      // tinymce config
+      tinyConfig: tinyConfig
 
     };
   },

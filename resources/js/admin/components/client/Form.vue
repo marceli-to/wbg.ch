@@ -35,22 +35,6 @@
                 v-model="client.location"
               >
             </div>
-            <div class="form-row" :class="errors.website ? 'has-error': ''">
-              <label>
-                Website
-                <a :href="client.website" 
-                   target="_blank" 
-                   class="icon-external-link is-sm icon-mini" 
-                   v-if="client.website">
-                </a>
-              </label>
-              <input 
-                type="text" 
-                @focus="removeError('website')" 
-                name="name" 
-                v-model="client.website"
-              >
-            </div>
             <div class="form-row" :class="errors.project_id ? 'has-error': ''">
               <label>Verlinktes Projekt</label>
               <div class="select-wrapper">
@@ -111,7 +95,6 @@ export default {
       client: {
         name: null,
         location: null,
-        website: null,
         project_id: null,
       },
     };

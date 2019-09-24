@@ -81,6 +81,7 @@ export default {
     store(gridId) {
       let uri = `/api/project/grid/store/${this.projectId}/${gridId}`;
       this.axios.get(uri).then(response => {
+        this.$notify({type: 'success', text: 'Zeile hinzugefügt'});
         this.fetch();
       });
     },
@@ -102,13 +103,14 @@ export default {
 
     destroy(gridId, event) {
       let uri = `/api/project/grid/delete/${gridId}`;
+      console.log(event.target);
       this.axios.delete(uri).then(response => {
         let row = event.target.parentNode, self = this;
         row.classList.add('fade-out');
         setTimeout(function(){
           const index = self.grids.findIndex(x => x.id === gridId);
           self.grids.splice(index, 1);
-          self.$notify({type: "success", text: "Zeile gelöscht!"});
+          self.$notify({type: 'success', text: 'Zeile gelöscht'});
         }, 200);
       });
     }

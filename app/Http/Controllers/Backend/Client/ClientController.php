@@ -52,7 +52,6 @@ class ClientController extends Controller
         $client = new Client([
             'name'          => $request->input('name'),
             'location'      => $request->input('location'),
-            'website'       => $request->input('website') ? \AppHelper::addScheme($request->input('website')) : NULL,
             'project_id'    => $request->input('project_id'),          
         ]);
 
@@ -84,7 +83,6 @@ class ClientController extends Controller
         $client = $this->client->findOrFail($id);
         $client->name       = $request->input('name');
         $client->location   = $request->input('location');
-        $client->website    = $request->input('website') ? \AppHelper::addScheme($request->input('website')) : NULL;
         $client->project_id = $request->input('project_id');
         $client->save();
         return response()->json('successfully updated');

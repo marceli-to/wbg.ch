@@ -9,8 +9,9 @@ html.has-overlay {
     overflow: hidden;
 }
 
+%overlay,
 .overlay {
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgba(0,0,0, .9);
     color: $color--dark;
     display: block;
     height: 100%;
@@ -23,17 +24,62 @@ html.has-overlay {
     top: 0;
     width: 100%;
     z-index: -1;
-    -webkit-transition: opacity .24s ease-out;
-    transition: opacity .24s ease-out;
 
     &.is-visible {
         opacity: 1;
         pointer-events: all;
         z-index: 101;
+        transition: opacity .24s ease-out;
+    }
+
+    * {
+        color: $color--white;
     }
 
     > div {
         @extend %page-block;
     }
-  
+}
+
+.overlay-asset {
+    @extend %overlay;
+    opacity: 0;
+    transition: opacity 0s ease-out;
+    
+    &.is-visible {
+        transition: opacity .24s ease-out;
+    }
+
+    .overlay-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 40px;
+        padding-top: 40px;
+    }
+
+    img {
+        display: block;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100% !important;
+    }
+
+    input[type=text] {
+        border: 1px solid $color--white;
+        color: $color--white;
+        max-width: 360px;
+    }
+
+    label {
+        margin-bottom: 5px;
+    }
+
+    .form-row {
+        margin-bottom: 20px;
+    }
+
+    .form-row-button {
+        margin-top: 40px;
+    }
 }

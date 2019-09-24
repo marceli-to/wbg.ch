@@ -36,7 +36,7 @@
     </div>
     <div :class="[hasOverlay ? 'is-visible': '', 'overlay']">
       <div>
-        <a href="javascript:;" @click.prevent="toggleOverlay()" class="icon-close icon-close-overlay"></a>
+        <a href="javascript:;" @click.prevent="toggleOverlay()" class="icon-close-overlay"></a>
         <div>
           <h1>Projektbild auswählen</h1>
           <div class="project-selector">
@@ -140,7 +140,7 @@ export default {
       let uri = '/api/project/grid/image/store';
       this.axios.post(uri, data).then(response => {
         this.toggleOverlay();
-        this.$notify({type: 'success', text: 'Bild hinzugefügt!'});
+        this.$notify({type: 'success', text: 'Bild hinzugefügt'});
         this.fetch();
       });
     },
@@ -148,7 +148,7 @@ export default {
     deleteImage(id) {
       let uri = `/api/project/grid/image/delete/${id}`;
       this.axios.delete(uri).then(response => {
-        this.$notify({type: 'success', text: 'Bild gelöscht!'});
+        this.$notify({type: 'success', text: 'Bild gelöscht'});
         this.fetch();
       });
     },

@@ -44,28 +44,30 @@
                 @click.prevent="deleteUpload(asset.name)">
               </a>
             </div>
-            <div class="dz-edit-form">
-              <a
-                href="javascript:;"
-                class="dz-icon-hide-form"
-                @click.prevent="hideAssetEdit($event)"
-              >Schliessen</a>
-              <div class="dz-edit-form-row">
-                <label>Datei:</label>
-                <a 
-                  :href="getAssetUri(asset.name)"
-                  target="_blank"
-                >
-                  {{asset.name}}
-                </a>
-              </div>
-              <div class="dz-edit-form-row">
-                <label>Alt-Tag:</label>
-                <input
-                  type="text"
-                  v-model="asset.caption"
-                  class="is-caption"
-                >
+            <div class="overlay-asset">
+              <div>
+                <div class="overlay-grid">
+                  <div>
+                    <img :src="getAssetUri(asset.name)" height="300" width="300">
+                  </div>
+                  <div>
+                    <div class="form-row">
+                      <label>Name:</label>
+                      <div>{{asset.name}}</div>
+                    </div>
+                    <div class="form-row">
+                      <label>Legende:</label>
+                      <input type="text" v-model="asset.caption" class="is-caption">
+                    </div>
+                    <div class="form-row-button">
+                      <a
+                        href="javascript:;"
+                        class="btn-secondary"
+                        @click.prevent="hideAssetEdit($event)"
+                      >Speichern</a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </figure>
@@ -132,8 +134,8 @@ export default {
     },
 
     hideAssetEdit(e) {
-      let editForm = e.target.parentNode;
-      editForm.classList.toggle(this.css_classes.visible);
+      let editForm= e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+      editForm.classList.remove(this.css_classes.visible);
     },
 
     getAssetUri(asset) {

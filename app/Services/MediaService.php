@@ -58,7 +58,7 @@ class MediaService
     /**
      * Maximum height for extra small portrait images
      */    
-    protected $max_height_xs = 90;
+    protected $max_height_xs = 120;
 
     /**
      * Maximum width for small landscape images

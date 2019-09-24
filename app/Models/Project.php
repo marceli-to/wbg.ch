@@ -10,8 +10,8 @@ class Project extends Model
     protected $fillable = [
         'name',
         'principal',
-        'description_short',
         'description',
+        'meta_description',
         'category_id',
         'client_id',
         'publish',

@@ -2,6 +2,7 @@ Add admin user:
 
 1) php artisan tinker
 2) DB::table('users')->insert(['name'=>'marcel','email'=>'m@marceli.to','password'=>Hash::make('7aq31rr')])
+3) DB::table('users')->insert(['name'=>'bettina','email'=>'bp@wbg.ch','password'=>Hash::make('TVwN0F*gsNn]mrjZ8GQo')])
 
 
 DB

@@ -16,7 +16,6 @@
                 <div class="form-row is-last">
                     <div class="form-buttons">
                         <input type="submit" class="btn" value="Login">
-                        <a href="">Passwort vergessen?</a>
                     </div>
                 </div>
             </form>
@@ -45,7 +44,7 @@
                     store.commit('loginUser')
                     localStorage.setItem('token', response.data.access_token)
                     // this.$router.push({ name: 'dashboard' })
-                    window.location.href = '/admin/dashboard';
+                    window.location.href = '/admin/projects';
                 }).catch(error => {
                     this.loginError = true
                 });
