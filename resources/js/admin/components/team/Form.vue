@@ -54,7 +54,7 @@
                   @focus="removeError('phone')"
                   name="phone"
                   v-model="team.phone"
-                  placeholder="Format: +41 52 2xx xx xx"
+                  placeholder="Format: +41 44 2xx xx xx"
                 >
               </div>
               <div class="span form-row" :class="errors.email ? 'has-error': ''">
