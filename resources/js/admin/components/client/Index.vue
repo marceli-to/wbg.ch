@@ -22,7 +22,7 @@
                 <a
                   href="javascript:;"
                   :class="[client.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']"
-                  @click.prevent="toggleStatus(client.id)"
+                  @click.prevent="toggleStatus(client.id,$event)"
                 ></a>
                 <router-link
                   :to="{name: 'client-edit', params: { id: client.id }}"
@@ -31,12 +31,12 @@
                 <a
                   href="javascript:;"
                   class="icon-copy icon-mini"
-                  @click.prevent="clone(client.id)"
+                  @click.prevent="clone(client.id,$event)"
                 ></a>
                 <a
                   href="javascript:;"
                   class="icon-trash icon-mini"
-                  @click.prevent="destroy(client.id)"
+                  @click.prevent="destroy(client.id,$event)"
                 ></a>
               </div>
             </div>
@@ -64,11 +64,15 @@
 <script>
 import PageHeader from "@/layout/PageHeader.vue";
 import draggable from "vuedraggable";
+import Progress from "@/mixins/progress";
+
 export default {
   components: {
     draggable,
     PageHeader: PageHeader
   },
+
+  mixins: [Progress],
 
   data() {
     return {
@@ -90,36 +94,43 @@ export default {
       });
     },
 
-    destroy(id) {
+    destroy(id,event) {
       if (confirm("Bitte löschen bestätigen!")) {
         let uri = `/api/client/destroy/${id}`;
+        let el = this.progress(event.target);
         this.axios.delete(uri).then(response => {
           this.fetch();
           this.$notify({ type: "success", text: "Eintrag gelöscht" });
+          this.progress(el);
         });
       }
     },
 
-    clone(id) {
+    clone(id,event) {
       let uri = `/api/client/clone/${id}`;
+      let el = this.progress(event.target);
       this.axios.get(uri).then(response => {
-        this.clients.push(response.data);
+        this.clients.unshift(response.data);
         this.$notify({ type: "success", text: "Eintrag kopiert" });
+        this.progress(el);
       });
     },
 
-    toggleStatus(id) {
+    toggleStatus(id,event) {
       let uri = `/api/client/status/${id}`;
+      let el = this.progress(event.target);
       this.axios.get(uri).then(response => {
         const index = this.clients.findIndex(x => x.id === id);
         this.clients[index].publish = response.data;
         this.$notify({ type: "success", text: "Status angepasst" });
+        this.progress(el)
       });
     },
     
     clearSearch() {
       this.search = '';
-    }
+    },
+
   },
   computed: {
     filteredList() {

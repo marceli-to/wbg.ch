@@ -145,9 +145,11 @@ export default {
       });
     },
 
-    deleteImage(id) {
+    deleteImage(id,btn) {
       let uri = `/api/project/grid/image/delete/${id}`;
+      btn.classList.add('is-loading');
       this.axios.delete(uri).then(response => {
+        btn.classList.remove('is-loading');
         this.$notify({type: 'success', text: 'Bild gelöscht'});
         this.fetch();
       });

@@ -16,12 +16,12 @@
                   <div v-for="(project, idx) in categories" :key="`${idx}-${project.id}`">
                     <h2 v-if="idx == 0">{{ project.category.name }}</h2>
                   </div>
-                  <draggable 
+                  <draggable
                     v-model="grouped[index]"
                     @end="updateOrder(index)"
                     ghost-class="draggable-ghost"
-                    tag="div">
-
+                    tag="div"
+                  >
                     <div v-for="project in categories" :key="project.id">
                       <div
                         :class="[project.publish == 0 ? 'is-disabled' : '', 'list-item', 'list-item--project is-sortable']"
@@ -41,7 +41,7 @@
                           <a
                             href="javascript:;"
                             :class="[project.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']"
-                            @click.prevent="toggleStatus(project.id)"
+                            @click.prevent="toggleStatus(project.id,$event)"
                           ></a>
                           <router-link
                             :to="{name: 'project-edit', params: { id: project.id }}"
@@ -50,12 +50,12 @@
                           <a
                             href="javascript:;"
                             class="icon-copy icon-mini"
-                            @click.prevent="clone(project.id)"
+                            @click.prevent="clone(project.id,$event)"
                           ></a>
                           <a
                             href="javascript:;"
                             class="icon-trash icon-mini"
-                            @click.prevent="destroy(project.id)"
+                            @click.prevent="destroy(project.id,$event)"
                           ></a>
                         </div>
                       </div>
@@ -71,12 +71,18 @@
           <footer class="form-footer">
             <div>
               <div class="search-wrapper">
-                <a href="javascript:;" 
-                   class="icon-delete" v-if="search"
-                   @click.prevent="clearSearch()"
+                <a
+                  href="javascript:;"
+                  class="icon-delete"
+                  v-if="search"
+                  @click.prevent="clearSearch()"
+                ></a>
+                <input
+                  type="text"
+                  class="search"
+                  v-model="search"
+                  placeholder="Filter nach Projektname, Auftraggeber, Kunde oder Kategorie"
                 >
-                </a>
-                <input type="text" class="search" v-model="search" placeholder="Filter nach Projektname, Auftraggeber, Kunde oder Kategorie">
               </div>
             </div>
           </footer>
@@ -87,7 +93,8 @@
 </template>
 <script>
 import PageHeader from "@/layout/PageHeader.vue";
-import draggable from 'vuedraggable';
+import draggable from "vuedraggable";
+import Progress from "@/mixins/progress";
 
 export default {
   components: {
@@ -95,13 +102,15 @@ export default {
     draggable
   },
 
+  mixins: [Progress],
+
   data() {
     return {
       projects: [],
       groupedProjects: [],
       filteredProjects: [],
-      search: '',
-      debounce: false,
+      search: "",
+      debounce: false
     };
   },
 
@@ -117,70 +126,82 @@ export default {
       });
     },
 
-    destroy(id) {
+    destroy(id,event) {
       if (confirm("Bitte löschen bestätigen!")) {
         let uri = `/api/project/destroy/${id}`;
+        let el = this.progress(event.target);
         this.axios.delete(uri).then(response => {
           this.fetch();
           this.$notify({ type: "success", text: "Eintrag gelöscht" });
+          this.progress(el);
         });
       }
     },
 
-    clone(id) {
+    clone(id,event) {
       let uri = `/api/project/clone/${id}`;
+      let el = this.progress(event.target);
       this.axios.get(uri).then(response => {
         this.fetch();
         this.$notify({ type: "success", text: "Eintrag kopiert" });
+        this.progress(el);
       });
     },
 
-    toggleStatus(id) {
+    toggleStatus(id,event) {
       let uri = `/api/project/status/${id}`;
+      let el = this.progress(event.target);
       this.axios.get(uri).then(response => {
         const index = this.projects.findIndex(x => x.id === id);
         this.projects[index].publish = response.data;
         this.$notify({ type: "success", text: "Status angepasst" });
+        this.progress(el);
       });
     },
 
     updateOrder(groupIndex) {
-      let projects = this.groupedProjects[groupIndex].map(function(project, index) {
-          project.order = index;
-          return project;
+      let projects = this.groupedProjects[groupIndex].map(function(
+        project,
+        index
+      ) {
+        project.order = index;
+        return project;
       });
       if (this.debounce) return;
-      this.debounce = setTimeout(function(projects) {
-        this.debounce = false 
-        let uri = `/api/project/order`;
-        this.axios.post(uri, {projects: projects}).then((response) => {
-          this.fetch();
-        });
-      }.bind(this, projects), 500);
-      this.$notify({type: 'success', text: 'Reihenfolge angepasst'});
+      this.debounce = setTimeout(
+        function(projects) {
+          this.debounce = false;
+          let uri = `/api/project/order`;
+          this.axios.post(uri, { projects: projects }).then(response => {
+            this.fetch();
+          });
+        }.bind(this, projects),
+        500
+      );
+      this.$notify({ type: "success", text: "Reihenfolge angepasst" });
     },
 
     clearSearch() {
-      this.search = '';
+      this.search = "";
     }
   },
 
   computed: {
     grouped() {
       let filteredProjects = this.projects;
-      let filter = c => 
-          c.name.toLowerCase().includes(this.search.toLowerCase()) ||
-          c.principal.toLowerCase().includes(this.search.toLowerCase()) ||
-          c.client.name.toLowerCase().includes(this.search.toLowerCase()) ||
-          c.category.name.toLowerCase().includes(this.search.toLowerCase())
+      let filter = c =>
+        c.name.toLowerCase().includes(this.search.toLowerCase()) ||
+        c.principal.toLowerCase().includes(this.search.toLowerCase()) ||
+        c.client.name.toLowerCase().includes(this.search.toLowerCase()) ||
+        c.category.name.toLowerCase().includes(this.search.toLowerCase());
 
       if (this.search) {
-        filteredProjects = this.projects.filter(filter)
+        filteredProjects = this.projects.filter(filter);
       }
 
       this.groupedProjects = _.groupBy(filteredProjects, "category_id");
 
-      return this.groupedProjects
+      return this.groupedProjects;
     }
   }
 };

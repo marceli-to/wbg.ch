@@ -80,6 +80,7 @@ import PageHeader from "@/layout/PageHeader.vue";
 import MultiImageUpload from "@/components/ui/MultiImageUpload.vue";
 import FormButtons from "@/components/ui/buttons/FormButtons.vue";
 import Helpers from "@/mixins/helpers";
+import Progress from "@/mixins/progress";
 
 export default {
   components: {
@@ -91,7 +92,7 @@ export default {
     type: String
   },
 
-  mixins: [Helpers],
+  mixins: [Helpers, Progress],
 
   data() {
     return {
@@ -203,25 +204,29 @@ export default {
     },
 
     // Delete a single file by its name
-    deleteUpload(file) {
+    deleteUpload(file,event) {
       if(confirm('Bitte löschen bestätigen!')) {
         let uri = `/api/competence/media/delete/${file}`;
+        let el = this.progress(event.target);
         this.axios.delete(uri).then(response => {
           this.competence.media.splice(this.competence.media.indexOf(file), 1);
+          this.progress(el);
         });
       }
     },
 
-    toggleAsset(asset) {
+    toggleAsset(asset,event) {
       if (asset.id === null) {
           const index = this.competence.media.findIndex(x => x.name === asset.name);
           this.competence.media[index].publish = asset.publish == 1 ? 0 : 1;
       }
       else {
         let uri = `/api/competence/media/status/${asset.id}`;
+        let el = this.progress(event.target);
         this.axios.get(uri).then(response => {
           const index = this.competence.media.findIndex(x => x.id === asset.id);
           this.competence.media[index].publish = response.data;
+          this.progress(el);
         });
       }
     },

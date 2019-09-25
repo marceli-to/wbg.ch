@@ -64,9 +64,7 @@
 .dropzone-existing-assets {
     margin-top: 12px;
     background-color: transparent;
-    border: 2px solid $color--dark;
-    border-radius: 2px;
-    padding: 15px !important;
+
     
     > div {
         display: grid;
@@ -75,6 +73,7 @@
     }
 
     .dz-existing-asset {
+        box-shadow: $box-shadow-sm;
         width: 100% !important;
     }
 
@@ -98,10 +97,10 @@
     }
     
     .dz-existing-asset {
-        background-color: $color--light-grey;
-        border-radius: 2px;
+        //background-color: $color--light-grey;
+        //border-radius: 2px;
         display: inline-block;
-        padding: 10px;
+        //padding: 10px;
         position: relative;
         display: inline-block;
         vertical-align: top;
@@ -137,7 +136,7 @@
 
         .dz-toolbar {
             background-color: $color--white;
-            border-top: 2px solid $color--light-grey;
+            //border-top: 2px solid $color--light-grey;
             display: grid;
             line-height: 1;
             grid-template-columns: repeat(4, 18px);

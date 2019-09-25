@@ -28,7 +28,7 @@
                   <a
                     href="javascript:;"
                     :class="[category.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']"
-                    @click.prevent="toggleStatus(category.id)"
+                    @click.prevent="toggleStatus(category.id,$event)"
                   ></a>
                   <router-link
                     :to="{name: 'category-edit', params: { id: category.id }}"
@@ -37,12 +37,12 @@
                   <a
                     href="javascript:;"
                     class="icon-copy icon-mini"
-                    @click.prevent="clone(category.id)"
+                    @click.prevent="clone(category.id,$event)"
                   ></a>
                   <a
                     href="javascript:;"
                     class="icon-trash icon-mini"
-                    @click.prevent="destroy(category.id)"
+                    @click.prevent="destroy(category.id,$event)"
                   ></a>
                 </div>
               </div>
@@ -59,11 +59,15 @@
 <script>
 import PageHeader from "@/layout/PageHeader.vue";
 import draggable from "vuedraggable";
+import Progress from "@/mixins/progress";
+
 export default {
   components: {
     draggable,
     PageHeader: PageHeader
   },
+
+  mixins: [Progress],
 
   data() {
     return {
@@ -84,30 +88,36 @@ export default {
       });
     },
 
-    destroy(id) {
+    destroy(id,event) {
       if (confirm("Bitte löschen bestätigen!")) {
         let uri = `/api/category/destroy/${id}`;
+        let el = this.progress(event.target);
         this.axios.delete(uri).then(response => {
           this.fetch();
           this.$notify({ type: "success", text: "Eintrag gelöscht" });
+          this.progress(el)
         });
       }
     },
 
-    clone(id) {
+    clone(id,event) {
       let uri = `/api/category/clone/${id}`;
+      let el = this.progress(event.target);
       this.axios.get(uri).then(response => {
         this.categories.push(response.data);
         this.$notify({ type: "success", text: "Eintrag kopiert" });
+        this.progress(el);
       });
     },
 
-    toggleStatus(id) {
+    toggleStatus(id,event) {
       let uri = `/api/category/status/${id}`;
+      let el = this.progress(event.target);
       this.axios.get(uri).then(response => {
         const index = this.categories.findIndex(x => x.id === id);
         this.categories[index].publish = response.data;
         this.$notify({ type: "success", text: "Status angepasst" });
+        this.progress(el);
       });
     },
 

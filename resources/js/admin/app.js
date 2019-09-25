@@ -28,7 +28,6 @@ Vue.use(VueRouter);
 import Notifications from 'vue-notification';
 Vue.use(Notifications);
 
-
 // Filters
 require('./filters');
 

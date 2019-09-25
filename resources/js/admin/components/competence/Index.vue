@@ -5,7 +5,7 @@
     <div class="container">
       <main class="content" role="main">
         <div>
-          <h1>Kategorien</h1>
+          <h1>Kompetenzen</h1>
           <router-link :to="{ name: 'competence-create' }" class="btn-add">
             <span>Hinzufügen</span>
           </router-link>
@@ -29,7 +29,7 @@
                   <a
                     href="javascript:;"
                     :class="[competence.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']"
-                    @click.prevent="toggleStatus(competence.id)"
+                    @click.prevent="toggleStatus(competence.id,$event)"
                   ></a>
                   <router-link
                     :to="{name: 'competence-edit', params: { id: competence.id }}"
@@ -38,12 +38,12 @@
                   <a
                     href="javascript:;"
                     class="icon-copy icon-mini"
-                    @click.prevent="clone(competence.id)"
+                    @click.prevent="clone(competence.id,$event)"
                   ></a>
                   <a
                     href="javascript:;"
                     class="icon-trash icon-mini"
-                    @click.prevent="destroy(competence.id)"
+                    @click.prevent="destroy(competence.id,$event)"
                   ></a>
                 </div>
               </div>
@@ -60,12 +60,16 @@
 <script>
 import PageHeader from "@/layout/PageHeader.vue";
 import draggable from "vuedraggable";
+import Progress from "@/mixins/progress";
+
 export default {
   components: {
     draggable,
     PageHeader: PageHeader
   },
 
+  mixins: [Progress],
+  
   data() {
     return {
       competences: [],
@@ -85,30 +89,36 @@ export default {
       });
     },
 
-    destroy(id) {
+    destroy(id,event) {
       if (confirm("Bitte löschen bestätigen!")) {
         let uri = `/api/competence/destroy/${id}`;
+        let el = this.progress(event.target);
         this.axios.delete(uri).then(response => {
           this.fetch();
           this.$notify({ type: "success", text: "Eintrag gelöscht" });
+          this.progress(el);
         });
       }
     },
 
     clone(id) {
       let uri = `/api/competence/clone/${id}`;
+      let el = this.progress(event.target);
       this.axios.get(uri).then(response => {
         this.competences.push(response.data);
         this.$notify({ type: "success", text: "Eintrag kopiert" });
+        this.progress(el);
       });
     },
 
     toggleStatus(id) {
       let uri = `/api/competence/status/${id}`;
+      let el = this.progress(event.target);
       this.axios.get(uri).then(response => {
         const index = this.competences.findIndex(x => x.id === id);
         this.competences[index].publish = response.data;
         this.$notify({ type: "success", text: "Status angepasst" });
+        this.progress(el);
       });
     },
 

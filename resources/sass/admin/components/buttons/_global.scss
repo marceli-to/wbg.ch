@@ -51,6 +51,25 @@
     padding: 10px 10px 10px 30px;
 }
 
+%btn-loading,
+.btn-loading {
+    position: relative;
+
+    &.is-loading:after {
+        background-color: #343E3D;
+        border-radius: inherit;
+        content: '';
+        display: block;
+        height: 4px;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 5;
+        animation: loadingBtn 2s infinite;
+    }
+}
+
 %btn-dark,
 .btn-dark {
     background-color: $color--dark;

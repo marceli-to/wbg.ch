@@ -26,7 +26,7 @@
               <a
                 href="javascript:;"
                 :class="[asset.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']"
-                @click.prevent="toggleAsset(asset)">
+                @click.prevent="toggleAsset(asset,$event)">
               </a>
               <a
                 href="javascript:;"
@@ -41,7 +41,7 @@
               <a
                 href="javascript:;"
                 class="icon-trash icon-mini"
-                @click.prevent="deleteUpload(asset.name)">
+                @click.prevent="deleteUpload(asset.name,$event)">
               </a>
             </div>
             <div class="overlay-asset">
@@ -49,6 +49,7 @@
                 <div class="overlay-grid">
                   <div>
                     <img :src="getAssetUri(asset.name)" height="300" width="300">
+                    <figcaption>{{asset.caption}}</figcaption>
                   </div>
                   <div>
                     <div class="form-row">
@@ -120,12 +121,12 @@ export default {
       this.$parent.afterUpload(asset);
     },
 
-    deleteUpload(asset) {
-      this.$parent.deleteUpload(asset);
+    deleteUpload(asset,eveent) {
+      this.$parent.deleteUpload(asset,event);
     },
 
-    toggleAsset(asset) {
-      this.$parent.toggleAsset(asset);
+    toggleAsset(asset,event) {
+      this.$parent.toggleAsset(asset,event);
     },
 
     showAssetEdit(e) {

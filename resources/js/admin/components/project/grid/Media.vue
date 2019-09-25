@@ -4,7 +4,7 @@
       <a
         href="javascript:;"
         class="btn-trash"
-        @click.prevent="deleteImage(element.id)"
+        @click.prevent="deleteImage(element.id, $event)"
       >Löschen</a>
       <img :src="getPreviewImage(element.image)" height="50" width="50">
       <figcaption v-if="element.caption">
@@ -21,8 +21,9 @@ export default {
 
   methods: {
     
-    deleteImage(id) {
-      this.$parent.deleteImage(id);
+    deleteImage(id,event) {
+      let btn = event.target;
+      this.$parent.deleteImage(id,btn);
     },
 
     getPreviewImage(image) {

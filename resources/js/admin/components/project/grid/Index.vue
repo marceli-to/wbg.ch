@@ -53,6 +53,8 @@ export default {
       pageTitle: null,
       projectId: null,
       debounce: false,
+
+      isLoading: true,
     };
   },
 
@@ -103,9 +105,11 @@ export default {
 
     destroy(gridId, event) {
       let uri = `/api/project/grid/delete/${gridId}`;
-      console.log(event.target);
+      let btn = event.target;
+      btn.classList.add('is-loading');
       this.axios.delete(uri).then(response => {
         let row = event.target.parentNode, self = this;
+        btn.classList.remove('is-loading');
         row.classList.add('fade-out');
         setTimeout(function(){
           const index = self.grids.findIndex(x => x.id === gridId);

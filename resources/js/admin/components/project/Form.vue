@@ -120,6 +120,7 @@ import FormButtons from "@/components/ui/buttons/FormButtons.vue";
 import tinyConfig from "@/config/tinyconfig.js";
 import Editor from "@tinymce/tinymce-vue";
 import Helpers from "@/mixins/helpers";
+import Progress from "@/mixins/progress";
 
 export default {
   components: {
@@ -127,12 +128,12 @@ export default {
     MultiImageUpload: MultiImageUpload,
     tinymceEditor: Editor,
   },
-
+  
   props: {
     type: String
   },
 
-  mixins: [Helpers],
+  mixins: [Helpers, Progress],
 
   data() {
     return {
@@ -271,25 +272,29 @@ export default {
     },
 
     // Delete a single file by its name
-    deleteUpload(file) {
+    deleteUpload(file,event) {
       if(confirm('Bitte löschen bestätigen!')) {
         let uri = `/api/project/image/delete/${file}`;
+        let el = this.progress(event.target);
         this.axios.delete(uri).then(response => {
           this.project.images.splice(this.project.images.indexOf(file), 1);
+          this.progress(el);
         });
       }
     },
 
-    toggleAsset(asset) {
+    toggleAsset(asset,event) {
       if (asset.id === null) {
           const index = this.project.images.findIndex(x => x.name === asset.name);
           this.project.images[index].publish = asset.publish == 1 ? 0 : 1;
       }
       else {
         let uri = `/api/project/image/status/${asset.id}`;
+        let el = this.progress(event.target);
         this.axios.get(uri).then(response => {
           const index = this.project.images.findIndex(x => x.id === asset.id);
           this.project.images[index].publish = response.data;
+          this.progress(el);
         });
       }
     },

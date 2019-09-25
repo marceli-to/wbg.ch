@@ -8,31 +8,9 @@
     @extend %btn-ib;
     @extend %btn-icon;
     @extend %btn-danger;
+    @extend %btn-loading;
     background-image: url($url-icons + 'trash-light.svg');
     margin-bottom: 15px;
     margin-top: 5px;
     position: relative;
-
-    // &:after {
-    //     background-color: darken($color--danger, 20);
-    //     border-radius: inherit;
-    //     content: '';
-    //     display: block;
-    //     height: 4px;
-    //     left: 0;
-    //     position: absolute;
-    //     top: 0;
-    //     width: 100%;
-    //     z-index: 5;
-    //     animation: loading 2s infinite;
-    // }
 }
-
-// @keyframes loading {
-//     from {
-//         width: 0; 
-//     }
-//     to {
-//         width: 100%;
-//     }
-// }
