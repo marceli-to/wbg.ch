@@ -95,17 +95,19 @@
             </div>
           </div>
           <div v-show="tabs.media.active">
-            <multi-image-upload
-              :labelNew="'Bilder hochladen'"
-              :labelExisting="'Vorhandene Bilder'"
-              :labelRestrictions="'jpg, png | max. 8 MB'"
-              :maxFiles="99"
-              :maxFilesize="8"
-              :assets="project.images"
-              :assetType="'image'"
-              :acceptedFiles="'.png,.jpg'"
-              :uploadUrl="'/api/media/upload'"
-            ></multi-image-upload>
+            <div style="position:relative">
+              <multi-image-upload
+                :labelNew="'Bilder hochladen'"
+                :labelExisting="'Vorhandene Bilder'"
+                :labelRestrictions="'jpg, png | max. 8 MB'"
+                :maxFiles="99"
+                :maxFilesize="8"
+                :assets="project.images"
+                :assetType="'image'"
+                :acceptedFiles="'.png,.jpg'"
+                :uploadUrl="'/api/media/upload'"
+              ></multi-image-upload>
+            </div>
           </div>
           <form-buttons :route="'projects'"></form-buttons>
         </form>
@@ -277,7 +279,8 @@ export default {
         let uri = `/api/project/image/delete/${file}`;
         let el = this.progress(event.target);
         this.axios.delete(uri).then(response => {
-          this.project.images.splice(this.project.images.indexOf(file), 1);
+          const index = this.project.images.findIndex(x => x.name === file);
+          this.project.images.splice(index, 1);
           this.progress(el);
         });
       }

@@ -84,4 +84,23 @@ class ProjectImageController extends Controller
         $image->save();
         return response()->json($image->publish);
     }
+
+    /**
+     * Update the order of the resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function order(Request $request)
+    {
+        $images = $request->get('images');
+        foreach($images as $i)
+        {
+            $image = $this->projectImage->find($i['id']);
+            $image->order = $i['order'];
+            $image->save(); 
+        }
+        return response()->json('successfully updated');
+    }
 }

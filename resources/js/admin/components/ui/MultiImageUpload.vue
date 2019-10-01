@@ -14,11 +14,11 @@
       <label>{{labelExisting}}</label>
       <div class="dropzone-existing-assets has-images">
         <div>
-            <figure
-              :class="[asset.publish == 0 ? 'is-disabled' : '', 'dz-existing-asset is-image']"
-              v-for="asset in assets"
-              :key="asset.id"
-            >
+          <figure
+            :class="[asset.publish == 0 ? 'is-disabled' : '', 'dz-existing-asset is-image']"
+            v-for="asset in assets"
+            :key="asset.id"
+          >
             <a :href="getAssetUri(asset.name)" target="_blank" class="dz-file-preview">
               <img :src="getAssetSource(asset.name)" height="300" width="300">
             </a>
@@ -137,6 +137,10 @@ export default {
     hideAssetEdit(e) {
       let editForm= e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
       editForm.classList.remove(this.css_classes.visible);
+    },
+
+    updateOrder() {
+      return true;
     },
 
     getAssetUri(asset) {

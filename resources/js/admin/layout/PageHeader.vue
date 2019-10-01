@@ -12,6 +12,9 @@
             </div>
             <ul>
                 <li>
+                    <router-link :to="{ name: 'news' }">News</router-link>
+                </li>
+                <li>
                     <router-link :to="{ name: 'projects' }">Projekte</router-link>
                 </li>
                 <li>

@@ -26,6 +26,11 @@ import ProjectEdit from '@/components/project/Edit.vue';
 // Project Grids
 import ProjectGridIndex from '@/components/project/grid/Index.vue';
 
+// News
+import NewsIndex from '@/components/news/Index.vue';
+import NewsCreate from '@/components/news/Create.vue';
+import NewsEdit from '@/components/news/Edit.vue';
+
 // Page
 import PageComponent from '@/layout/Page.vue';
 
@@ -164,6 +169,26 @@ const routes = [
         name: 'project-grids',
         path: '/admin/project/grid/:id',
         component: ProjectGridIndex,
+        meta: { requiresAuth: true },
+    },
+
+    // News
+    {
+        name: 'news',
+        path: '/admin/news',
+        component: NewsIndex,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'news-create',
+        path: '/admin/news/create',
+        component: NewsCreate,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'news-edit',
+        path: '/admin/news/edit/:id',
+        component: NewsEdit,
         meta: { requiresAuth: true },
     },
 ];

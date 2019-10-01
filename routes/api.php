@@ -90,7 +90,9 @@ Route::middleware('auth:api')->group(function() {
     Route::get('project/image/get/{projectId}', 'Backend\Project\ProjectImageController@get');
     Route::delete('project/image/delete/{file}', 'Backend\Project\ProjectImageController@unlink');
     Route::get('project/image/status/{id}', 'Backend\Project\ProjectImageController@status');
-    
+    Route::post('project/image/order', 'Backend\Project\ProjectImageController@order');
+
+
     Route::get('project/grids/{id}', 'Backend\Project\GridController@get');
     Route::post('project/grids/order', 'Backend\Project\GridController@order');
     Route::get('project/grid/store/{projectId}/{layoutId}', 'Backend\Project\GridController@store');
@@ -99,6 +101,17 @@ Route::middleware('auth:api')->group(function() {
     Route::get('project/grid/images/{gridId}', 'Backend\Project\GridElementController@get');
     Route::post('project/grid/image/store', 'Backend\Project\GridElementController@store');
     Route::delete('project/grid/image/delete/{id}', 'Backend\Project\GridElementController@destroy');
+
+    /**
+     * News routes
+     */
+    Route::get('news/get', 'Backend\News\NewsController@get');
+    Route::post('news/create', 'Backend\News\NewsController@store');
+    Route::get('news/edit/{id}', 'Backend\News\NewsController@edit');
+    Route::post('news/update/{id}', 'Backend\News\NewsController@update');
+    Route::get('news/clone/{id}', 'Backend\News\NewsController@clone');
+    Route::get('news/status/{id}', 'Backend\News\NewsController@status');
+    Route::delete('news/destroy/{id}', 'Backend\News\NewsController@destroy');
 
     /**
      * Media routes
