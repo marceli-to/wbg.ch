@@ -46,7 +46,6 @@
 
 .preview {
     @extend %is-preview;
-    //@include responsive-prop('height', $box-heights-lg);
     position: absolute;
     top: 0;
     left: 0;

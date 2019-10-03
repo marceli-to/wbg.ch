@@ -4,11 +4,9 @@
  * -----------------------------------------------------------------------------
  */
 
-// Alignments
-.align-center { text-align: center; }
-
-.align-justify { text-align: justify; }
-
-.align-left { text-align: left; }
-
-.align-right { text-align: right; }
+.hide-sm {
+	display: none;
+	@include bp-md {
+		display: block;
+	}
+}

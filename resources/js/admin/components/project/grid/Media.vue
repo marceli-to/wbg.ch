@@ -1,12 +1,11 @@
 <template>
   <div>
-    <figure>
+    <figure :style="{ backgroundImage: 'url(' + getPreviewImage(element.image) + ')' }">
       <a
         href="javascript:;"
         class="btn-trash"
         @click.prevent="deleteImage(element.id, $event)"
       >Löschen</a>
-      <img :src="getPreviewImage(element.image)" height="50" width="50">
       <figcaption v-if="element.caption">
         <strong>{{element.caption}}</strong>
       </figcaption>

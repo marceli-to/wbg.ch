@@ -6,12 +6,12 @@
  * Global settings and variables
  *
  */
-
  
 /* Box shadows
  * -------------------- */
 
-$box-shadow: 0 4px 6px rgba(100, 100, 100, 0.3);
+$box-shadow: 0 2px 6px rgba(100, 100, 100, 0.3);
+$box-shadow-sm: 0 0 2px 0 rgba(100, 100, 100, 0.3);
 
 /* Default easing
  * -------------------- */
@@ -20,44 +20,20 @@ $easing: cubic-bezier(0.980, 0.310, 0.940, 0.840);
 
 /* Urls
  * -------------------- */
-
-$url-images:  '../img/';
-$url-icons:   '../img/icons/';
+ 
+$url-images: '../img/';
+$url-icons:  '../img/icons/';
+$url-svg:    '../img/svg/';
 
 /* Breakpoints
  * -------------------- */
 
-$bp-xs:  400px;
-$bp-sm:  600px;
-$bp-md:  900px;
-$bp-lg: 1200px;
+$bp-sm:  720px;
+$bp-md: 1024px;
+$bp-lg: 1440px;
 
 $breakpoints: (
   sm: $bp-sm,
   md: $bp-md,
-  lg: $bp-lg,
-);
-
-/* Global element dimensions
- * ---------------------- */
-
-$page-max-width:     100%;
-$page-max-width-sm:  100%;
-$page-max-width-md:  100%;
-$page-max-width-lg:  1400px;
-
-$page-max-width: (
-  null:  $page-max-width,
-  sm:    $page-max-width-sm,
-  md:    $page-max-width-md,
-  lg:    $page-max-width-lg
-);
-
-$header-height: 80px;
-
-$header-heights: (
-  null:  80px,
-  sm:    160px,
-  md:    160px,
-  lg:    160px
+  lg: $bp-lg  
 );

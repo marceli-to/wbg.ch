@@ -13,8 +13,32 @@
           </div>
         </div>
       </div>
-      <div v-if="layout == '2fr'">
-        <div class="grid-2fr">
+      <div v-if="layout == '1fr-wide'">
+        <div class="grid-1fr-wide">
+          <div class="span">
+            <div v-if="elements[0] && elements[0].position == '0'">
+              <grid-media :element="elements[0]"></grid-media>
+            </div>
+            <div v-else>
+              <button-add :gridId="gridId" :gridPosition="0"></button-add>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="layout == '1fr-portrait'">
+        <div class="grid-1fr-portrait">
+          <div class="span">
+            <div v-if="elements[0] && elements[0].position == '0'">
+              <grid-media :element="elements[0]"></grid-media>
+            </div>
+            <div v-else>
+              <button-add :gridId="gridId" :gridPosition="0"></button-add>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="layout == '2x1fr-wide'">
+        <div class="grid-2x1fr-wide">
           <div class="span">
             <div v-if="elements[0] && elements[0].position == '0'">
               <grid-media :element="elements[0]"></grid-media>
@@ -33,8 +57,8 @@
           </div>
         </div>
       </div>
-      <div v-if="layout == '2fr-logo'">
-        <div class="grid-2fr is-logo">
+      <div v-if="layout == '2x1fr'">
+        <div class="grid-2x1fr">
           <div class="span">
             <div v-if="elements[0] && elements[0].position == '0'">
               <grid-media :element="elements[0]"></grid-media>
@@ -53,6 +77,29 @@
           </div>
         </div>
       </div>
+      <div v-if="layout == '2x1fr-logo'">
+        <div class="grid-2x1fr-wide is-logo">
+          <div class="span">
+            <div v-if="elements[0] && elements[0].position == '0'">
+              <grid-media :element="elements[0]"></grid-media>
+            </div>
+            <div v-else>
+              <button-add :gridId="gridId" :gridPosition="0"></button-add>
+            </div>
+          </div>
+          <div class="span">
+            <div v-if="elements[1] && elements[1].position == '1'">
+              <grid-media :element="elements[1]"></grid-media>
+            </div>
+            <div v-else>
+              <button-add :gridId="gridId" :gridPosition="1"></button-add>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
       <div v-if="layout == '1fr-1fr_stacked'">
         <div class="grid-1fr-1fr_stacked">
           <div class="span">

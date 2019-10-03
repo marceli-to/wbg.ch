@@ -13,6 +13,14 @@
 
 .cap { text-transform: capitalize; }
 
+.align-center { text-align: center; }
+
+.align-justify { text-align: justify; }
+
+.align-left { text-align: left; }
+
+.align-right { text-align: right; }
+
 .nobr { white-space: nowrap; }
 
 /**
@@ -21,12 +29,12 @@
  */
 
 strong, b {
-	font-weight: 700;
+	@include font-bold();
 }
 
 p {
-	margin-bottom: 24px;
-	&:last-child,
+	margin-bottom: $space-lg;
+	max-width: 600px;
 	&:last-of-type {
 		margin-bottom: 0;
 	}

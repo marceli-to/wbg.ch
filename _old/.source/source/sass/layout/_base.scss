@@ -20,12 +20,6 @@ body {
 	@include font-regular();
 	display: flex;
 	flex-direction: column;
-	padding: 0 $space-md 0 $space-md;
-	
-	@include bp-sm() {
-		padding-left: 12%;
-		padding-right: 12%;
-	}
 }
 
 main {

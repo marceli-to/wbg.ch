@@ -33,27 +33,37 @@
         &.is-visible {
             display: block;
             display: grid;
-            grid-template-columns: repeat(5, 102px);
-            grid-gap: 10px;
+            margin-bottom: 15px;
+            grid-template-columns: repeat(8, 102px);
+            grid-gap: 15px;
+
+            @include bp-lg() {
+                grid-template-columns: repeat(8, 118px);
+            }
         }
 
         li {
             display: block;
+            margin-top: 15px;
         }
     
         a {
             display: block;
-            padding: 15px 15px 15px 10px;
             width: 102px;
+            @include bp-lg() {
+                width: 118px;
+            }
 
             img {
                 display: block;
                 height: auto;
+                opacity: 1;
+                transition: opacity .12s ease-out;
                 width: 100%;
             }
     
-            &:hover {
-                background-color: $color--light-grey;
+            &:hover img {
+                opacity: 0.7;
             }
         }
     }
@@ -74,6 +84,9 @@
         }
 
         figure {
+            @include background-default();
+            background-size: cover;
+            background-position: center center;
             padding: 0;
             position: relative;
 
@@ -99,19 +112,84 @@
         }
     }
     
-    .grid-1fr {
-        display: grid;
-        grid-template-columns: 1fr;
+    [class^='grid-'] {
+        background-size: 80px auto;
+        background-position: top 8px right 8px;
+        background-repeat: no-repeat;
     }
     
-    .grid-2fr {
+    .grid-1fr {
+        background-image: url($url-icons + 'grid-layout-1fr.svg');
+        display: grid;
+        grid-template-columns: 1fr;
+        min-height: 400px;
+
+        figure,
+        .span {
+            min-height: 400px;
+        }
+    }
+    
+    .grid-1fr-portrait {
+        background-image: url($url-icons + 'grid-layout-1fr-portrait.svg');
+        display: grid;
+        grid-template-columns: 1fr;
+        min-height: 600px;
+        
+        figure,
+        .span {
+            min-height: 600px;
+        }
+    }
+
+    .grid-1fr-wide {
+        background-image: url($url-icons + 'grid-layout-1fr-wide.svg');
+        display: grid;
+        grid-template-columns: 1fr;
+        min-height: 200px;
+        
+        figure,
+        .span {
+            min-height: 200px;
+        }
+    }
+
+    .grid-2x1fr-wide {
+        background-image: url($url-icons + 'grid-layout-2x1fr-wide.svg');
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 20px;
+        min-height: 200px;
+
+        figure,
+        .span {
+            min-height: 200px;
+        }
 
         &.is-logo .span {
             border: 2px dashed #c80000 !important;
         }
+    }
+
+    .grid-2x1fr {
+        background-image: url($url-icons + 'grid-layout-2x1fr.svg');
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 20px;
+        min-height: 400px;
+
+        figure,
+        .span {
+            min-height: 400px;
+        }
+    }
+
+    .grid-1fr-1fr_stacked {
+        background-image: url($url-icons + 'grid-layout-1fr-1fr_stacked.svg');
+    }
+
+    .grid-1fr_stacked-1fr {
+        background-image: url($url-icons + 'grid-layout-1fr_stacked-1fr.svg');
     }
 
     .grid-1fr_stacked-1fr,
@@ -119,12 +197,21 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-gap: 20px;
+        min-height: 400px;
+
+        figure,
+        .span {
+            min-height: 440px;
+        }
     }
 
-    .grid-1fr_stacked-1fr .span,
-    .grid-1fr-1fr_stacked .span {
-        min-height: 200px;
-    }
+    // .grid-1fr_stacked-1fr .span,
+    // .grid-1fr-1fr_stacked .span {
+    //     min-height: 200px;
+    //     figure {
+    //         min-height: 200px;
+    //     }
+    // }
 
     .grid-stacked {
         display: grid;
@@ -134,8 +221,11 @@
     }
     
     .grid-stacked .span {
-        min-height: 100px;
+        min-height: 200px;
         width: 100%;
+        figure {
+            min-height: 200px;
+        }        
     }
 }
 

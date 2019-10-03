@@ -3,23 +3,20 @@
  * File: components/spaces
  * -----------------------------------------------------------------------------
  *
- * Helper classes for vertical spacing
+ * Helpers for vertical spacing
  *
  */
 
 // After
 %sa-none, .sa-none { margin-bottom: 0 !important; }
-%sa-xs, .sa-xs {   @include responsive-prop('margin-bottom', $space-xs); }
-// %sa-sm, .sa-sm {   @include responsive-prop('margin-bottom', $space-sm); }
-// %sa-md, .sa-md {   @include responsive-prop('margin-bottom', $space-md); }
-// %sa-lg, .sa-lg {   @include responsive-prop('margin-bottom', $space-lg); }
-// %sa-xl, .sa-xl {   @include responsive-prop('margin-bottom', $space-xl); }
-
+%sa-xs, .sa-xs { margin-bottom: $space-xs; }
+%sa-sm, .sa-sm { margin-bottom: $space-sm; }
+%sa-md, .sa-md { margin-bottom: $space-md; }
+%sa-lg, .sa-lg { margin-bottom: $space-lg; }
 
 // Before
 %sb-none, .sb-none { margin-top: 0 !important; }
-%sb-xs, .sb-xs {   @include responsive-prop('margin-top', $space-xs); }
-// %sb-sm, .sb-sm {   @include responsive-prop('margin-top', $space-sm); }
-// %sb-md, .sb-md {   @include responsive-prop('margin-top', $space-md); }
-// %sb-lg, .sb-lg {   @include responsive-prop('margin-top', $space-lg); }
-// %sb-xl, .sb-xl {   @include responsive-prop('margin-top', $space-xl); }
+%sb-xs, .sb-xs { margin-top: $space-sm; }
+%sb-sm, .sb-sm { margin-top: $space-sm; }
+%sb-md, .sb-md { margin-top: $space-md; }
+%sb-lg, .sb-lg { margin-top: $space-lg; }

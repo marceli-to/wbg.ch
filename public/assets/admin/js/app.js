@@ -4899,7 +4899,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     element: Object
@@ -4928,6 +4927,53 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_project_grid_Media_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/components/project/grid/Media.vue */ "./resources/js/admin/components/project/grid/Media.vue");
 /* harmony import */ var _components_project_grid_ButtonAdd_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/project/grid/ButtonAdd.vue */ "./resources/js/admin/components/project/grid/ButtonAdd.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -28991,36 +29037,36 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("figure", [
-      _c(
-        "a",
-        {
-          staticClass: "btn-trash",
-          attrs: { href: "javascript:;" },
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              return _vm.deleteImage(_vm.element.id, $event)
-            }
-          }
-        },
-        [_vm._v("Löschen")]
-      ),
-      _vm._v(" "),
-      _c("img", {
-        attrs: {
-          src: _vm.getPreviewImage(_vm.element.image),
-          height: "50",
-          width: "50"
+    _c(
+      "figure",
+      {
+        style: {
+          backgroundImage: "url(" + _vm.getPreviewImage(_vm.element.image) + ")"
         }
-      }),
-      _vm._v(" "),
-      _vm.element.caption
-        ? _c("figcaption", [
-            _c("strong", [_vm._v(_vm._s(_vm.element.caption))])
-          ])
-        : _vm._e()
-    ])
+      },
+      [
+        _c(
+          "a",
+          {
+            staticClass: "btn-trash",
+            attrs: { href: "javascript:;" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.deleteImage(_vm.element.id, $event)
+              }
+            }
+          },
+          [_vm._v("Löschen")]
+        ),
+        _vm._v(" "),
+        _vm.element.caption
+          ? _c("figcaption", [
+              _c("strong", [_vm._v(_vm._s(_vm.element.caption))])
+            ])
+          : _vm._e()
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -29075,9 +29121,65 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _vm.layout == "2fr"
+      _vm.layout == "1fr-wide"
         ? _c("div", [
-            _c("div", { staticClass: "grid-2fr" }, [
+            _c("div", { staticClass: "grid-1fr-wide" }, [
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[0] && _vm.elements[0].position == "0"
+                  ? _c(
+                      "div",
+                      [
+                        _c("grid-media", {
+                          attrs: { element: _vm.elements[0] }
+                        })
+                      ],
+                      1
+                    )
+                  : _c(
+                      "div",
+                      [
+                        _c("button-add", {
+                          attrs: { gridId: _vm.gridId, gridPosition: 0 }
+                        })
+                      ],
+                      1
+                    )
+              ])
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.layout == "1fr-portrait"
+        ? _c("div", [
+            _c("div", { staticClass: "grid-1fr-portrait" }, [
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[0] && _vm.elements[0].position == "0"
+                  ? _c(
+                      "div",
+                      [
+                        _c("grid-media", {
+                          attrs: { element: _vm.elements[0] }
+                        })
+                      ],
+                      1
+                    )
+                  : _c(
+                      "div",
+                      [
+                        _c("button-add", {
+                          attrs: { gridId: _vm.gridId, gridPosition: 0 }
+                        })
+                      ],
+                      1
+                    )
+              ])
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.layout == "2x1fr-wide"
+        ? _c("div", [
+            _c("div", { staticClass: "grid-2x1fr-wide" }, [
               _c("div", { staticClass: "span" }, [
                 _vm.elements[0] && _vm.elements[0].position == "0"
                   ? _c(
@@ -29125,9 +29227,59 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _vm.layout == "2fr-logo"
+      _vm.layout == "2x1fr"
         ? _c("div", [
-            _c("div", { staticClass: "grid-2fr is-logo" }, [
+            _c("div", { staticClass: "grid-2x1fr" }, [
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[0] && _vm.elements[0].position == "0"
+                  ? _c(
+                      "div",
+                      [
+                        _c("grid-media", {
+                          attrs: { element: _vm.elements[0] }
+                        })
+                      ],
+                      1
+                    )
+                  : _c(
+                      "div",
+                      [
+                        _c("button-add", {
+                          attrs: { gridId: _vm.gridId, gridPosition: 0 }
+                        })
+                      ],
+                      1
+                    )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[1] && _vm.elements[1].position == "1"
+                  ? _c(
+                      "div",
+                      [
+                        _c("grid-media", {
+                          attrs: { element: _vm.elements[1] }
+                        })
+                      ],
+                      1
+                    )
+                  : _c(
+                      "div",
+                      [
+                        _c("button-add", {
+                          attrs: { gridId: _vm.gridId, gridPosition: 1 }
+                        })
+                      ],
+                      1
+                    )
+              ])
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.layout == "2x1fr-logo"
+        ? _c("div", [
+            _c("div", { staticClass: "grid-2x1fr-wide is-logo" }, [
               _c("div", { staticClass: "span" }, [
                 _vm.elements[0] && _vm.elements[0].position == "0"
                   ? _c(

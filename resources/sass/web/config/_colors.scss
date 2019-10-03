@@ -4,7 +4,14 @@
  * -----------------------------------------------------------------------------
  */
 
-$color--black: #000000;
-$color--green: #275d5b;
-$color--white: #ffffff;
-$color--grey:  #808080;
+$color--black:     #000000;
+$color--white: 		 #ffffff;
+
+$color--red:         #c80000;
+$color--grey:        #8c8c8c;
+$color--blue:        #0b5678;
+$color--dark-grey:   #505050;
+
+$color--success:      #27bd94 !default;
+$color--info:         #1C6FB7 !default;
+$color--danger:       #d0021b !default;

@@ -11,13 +11,17 @@
 </head>
 <body>
 <header class="site-header">
-    <div>
-        <a href="javascript:;" class="icon-menu js-btn-menu" title=""></a>
-    </div>
+
 </header>
+
 <main class="site-content" role="main">
-    <div>@yield('content')</div>
+@yield('content')
 </main>
+
+<footer class="site-footer">
+
+</footer>
+
 <script src="{{ asset('assets/js/app.js') }}" type="text/javascript"></script>
 </body>
 <!-- made with ❤ by marceli.to -->

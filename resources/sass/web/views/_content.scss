@@ -1,0 +1,55 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: views/content
+ * -----------------------------------------------------------------------------
+ */
+
+.team-member {
+    @include font-light();
+    @include font-size($fs-sm);
+    padding-top: $space-sm;
+    position: relative;
+    a {
+        color: $color--black;
+        text-decoration: none;
+    }
+}
+
+.profile {
+    @include font-size($fs-md);
+    @include font-light();
+}
+
+.contact {
+    @include font-light();
+    @include font-size($fs-sm);
+
+    strong {
+        display: block;
+        @include bp-sm() {
+            display: inline;
+        }
+    }
+    
+    p {
+        margin-bottom: $space-lg !important;
+    }
+
+    a {
+        color: $color--black;
+        text-decoration: none;
+    }
+}
+
+.map {
+    height: 240px;
+ 
+    @include bp-sm() {
+        height: 360px;
+    }
+    @include bp-lg() {
+        height: 480px;;
+    }
+}
+
+

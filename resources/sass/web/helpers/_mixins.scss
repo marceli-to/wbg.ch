@@ -9,13 +9,13 @@
  * -----------------------------------------------------------------------------
  */
 
-@mixin scrollbar($width: 6px, $color: #000000, $bgColor: #eeeeee) {
+@mixin scrollbar($width: 6px, $color: #000000) {
 	::-webkit-scrollbar {
 		height: $width;
 	    width: $width;
 	}
 	::-webkit-scrollbar-track {
-		background-color: $bgColor;
+		background-color: #eee;
 	    -webkit-border-radius: 0;
 	    border-radius: 0;
 	}
@@ -34,12 +34,12 @@
  * Usage:
  *
  *      element {
- *          @include vertical-center($position);
+ *          @include vertical-align($position);
  *      }
  *
  */
  
-@mixin vertical-center($position: relative) {
+@mixin vertical-align($position: relative) {
 	position: $position;
 	top: 50%;
 	-webkit-transform: translateY(-50%);
@@ -265,7 +265,7 @@
  *      }
  */
 
- @mixin bp-xs {
+@mixin bp-below-sm {
     @media only screen and (max-width: $bp-sm) {
         @content;
     }
@@ -291,6 +291,36 @@
 
 
 /**
+ * Set the width/height of an element
+ * -----------------------------------------------------------------------------
+ * 
+ * Usage:
+ *
+ *      p {
+ *          @include width-height($sizes);
+ *      }
+ *
+ */
+
+ @mixin set-width-height($map, $breakpoints: $breakpoints) {
+	@each $breakpoint, $size in $map {
+		@if $breakpoint == null {
+			width: nth($size, 1);
+			height: nth($size, 2);
+		}
+		@else {
+			@if map-has-key($breakpoints, $breakpoint) {
+				$breakpoint: map-get($breakpoints, $breakpoint);
+			}
+			@media screen and (min-width: $breakpoint) {
+				width: nth($size, 1);
+				height: nth($size, 2);
+			}
+		}
+	}
+}
+
+/**
  * Set a single (responsive) property
  * -----------------------------------------------------------------------------
  * 
@@ -302,7 +332,7 @@
  *
  */
 
- @mixin responsive-prop($prop, $map, $addProp: '', $breakpoints: $breakpoints) {
+@mixin responsive-prop($prop, $map, $addProp: '', $breakpoints: $breakpoints) {
 	@each $breakpoint, $size in $map {
 		@if $breakpoint == null {
 			#{$prop}: nth($size, 1) #{$addProp};

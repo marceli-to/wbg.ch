@@ -4,22 +4,27 @@
  * -----------------------------------------------------------------------------
  */
 
-
+// Base layout
 html {
-    overflow-y: scroll;
+	overflow-y: scroll;
 }
 
 html,
 body {
-    min-height: 100%;
+	height: 100%;
 }
 
 body {
-    @include font-regular();
-    @include font-size($fs-sm);
-    @include font-smoothing();
-    text-rendering: optimizeLegibility; // geometricPrecision
+	color: $color--black;
+	@include font-smoothing();
+	@include font-regular();
+	display: flex;
+	flex-direction: column;
+}
+
+main {
+	flex: 1 0 auto;
 }
 
 // Scrollbars
-@include scrollbar(8px, #dddddd, #ffffff);
+@include scrollbar(8px, #bbbbbb);

@@ -5,26 +5,11 @@
  */
 
 header.site-header {
-    background-color: $color--white;
-    @include responsive-prop('height', $header-heights);
-    @include responsive-prop('min-height', $header-heights);
 
-    // fixed header:
-    // left: 0;
-    // position: fixed;
-    // top: 0;
-    
-    // non-fixed header:
-    position: relative;
-
-    width: 100%;
-    z-index: 5;
-
-    > div {
-        @extend %page-block;
-        @include bp-md() {
-            padding-top: 20px;
-        }
+    .header-item {
+        @include font-size($fs-sm);
+        line-height: 1 !important;
+        padding: $space-sm 0;
+        position: relative;
     }
 }
-

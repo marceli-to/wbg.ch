@@ -1,104 +1,97 @@
 /**
  * -----------------------------------------------------------------------------
- * File: layout/grid
+ * File: component/grid
  * -----------------------------------------------------------------------------
  *
  */
 
-$grid-gap: 24px;
+// Header grid
+.grid-header {
+	@extend %clearfix;
 
-.span {
-    border-top: 1px solid $color--black;
-    padding-top: 5px;
+	.span {
+		
+		&:last-child {
+			display: none;
+		}
+
+		@include bp-sm() {
+			display: block;
+			float: left;
+				
+			&:first-child {
+				margin-right: 8px;
+				width: calc(25% - 8px);
+			}
+	
+			&:last-child {
+				display: block;
+				margin-left: 8px;
+				width: calc(75% - 8px);
+			}
+		}
+	}
 }
 
-.no-cssgrid {
-    .grid {
-        @extend %clearfix;
-    }
+// Box grid
+.grid-box {
+	@extend %clearfix;
+	margin-bottom: $space-lg;
+	
+	.span {
+
+		&:first-child {
+			margin-bottom: $space-lg;
+		}
+
+		@include bp-sm() {
+			float: left;
+			margin-bottom: 0;
+			width: calc(50% - 8px);
+
+			&:first-child {
+				margin-bottom: 0;
+				margin-right: 8px;
+			}
+
+			&:last-child {
+				margin-left: 8px;
+			}
+		}
+	}
 }
 
-.cssgrid {
-    %grid-1-1-1 {
-        display: grid;
-        grid-gap: $grid-gap;
-        grid-template-columns: 1fr;
+.grid-team {
+	@extend %clearfix;
+	display: block;
+	width: 100%;
 
-        @include bp-sm() {
-            grid-template-columns: repeat(2, 1fr);
-        }
+	@include bp-sm() {
+		margin-bottom: $space-lg;
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
 
-        @include bp-md() {
-            grid-template-columns: repeat(3, 1fr);
-        }
-    }
+	.span {
 
-    .grid-team {
-        @extend %grid-1-1-1;
-    }
-}
+		margin-bottom: $space-lg;
 
-.grid-team-flexbox {
-    display: flex;
-    flex-flow: column wrap;
-    align-content: space-between;
-    /* Your container needs a fixed height, and it 
-     * needs to be taller than your tallest column. */
-    height: 1200px; 
+		@include bp-sm() {
+			float: left;
+			margin-bottom: 0 !important;
+			width: calc(33.3333% - 11px);
 
-    @include bp-sm() {
-        .span {
-            width: 50%;
-            width: calc(50% - 12px);
-            margin-bottom: $grid-gap; /* Optional */
-        }
-          
-        /* Re-order items into 2 rows */
-        .span:nth-child(2n+1) { order: 1; margin-right: 24px; }
-        .span:nth-child(2n)   { order: 2; }
-    }
+			&:nth-child(1) {
+				margin-right: 16px;
+			}
 
-    @include bp-md() {
-        .span {
-            width: calc(33.33333% - 16px);
-            margin-bottom: $grid-gap; /* Optional */
-        }
-          
-        /* Re-order items into 3 rows */
-        .span:nth-child(3n+1) { order: 1; margin-right: 24px; }
-        .span:nth-child(3n+2) { order: 2; margin-right: 24px; }
-        .span:nth-child(3n)   { order: 3; }
-    }
-}
+			&:nth-child(2) {
+				margin-right: 16px;
+			}
 
-/* Force new columns */
-@include bp-sm() {
-    .grid-team-flexbox::before,
-    .grid-team-flexbox::after {
-        content: "";
-        flex-basis: 100%;
-        width: 0;
-        order: 1;
-    }
-}
-
-@include bp-md() {
-    .grid-team-flexbox::before,
-    .grid-team-flexbox::after {
-        content: "";
-        flex-basis: 100%;
-        width: 0;
-        order: 2;
-    }
-}
-
-.grid-team-masonry {
-    .span {
-        @include bp-sm() {
-            width: calc(50% - 12px);
-        }
-        @include bp-md() {
-            width: calc(33.3333% - 16px);
-        }
-    }
+			&:nth-child(3) {
+			}
+		}
+	}
 }
