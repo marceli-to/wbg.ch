@@ -1,0 +1,29 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: component/buttons/menu
+ * -----------------------------------------------------------------------------
+ *
+ *
+ */
+
+.btn-menu {
+  @include background-default();
+  background-image: url($url-icons + 'menu-burger.svg');
+  background-size: 24px 13px;
+  background-position: center center;
+  height: 18px;
+  right: $space-md;
+  position: absolute;
+  top: 30px;
+  width: 24px;
+  z-index: 101;
+
+  &.is-active {
+    background-image: url($url-icons + 'menu-cross.svg');
+    background-size: 18px 18px;
+  }
+
+  @include bp-sm() {
+    display: none;
+  }
+}

@@ -5,13 +5,19 @@
  */
 
 footer.site-footer {
+    bottom: 0;
     color: $color--red;
     @include font-size($fs-sm);
-    flex-shrink: 0;
-    padding-bottom: $space-lg;
+    padding: 0 $space-md $space-lg $space-md;
+    position: fixed;
     text-transform: uppercase;
-    z-index: 99999;
+    z-index: 100;
 
+	@include bp-lg() {
+		padding-left: 0;
+		padding-right: 0;
+    }
+    
     a {
         color: $color--red;
         text-decoration: none;

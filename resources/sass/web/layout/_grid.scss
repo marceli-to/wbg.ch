@@ -5,29 +5,23 @@
  *
  */
 
-// Header grid
-.grid-header {
+// Page layout grid 
+.grid-layout {
 	@extend %clearfix;
 
-	.span {
-		
-		&:last-child {
-			display: none;
-		}
-
-		@include bp-sm() {
-			display: block;
+	@include bp-sm() {
+		.span {
 			float: left;
-				
-			&:first-child {
-				margin-right: 8px;
-				width: calc(25% - 8px);
+			padding-top: $space-md;
+			
+			&:nth-child(1) {
+				margin-right: $space-xs;
+				width: calc(25% - #{$space-xs});
 			}
 	
-			&:last-child {
-				display: block;
-				margin-left: 8px;
-				width: calc(75% - 8px);
+			&:nth-child(2){
+				margin-left: $space-xs;
+				width: calc(75% - #{$space-xs});
 			}
 		}
 	}
@@ -47,15 +41,15 @@
 		@include bp-sm() {
 			float: left;
 			margin-bottom: 0;
-			width: calc(50% - 8px);
+			width: calc(50% - #{$space-xs});
 
 			&:first-child {
 				margin-bottom: 0;
-				margin-right: 8px;
+				margin-right: $space-xs;
 			}
 
 			&:last-child {
-				margin-left: 8px;
+				margin-left: $space-xs;
 			}
 		}
 	}

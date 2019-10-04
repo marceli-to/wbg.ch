@@ -5,11 +5,47 @@
  */
 
 header.site-header {
+    @extend %clearfix;
+    background-color: $color--white;
+    left: 0;
+    padding: 0 $space-md;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 200;
 
-    .header-item {
+    > div {
+        @extend %inner-block;
+    }
+
+    .span {
         @include font-size($fs-sm);
         line-height: 1 !important;
-        padding: $space-sm 0;
+        padding: $space-xl 0;
         position: relative;
+
+        &.header-logo {
+            width: 100%;
+        }
+
+        &.header-navigation {
+            display: none;
+        }
+
+        @include bp-sm() {
+            float: left;
+            padding-bottom: 28px;
+
+            &.header-logo {
+                margin-right: $space-xs;
+                width: calc(25% - #{$space-xs});
+            }
+    
+            &.header-navigation {
+                display: block;
+                margin-left: $space-xs;
+                width: calc(75% - #{$space-xs});
+            }
+        }
     }
 }

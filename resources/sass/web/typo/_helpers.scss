@@ -23,6 +23,14 @@
 
 .nobr { white-space: nowrap; }
 
+.font-light {
+	@include font-light();
+}
+
+.font-bold {
+	@include font-bold();
+}
+
 /**
  * Typography - Generic elements
  * -----------------------------------------------------------------------------

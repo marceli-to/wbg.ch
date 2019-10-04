@@ -83,7 +83,7 @@ class MediaService
     /**
      * Image prefix
      */
-    protected $prefix = 'strut.ch';
+    protected $prefix = 'wbg.ch';
     
     public function __construct()
     {

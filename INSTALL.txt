@@ -3,6 +3,7 @@ Add admin user:
 1) php artisan tinker
 2) DB::table('users')->insert(['name'=>'marcel','email'=>'m@marceli.to','password'=>Hash::make('7aq31rr')])
 3) DB::table('users')->insert(['name'=>'bettina','email'=>'bp@wbg.ch','password'=>Hash::make('TVwN0F*gsNn]mrjZ8GQo')])
+4) DB::table('users')->insert(['name'=>'benedikt','email'=>'bf@wbg.ch','password'=>Hash::make('7aq30FswgsNn]mrjoL$')])
 
 
 DB
@@ -20,7 +21,7 @@ DEPLOYING
 npm run production
 
 2. COMPRESS FILES
-tar --exclude="INSTALL.txt" --exclude="*.DS_Store" --exclude="_old/" --exclude="storage/" --exclude="node_modules/" --exclude=".source/"  --exclude=".git*" --exclude=".env" --exclude=".editorconfig" --exclude="public/.htaccess" -cvzf app.tar.gz *
+tar --exclude="INSTALL.txt" --exclude="*.DS_Store" --exclude="_old/" --exclude="storage/app/public/media/" --exclude="node_modules/" --exclude=".source/"  --exclude=".git*" --exclude=".env" --exclude=".editorconfig" --exclude="public/.htaccess" -cvzf app.tar.gz *
 
 3. COPY FILE
 scp app.tar.gz www-data@silverfish02.nine.ch:/home/www-data/marceli.to/wbg.ch/

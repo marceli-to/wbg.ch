@@ -32,21 +32,25 @@
 @import 'components/animations';
 @import 'components/anchors';
 @import 'components/blocks';
-@import 'components/boxes';
+@import 'components/boxes/global';
+@import 'components/boxes/ratio';
+@import 'components/buttons/menu';
 @import 'components/headings';
 @import 'components/hr';
 @import 'components/logo';
 @import 'components/icons';
 @import 'components/images';
 
-
 // Layout
 @import 'layout/base';
 @import 'layout/grid';
 @import 'layout/sections';
-@import 'layout/navigation';
 @import 'layout/header';
 @import 'layout/footer';
+
+// Navigation
+@import 'navigation/header';
+@import 'navigation/sidebar';
 
 // Vendor
 @import 'vendor/fancybox/fancybox';

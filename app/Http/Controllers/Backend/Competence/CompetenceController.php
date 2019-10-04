@@ -48,6 +48,7 @@ class CompetenceController extends Controller
         $competences = $this->competence->with('category')
                                         ->orderBy('order', 'ASC')
                                         ->get();
+                                        
         return new CompetenceCollection($competences);
     }
 

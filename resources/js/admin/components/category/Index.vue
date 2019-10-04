@@ -17,7 +17,7 @@
               tag="div"
             >
               <div
-                :class="[category.publish == 0 ? 'is-disabled' : '', 'list-item', 'list-item--sortable']"
+                :class="[category.publish == 0 ? 'is-disabled' : '', 'list-item', 'is-sortable']"
                 v-for="category in categories"
                 :key="category.id"
               >

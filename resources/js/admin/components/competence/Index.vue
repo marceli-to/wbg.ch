@@ -17,7 +17,7 @@
               tag="div"
             >
               <div
-                :class="[competence.publish == 0 ? 'is-disabled' : '', 'list-item', 'list-item--sortable']"
+                :class="[competence.publish == 0 ? 'is-disabled' : '', 'list-item', 'is-sortable']"
                 v-for="competence in competences"
                 :key="competence.id"
               >

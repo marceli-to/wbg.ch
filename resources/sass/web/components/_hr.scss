@@ -12,7 +12,7 @@ hr {
     margin: 0;
     padding: 0;
     border: none;
-    border-bottom: 1px solid $color--dark-grey;
+    border-bottom: 1px solid $color--light-grey;
     position: absolute;
     top: -50%;
     right: -50%;
@@ -23,7 +23,7 @@ hr {
     z-index: -1;
 
     &.is-before {
-        border-top: 1px solid $color--dark-grey;
+        border-top: 1px solid $color--light-grey;
         border-bottom: none;
     }
 }

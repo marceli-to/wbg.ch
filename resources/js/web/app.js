@@ -10,14 +10,8 @@ require('./bootstrap');
  * Import Modules
  */
 
-// Swiper
-// require('./modules/swiper.js');
-
 // Menu
 require('./modules/menu.js');
 
 // Team
-require('./modules/team.js');
-
-// Masonry
-require('./modules/packery.js');
+// require('./modules/team.js');

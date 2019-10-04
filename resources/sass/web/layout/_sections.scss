@@ -3,3 +3,14 @@
  * File: layout/sections
  * -----------------------------------------------------------------------------
  */
+
+section.site-content {
+  padding-top: $space-xl;
+  
+  @include bp-sm() {
+    padding-top: $space-xl;
+    position: relative;
+    left: calc(25% + #{$space-xs});
+    width: calc(75% - #{$space-xs});
+  }
+}

@@ -10,3 +10,10 @@
 		display: block;
 	}
 }
+
+.hide-md {
+	display: block;
+	@include bp-sm {
+		display: none;
+	}
+}

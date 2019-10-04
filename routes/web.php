@@ -13,6 +13,8 @@
 
 Route::get('/', 'Frontend\HomeController@index')->name('home');
 
+Route::get('projekte', 'Frontend\ProjectsController@projects')->name('project.index');
+Route::get('projekt/{id}/{slug?}', 'Frontend\ProjectsController@project')->name('project.detail');
 
 /**
  * Image routes

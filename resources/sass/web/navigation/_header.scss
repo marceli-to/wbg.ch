@@ -1,10 +1,10 @@
 /**
  * -----------------------------------------------------------------------------
- * File: layout/navigation
+ * File: layout/navigation/header
  * -----------------------------------------------------------------------------
  */
 
-nav.site-nav {
+nav.header {
     
     ul {
         margin: 0;
@@ -25,7 +25,15 @@ nav.site-nav {
     a {
         color: $color--grey;
         display: block;
+        @include font-light();
+        @include font-size($fs-nav);
         text-decoration: none;
         text-transform: uppercase;
+        transition: color .12s ease-out;
+        
+        &:hover,
+        &.is-active {
+            color: $color--black;
+        }
     }
 }

@@ -6,7 +6,7 @@
 
 // Base layout
 html {
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 html,
@@ -15,16 +15,26 @@ body {
 }
 
 body {
+	@extend %inner-block;
 	color: $color--black;
 	@include font-smoothing();
 	@include font-regular();
+	@include font-size($fs-sm);
 	display: flex;
 	flex-direction: column;
+	min-height: 100vh;
+	position: relative;
 }
 
 main {
-	flex: 1 0 auto;
+	padding: $header-height-sm $space-md $space-md $space-md;
+	position: relative;
+	
+	@include bp-lg() {
+		padding-left: 0;
+		padding-right: 0;
+	}
 }
 
 // Scrollbars
-@include scrollbar(8px, #bbbbbb);
+@include scrollbar(8px, #ccc);

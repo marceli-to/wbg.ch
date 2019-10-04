@@ -53,9 +53,9 @@ class TeamController extends Controller
             'name'      =>  $request->input('name'),
             'firstname' =>  $request->input('firstname'),
             'role'      => $request->input('role'),
-            'phone' =>  $request->input('phone'),
-            'email' =>  $request->input('email'),
-            'media' =>  $request->input('media'),          
+            'phone'     =>  $request->input('phone'),
+            'email'     =>  $request->input('email'),
+            'media'     =>  $request->input('media'),          
         ]);
 
         $team->save();
@@ -84,12 +84,12 @@ class TeamController extends Controller
     public function update($id, Request $request)
     {
         $team = $this->team->findOrFail($id);
-        $team->name = $request->input('name');
-        $team->firstname = $request->input('firstname');
-        $team->phone = $request->input('phone');
-        $team->email = $request->input('email');
-        $team->media = $request->input('media') ? $request->input('media') : NULL;
-        $team->role = $request->input('role');
+        $team->name         = $request->input('name');
+        $team->firstname    = $request->input('firstname');
+        $team->phone        = $request->input('phone');
+        $team->email        = $request->input('email');
+        $team->media        = $request->input('media') ? $request->input('media') : NULL;
+        $team->role         = $request->input('role');
         $team->save();
         return response()->json('successfully updated');
     }
@@ -103,10 +103,10 @@ class TeamController extends Controller
     public function clone($id)
     {
         $team = $this->team->findOrFail($id);
-        $teamCopy = $team->replicate();
-        $teamCopy->name = $team->name . ' (Kopie)';
-        $teamCopy->media = null;
-        $teamCopy->publish = 0;
+        $teamCopy           = $team->replicate();
+        $teamCopy->name     = $team->name . ' (Kopie)';
+        $teamCopy->media    = null;
+        $teamCopy->publish  = 0;
         $teamCopy->save();
         return response()->json($teamCopy);
     }

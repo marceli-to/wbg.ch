@@ -1,1 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 13"><title>menu-burger</title><g style="isolation:isolate"><rect y="11.5" width="24" height="1.5" style="fill:#dc0000"/></g><g style="isolation:isolate"><rect y="5.8" width="24" height="1.5" style="fill:#dc0000"/></g><g style="isolation:isolate"><rect width="24" height="1.5" style="fill:#dc0000"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 13"><title>menu-burger</title><path fill="#dc0000" d="M0 11.5h24V13H0zM0 5.8h24v1.5H0zM0 0h24v1.5H0z" style="isolation:isolate"/></svg>

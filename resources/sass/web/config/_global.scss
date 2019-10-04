@@ -30,10 +30,20 @@ $url-svg:    '../img/svg/';
 
 $bp-sm:  720px;
 $bp-md: 1024px;
-$bp-lg: 1440px;
+$bp-lg: 1168px;
 
 $breakpoints: (
   sm: $bp-sm,
   md: $bp-md,
   lg: $bp-lg  
 );
+
+/* Layout
+ * -------------------- */
+
+// Page
+$page-max-width: 1142px;
+
+// Header
+$header-height-sm: 76px;
+$header-height-lg: 74px;
