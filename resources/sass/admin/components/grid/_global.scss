@@ -74,7 +74,7 @@
         justify-content:center;
         min-height: 200px;
 
-        div {
+        > div {
             text-align: center;
             width: 100%;
         }
@@ -91,6 +91,13 @@
                 position: absolute;
                 right: 10px;
                 top: 10px;
+            }
+
+            .btn-crop {
+                margin: 0;
+                position: absolute;
+                right: 10px;
+                top: 55px;
             }
 
             figcaption {

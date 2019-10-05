@@ -91,7 +91,7 @@ Route::middleware('auth:api')->group(function() {
     Route::delete('project/image/delete/{file}', 'Backend\Project\ProjectImageController@unlink');
     Route::get('project/image/status/{id}', 'Backend\Project\ProjectImageController@status');
     Route::post('project/image/order', 'Backend\Project\ProjectImageController@order');
-
+    Route::post('project/image/crop', 'Backend\Project\ProjectImageController@crop');
 
     Route::get('project/grids/{id}', 'Backend\Project\GridController@get');
     Route::post('project/grids/order', 'Backend\Project\GridController@order');

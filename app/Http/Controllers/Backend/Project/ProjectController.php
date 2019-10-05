@@ -127,7 +127,7 @@ class ProjectController extends Controller
     {
         $project = $this->project->with('category')
                                  ->with('client')
-                                 ->with('images')
+                                 ->with('originalImages')
                                  ->findOrFail($id);
         return response()->json($project);
     }

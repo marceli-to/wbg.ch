@@ -16,6 +16,7 @@
     @extend %icon-dashboard;
     background-image: url($url-icons + 'close.svg');
     position: absolute;
-    right: 20px;
-    top: -15px;
+    right: 30px;
+    top: 30px;
+    z-index: 100;
 }

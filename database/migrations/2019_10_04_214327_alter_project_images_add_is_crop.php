@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterGridLayoutsTableAddIsLogo extends Migration
+class AlterProjectImagesAddIsCrop extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AlterGridLayoutsTableAddIsLogo extends Migration
      */
     public function up()
     {
-        Schema::table('grid_layouts', function($table) {
-            $table->integer('isLogo')->default(0)->after('key');
+        Schema::table('project_images', function($table) {
+            $table->integer('is_crop')->default(0)->after('is_grid');
         });
     }
 
@@ -25,8 +25,8 @@ class AlterGridLayoutsTableAddIsLogo extends Migration
      */
     public function down()
     {
-        Schema::table('grid_layouts', function($table) {
-            $table->dropColumn('isLogo');
+        Schema::table('project_images', function($table) {
+            $table->dropColumn('is_crop');
         });
     }
 }

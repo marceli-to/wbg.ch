@@ -22,32 +22,32 @@
 
   .project-selector__media {
 
+
     figure {
       display: inline-block;
       line-height: 1 !important;
       margin-bottom: 8px;
       margin-right: 16px;
+      position: relative;
 
       a {
         display: block;
       }
 
       img {
-        background-color: $color--white;
-        padding: 5px;
+        background-color: $color--medium-grey;
+        padding: 3px;
         display: block;
         height: 100%;
         width: auto;
         opacity: 1;
-        -webkit-transition: opacity .1s ease-out;
-        transition: opacity .1s ease-out;
+        transition: background-color .1s ease-out;
       }
 
       &:hover {
         img {
-          opacity: .7;
-          -webkit-transition: opacity .1s ease-out;
-          transition: opacity .1s ease-out;
+          background-color: $color--white;
+          transition: background-color .1s ease-out;
         }
       }
     }

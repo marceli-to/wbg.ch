@@ -57,7 +57,7 @@
 
     &.is-loading:after {
         background-color: #343E3D;
-        border-radius: inherit;
+        border-radius: 0;
         content: '';
         display: block;
         height: 4px;
@@ -91,3 +91,9 @@
     color: $color--light;
 }
 
+%btn-info,
+.btn-info {
+    background-color: $color--info;
+    border: 2px solid color--info;
+    color: $color--light;
+}

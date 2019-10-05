@@ -13,7 +13,9 @@ class ProjectImage extends Model
         'caption',
         'order',
         'publish',
-        'project_id'
+        'project_id',
+        'is_grid',
+        'is_crop'
     ];
 
     /**

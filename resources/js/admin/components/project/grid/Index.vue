@@ -9,6 +9,7 @@
           <grid-selector></grid-selector>
           <div class="grid-rows">
             <draggable 
+              :disabled="true"
               v-model="grids" 
               @end="updateOrder"
               ghost-class="draggable-ghost"
@@ -54,6 +55,7 @@ export default {
       projectId: null,
       debounce: false,
 
+      hasOverlay: false,
       isLoading: true,
     };
   },

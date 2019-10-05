@@ -27,6 +27,14 @@ class Project extends Model
     }
 
     /**
+     * Relation 'originalImages'
+     */
+    public function originalImages()
+    {
+        return $this->hasMany('App\Models\ProjectImage')->where('is_crop', '=', 0);
+    }
+
+    /**
      * Relation 'client'
      */
     public function client()

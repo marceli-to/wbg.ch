@@ -11,7 +11,7 @@ html.has-overlay {
 
 %overlay,
 .overlay {
-    background-color: rgba(0,0,0, .9);
+    background-color: rgba(0,0,0, .97);
     color: $color--dark;
     display: block;
     height: 100%;
@@ -87,5 +87,25 @@ html.has-overlay {
 
     .form-row-button {
         margin-top: 40px;
+    }
+}
+
+.overlay-crop {
+    @extend %overlay;
+
+    .form-buttons {
+        padding-top: 40px;
+        text-align: left;
+
+        .btn-secondary {
+            @extend %btn-loading;
+        }
+
+        a:not(.btn-secondary) {
+            margin-left: 20px;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     }
 }

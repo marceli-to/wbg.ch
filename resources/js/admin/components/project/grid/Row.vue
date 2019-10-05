@@ -5,7 +5,7 @@
         <div class="grid-1fr">
           <div class="span">
             <div v-if="elements[0] && elements[0].position == '0'">
-              <grid-media :element="elements[0]"></grid-media>
+              <grid-media :ratioW="86" :ratioH="56" :element="elements[0]"></grid-media>
             </div>
             <div v-else>
               <button-add :gridId="gridId" :gridPosition="0"></button-add>
@@ -97,9 +97,6 @@
           </div>
         </div>
       </div>
-
-
-
       <div v-if="layout == '1fr-1fr_stacked'">
         <div class="grid-1fr-1fr_stacked">
           <div class="span">
@@ -166,19 +163,22 @@
       </div>
     </div>
     <div :class="[hasOverlay ? 'is-visible': '', 'overlay']">
+      <a href="javascript:;" @click.prevent="toggleOverlay()" class="icon-close-overlay"></a>
       <div>
-        <a href="javascript:;" @click.prevent="toggleOverlay()" class="icon-close-overlay"></a>
-        <div>
-          <h1>Projektbild auswählen</h1>
-          <div class="project-selector">
-            <div class="project-selector__item">
-              <div class="project-selector__media">
-                <figure v-for="image in images" :key="image.id">
-                  <a href @click.prevent="storeImage(image.id)">
-                    <img :src="getAssetSource(image.name)" height="50" width="50">
-                  </a>
-                </figure>
-              </div>
+        <h1>Projektbild auswählen</h1>
+        <div class="project-selector">
+          <div class="project-selector__item">
+            <div class="project-selector__media">
+              <figure v-for="image in images" :key="image.id">
+                <a
+                  v-if="image.is_crop"
+                  @click.prevent="destroyImage($event,image.id)"
+                  class="btn-trash-mini"
+                ></a>
+                <a href @click.prevent="storeImage(image.id)">
+                  <img :src="getAssetSource(image.name)" height="50" width="50">
+                </a>
+              </figure>
             </div>
           </div>
         </div>
@@ -242,8 +242,7 @@ export default {
 
           if (els.length > 0) {
             this.elements = els;
-          }
-          else if (els.length == 0) {
+          } else if (els.length == 0) {
             this.elements = [];
           }
         }
@@ -268,22 +267,27 @@ export default {
         project_id: this.$props.projectId
       };
 
-      let uri = '/api/project/grid/image/store';
+      let uri = "/api/project/grid/image/store";
       this.axios.post(uri, data).then(response => {
         this.toggleOverlay();
-        this.$notify({type: 'success', text: 'Bild hinzugefügt'});
+        this.$notify({ type: "success", text: "Bild hinzugefügt" });
         this.fetch();
       });
     },
 
-    deleteImage(id,btn) {
+    deleteImage(id, btn) {
       let uri = `/api/project/grid/image/delete/${id}`;
-      btn.classList.add('is-loading');
+      btn.classList.add("is-loading");
       this.axios.delete(uri).then(response => {
-        btn.classList.remove('is-loading');
-        this.$notify({type: 'success', text: 'Bild gelöscht'});
+        btn.classList.remove("is-loading");
+        this.$notify({ type: "success", text: "Bild gelöscht" });
         this.fetch();
       });
+    },
+
+    destroyImage(event, imageId) {
+      event.stopPropagation();
+      console.log(imageId);
     },
 
     getAssetSource(asset) {
@@ -291,10 +295,10 @@ export default {
     },
 
     toggleOverlay() {
-      let html = document.querySelector('html');
-      html.classList.toggle('has-overlay');
+      let html = document.querySelector("html");
+      html.classList.toggle("has-overlay");
       this.hasOverlay = this.hasOverlay ? false : true;
-    },
+    }
   }
 };
 </script>

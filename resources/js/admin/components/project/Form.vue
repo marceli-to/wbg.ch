@@ -185,6 +185,9 @@ export default {
       let uri = `/api/project/edit/${this.$route.params.id}`;
       this.axios.get(uri).then(response => {
         this.project = response.data;
+
+        // show only original images
+        this.project.images = this.project.original_images;
       });
     }
 
