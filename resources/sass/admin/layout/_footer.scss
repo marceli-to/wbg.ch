@@ -20,8 +20,13 @@ footer.form-footer {
         @include responsive-prop('height', $footer-heights);
     }
 
-    a {
+    a:not(.btn-preview) {
+        color: $color--dark;
         @include responsive-prop('margin-left', $space-md);
+        text-decoration: underline;
+        &:hover {
+            text-decoration: none;
+        }
     }
 
     .filter {

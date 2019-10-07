@@ -30,6 +30,10 @@
         grid-template-columns: auto 130px;
     }
 
+    &[data-icons="6"] {
+        grid-template-columns: auto 158px;
+    }
+
     &.is-disabled {
         * {
             opacity: .7;
@@ -88,6 +92,10 @@
     text-align: right;
 
     &[data-icons="5"] {
+        grid-template-columns: repeat(5, 18px);
+    }
+
+    &[data-icons="6"] {
         grid-template-columns: repeat(6, 18px);
     }
 }

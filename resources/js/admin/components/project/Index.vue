@@ -25,14 +25,20 @@
                     <div v-for="project in categories" :key="project.id">
                       <div
                         :class="[project.publish == 0 ? 'is-disabled' : '', 'list-item', 'list-item--project is-sortable']"
-                        data-icons="5"
+                        data-icons="6"
                       >
                         <div class="list-item-body">
                           <h3>{{ project.name }}</h3>
                           <span>Auftraggeber: {{project.principal}}</span>
                           <span>Kunde: {{project.client.name}}</span>
                         </div>
-                        <div class="list-item-action" data-icons="5">
+                        <div class="list-item-action" data-icons="6">
+                          <a
+                            :href="'/projekt/' + project.id"
+                            target="_blank"
+                            class="icon-external-link icon-mini"
+                            title="Vorschau"
+                          ></a>
                           <router-link
                             :to="{name: 'project-grids', params: { id: project.id }}"
                             :class="[project.images.length > 0 ? '' : 'is-disabled', 'icon-grid icon-mini']"

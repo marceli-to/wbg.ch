@@ -26,7 +26,12 @@
           </div>
           <footer class="form-footer">
             <div>
-                <router-link :to="{name: 'projects'}" class="btn-secondary" style="margin-left:0">Zurück</router-link>
+              <a
+                :href="'/projekt/' + projectId"
+                class="btn-preview"
+                target="_blank"
+              >Vorschau</a>
+              <router-link :to="{name: 'projects'}">Zurück</router-link>
             </div>
           </footer>
         </div>

@@ -49,6 +49,7 @@ class ProjectsController extends Controller
    */
   public function project($id = NULL, $slug = NULL)
   {
+   
     $project = $this->project->with('client')->findOrFail($id);
     return view(
         $this->view_path . '.project',
@@ -57,22 +58,6 @@ class ProjectsController extends Controller
           'grids'   => $this->getProjectGrid($id)
         ]
     );
-  }
-
-  /**
-   * Show a preview
-   * 
-   * @param Project $project
-   */
-  public function preview(Project $project)
-  {
-    return view(
-      $this->view_path . '.preview',
-      [
-        'project'       => $project,
-        'grids'         => $this->getProjectGrid($project->id),
-        'is_preview'    => TRUE
-      ]);
   }
 
   protected function getProjectGrid($projectId)
