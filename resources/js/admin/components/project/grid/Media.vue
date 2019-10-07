@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="box-wrapper">
     <figure :style="{ backgroundImage: 'url(' + getPreviewImage(img.name) + ')' }">
       <a
         href="javascript:;"
@@ -24,7 +24,7 @@
           class="icon-close-overlay">
       </a>
       <div>
-        <span class="cropper-info">Ausschnitt: {{ cropW }} x {{ cropH }}</span>
+        <span class="cropper-info">Neue Grösse:<br>{{ cropW }}px x {{ cropH }}px</span>
         <cropper
           :src="img.uri"
           :stencilProps="{

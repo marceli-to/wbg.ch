@@ -1,5 +1,5 @@
 <template>
-  <div class="center">
+  <div class="box-buttons">
     <div>
       <a
         href="javascript:;"

@@ -47,13 +47,13 @@ $breakpoints: (
 /* Global element dimensions
  * ---------------------- */
 
-$page-min-width: 960px;
+$page-min-width: 840px;
 
 // Page layout
 $page-max-width:      640px;
 $page-max-width-sm:   728px;
-$page-max-width-md:   964px;
-$page-max-width-lg:  1100px;
+$page-max-width-md:   860px;
+$page-max-width-lg:   920px;
 
 $page-max-width: (
   null:  $page-max-width,

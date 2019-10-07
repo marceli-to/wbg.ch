@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="grids">
+    <div class="ratio-boxes">
       <div v-if="layout == '1fr'">
-        <div class="grid-1fr">
-          <div class="span">
+        <div class="box-1fr">
+          <div class="box__c">
             <div v-if="elements[0] && elements[0].position == '0'">
               <grid-media :ratioW="86" :ratioH="56" :element="elements[0]"></grid-media>
             </div>
@@ -14,10 +14,10 @@
         </div>
       </div>
       <div v-if="layout == '1fr-wide'">
-        <div class="grid-1fr-wide">
-          <div class="span">
+        <div class="box-1fr">
+          <div class="box__d">
             <div v-if="elements[0] && elements[0].position == '0'">
-              <grid-media :element="elements[0]"></grid-media>
+              <grid-media :ratioW="86" :ratioH="28" :element="elements[0]"></grid-media>
             </div>
             <div v-else>
               <button-add :gridId="gridId" :gridPosition="0"></button-add>
@@ -26,10 +26,10 @@
         </div>
       </div>
       <div v-if="layout == '1fr-portrait'">
-        <div class="grid-1fr-portrait">
-          <div class="span">
+        <div class="box-1fr">
+          <div class="box__e">
             <div v-if="elements[0] && elements[0].position == '0'">
-              <grid-media :element="elements[0]"></grid-media>
+              <grid-media :ratioW="86" :ratioH="112" :element="elements[0]"></grid-media>
             </div>
             <div v-else>
               <button-add :gridId="gridId" :gridPosition="0"></button-add>
@@ -38,18 +38,18 @@
         </div>
       </div>
       <div v-if="layout == '2x1fr-wide'">
-        <div class="grid-2x1fr-wide">
-          <div class="span">
+        <div class="box-2x1fr">
+          <div class="box__a">
             <div v-if="elements[0] && elements[0].position == '0'">
-              <grid-media :element="elements[0]"></grid-media>
+              <grid-media :ratioW="43" :ratioH="28" :element="elements[0]"></grid-media>
             </div>
             <div v-else>
               <button-add :gridId="gridId" :gridPosition="0"></button-add>
             </div>
           </div>
-          <div class="span">
+          <div class="box__a">
             <div v-if="elements[1] && elements[1].position == '1'">
-              <grid-media :element="elements[1]"></grid-media>
+              <grid-media :ratioW="43" :ratioH="28" :element="elements[1]"></grid-media>
             </div>
             <div v-else>
               <button-add :gridId="gridId" :gridPosition="1"></button-add>
@@ -58,18 +58,18 @@
         </div>
       </div>
       <div v-if="layout == '2x1fr'">
-        <div class="grid-2x1fr">
-          <div class="span">
+        <div class="box-2x1fr">
+          <div class="box__b">
             <div v-if="elements[0] && elements[0].position == '0'">
-              <grid-media :element="elements[0]"></grid-media>
+              <grid-media :ratioW="43" :ratioH="56" :element="elements[0]"></grid-media>
             </div>
             <div v-else>
               <button-add :gridId="gridId" :gridPosition="0"></button-add>
             </div>
           </div>
-          <div class="span">
+          <div class="box__b">
             <div v-if="elements[1] && elements[1].position == '1'">
-              <grid-media :element="elements[1]"></grid-media>
+              <grid-media :ratioW="43" :ratioH="56" :element="elements[1]"></grid-media>
             </div>
             <div v-else>
               <button-add :gridId="gridId" :gridPosition="1"></button-add>
@@ -78,16 +78,16 @@
         </div>
       </div>
       <div v-if="layout == '2x1fr-logo'">
-        <div class="grid-2x1fr-wide is-logo">
-          <div class="span">
+        <div class="box-2x1fr">
+          <div class="box__a is-logo">
             <div v-if="elements[0] && elements[0].position == '0'">
-              <grid-media :element="elements[0]"></grid-media>
+              <grid-media :ratioW="43" :ratioH="28" :element="elements[0]"></grid-media>
             </div>
             <div v-else>
-              <button-add :gridId="gridId" :gridPosition="0"></button-add>
+              <button-add :ratioW="43" :ratioH="28" :gridId="gridId" :gridPosition="0"></button-add>
             </div>
           </div>
-          <div class="span">
+          <div class="box__a is-logo">
             <div v-if="elements[1] && elements[1].position == '1'">
               <grid-media :element="elements[1]"></grid-media>
             </div>
@@ -98,10 +98,10 @@
         </div>
       </div>
       <div v-if="layout == '1fr-1fr_stacked'">
-        <div class="grid-1fr-1fr_stacked">
-          <div class="span">
+        <div class="box-2x1fr">
+          <div class="box__b">
             <div v-if="elements[0] && elements[0].position == '0'">
-              <grid-media :element="elements[0]"></grid-media>
+              <grid-media :ratioW="43" :ratioH="56" :element="elements[0]"></grid-media>
             </div>
             <div v-else>
               <button-add :gridId="gridId" :gridPosition="0"></button-add>
@@ -109,17 +109,17 @@
           </div>
           <div class="span">
             <div class="grid-stacked">
-              <div class="span">
+              <div class="box__a">
                 <div v-if="elements[1] && elements[1].position == '1'">
-                  <grid-media :element="elements[1]"></grid-media>
+                  <grid-media :ratioW="43" :ratioH="28" :element="elements[1]"></grid-media>
                 </div>
                 <div v-else>
                   <button-add :gridId="gridId" :gridPosition="1"></button-add>
                 </div>
               </div>
-              <div class="span">
+              <div class="box__a">
                 <div v-if="elements[2] && elements[2].position == '2'">
-                  <grid-media :element="elements[2]"></grid-media>
+                  <grid-media :ratioW="43" :ratioH="28" :element="elements[2]"></grid-media>
                 </div>
                 <div v-else>
                   <button-add :gridId="gridId" :gridPosition="2"></button-add>
@@ -130,20 +130,20 @@
         </div>
       </div>
       <div v-if="layout == '1fr_stacked-1fr'">
-        <div class="grid-1fr-1fr_stacked">
+        <div class="box-2x1fr">
           <div class="span">
             <div class="grid-stacked">
-              <div class="span">
+              <div class="box__a">
                 <div v-if="elements[0] && elements[0].position == '0'">
-                  <grid-media :element="elements[0]"></grid-media>
+                  <grid-media :ratioW="43" :ratioH="28" :element="elements[0]"></grid-media>
                 </div>
                 <div v-else>
                   <button-add :gridId="gridId" :gridPosition="0"></button-add>
                 </div>
               </div>
-              <div class="span">
+              <div class="box__a">
                 <div v-if="elements[1] && elements[1].position == '1'">
-                  <grid-media :element="elements[1]"></grid-media>
+                  <grid-media :ratioW="43" :ratioH="28" :element="elements[1]"></grid-media>
                 </div>
                 <div v-else>
                   <button-add :gridId="gridId" :gridPosition="1"></button-add>
@@ -151,9 +151,9 @@
               </div>
             </div>
           </div>
-          <div class="span">
+          <div class="box__b">
             <div v-if="elements[2] && elements[2].position == '2'">
-              <grid-media :element="elements[2]"></grid-media>
+              <grid-media :ratioW="43" :ratioH="56" :element="elements[2]"></grid-media>
             </div>
             <div v-else>
               <button-add :gridId="gridId" :gridPosition="2"></button-add>
@@ -172,7 +172,7 @@
               <figure v-for="image in images" :key="image.id">
                 <a
                   v-if="image.is_crop"
-                  @click.prevent="destroyImage($event,image.id)"
+                  @click.prevent="destroyImage($event,image.name)"
                   class="btn-trash-mini"
                 ></a>
                 <a href @click.prevent="storeImage(image.id)">
@@ -285,9 +285,15 @@ export default {
       });
     },
 
-    destroyImage(event, imageId) {
+    destroyImage(event, image) {
       event.stopPropagation();
-      console.log(imageId);
+      if(confirm('Bitte löschen bestätigen!')) {
+        let uri = `/api/project/image/delete/${image}`;
+        this.axios.delete(uri).then(response => {
+          const index = this.images.findIndex(x => x.name === image);
+          this.images.splice(index, 1);
+        });
+      }
     },
 
     getAssetSource(asset) {

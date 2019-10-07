@@ -29,25 +29,26 @@
         &.is-visible {
             display: block;
             display: grid;
-            margin-bottom: 15px;
-            grid-template-columns: repeat(8, 102px);
-            grid-gap: 15px;
+            margin-bottom: 10px;
+            grid-template-columns: repeat(8, 90px);
+            grid-gap: 10px;
 
             @include bp-lg() {
-                grid-template-columns: repeat(8, 118px);
+                grid-template-columns: repeat(8, 100px);
             }
         }
 
         li {
             display: block;
-            margin-top: 15px;
+            margin-top: 10px;
         }
     
         a {
             display: block;
-            width: 102px;
+            width: 90px;
+
             @include bp-lg() {
-                width: 118px;
+                width: 100px;
             }
 
             img {
