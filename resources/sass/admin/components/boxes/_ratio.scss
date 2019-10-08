@@ -62,18 +62,34 @@
     }
 
     > div .box-wrapper,
-    > div figure {
+    > div figure,
+    > div article {
       height: 100%; 
       width: 100%;
     }
 
-    figure {
-      @include background-default();
-      background-size: cover;
-      background-position: center center;
-      padding: 0;
+    article {
       position: relative;
 
+      .article__link {
+        margin-top: 10px;
+        a {
+          color: $color--dark;
+          @include font-bold();
+        }
+      }
+
+      > div {
+        left: 0%;
+        padding: 20px;
+        position: absolute;
+        top: 50%;
+        transform: translate(0,-50%);
+      }
+    }
+
+    article,
+    figure {
       .btn-trash {
         margin: 0;
         position: absolute;
@@ -87,6 +103,14 @@
         right: 10px;
         top: 55px;
       }
+    }
+
+    figure {
+      @include background-default();
+      background-size: cover;
+      background-position: center center;
+      padding: 0;
+      position: relative;
 
       figcaption {
         background-color: rgba(255,255,255,.6);

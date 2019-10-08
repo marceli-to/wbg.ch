@@ -5,21 +5,19 @@
  */
 
 .btn-primary {
+	@extend %btn-ib;
 	background-color: $color--light;
 	border-radius: 2px;
-    color: $color--white;
-    background-color: $color--info;
-    border: 2px solid color--info;
-
-	display: inline-block;
+	border: none;
+	color: $color--white;
+	background-color: $color--info;
 	@include font-size($fs-sm);
 	@include font-bold();
-	padding: 10px 25px;
+	padding: 12px 24px;
 	width: auto;
-	@include transition(background-color .1s ease-out, border-color .1s ease-out);
+	@include transition(background-color .16s ease-out);
 
 	&:hover {
-		background-color: $color--light-grey;
-		border-color: $color--light-grey;
+		background-color: darken($color--info, 10);
 	}
 }

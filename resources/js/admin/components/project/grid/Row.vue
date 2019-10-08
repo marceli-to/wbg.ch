@@ -259,6 +259,16 @@ export default {
       });
     },
 
+    showNews(gridId, position) {
+      let uri = `/api/project/image/get/${this.$props.projectId}`;
+      // this.axios.get(uri).then(response => {
+      //   this.images = response.data.data;
+      //   this.toggleOverlay();
+      //   this.tmpGridId = gridId;
+      //   this.tmpPosition = position;
+      // });
+    },
+
     storeImage(imageId) {
       let data = {
         position: this.tmpPosition,

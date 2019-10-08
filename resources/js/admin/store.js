@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        isLoggedIn: !!localStorage.getItem('token')
+        isLoggedIn: !!localStorage.getItem('token'),
+        hasChanges: false,
     },
     mutations: {
         loginUser (state) {
@@ -13,6 +14,13 @@ export default new Vuex.Store({
         },
         logoutUser (state) {
             state.isLoggedIn = false;
+        },
+
+        gridChanged (state) {
+            state.hasChanges = true;
+        },
+        gridDeployed (state) {
+            state.hasChanges = false;
         },
     }
 });

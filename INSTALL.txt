@@ -21,7 +21,7 @@ DEPLOYING
 npm run production
 
 2. COMPRESS FILES
-tar --exclude="INSTALL.txt" --exclude="*.DS_Store" --exclude="_old/" --exclude="storage/app/public/media/" --exclude="node_modules/" --exclude=".source/"  --exclude=".git*" --exclude=".env" --exclude=".editorconfig" --exclude="public/.htaccess" -cvzf app.tar.gz *
+tar --exclude="INSTALL.txt" --exclude="*.DS_Store" --exclude="_old/" --exclude="storage/app/public/media/" --exclude="node_modules/" --exclude=".source/"  --exclude=".git*" --exclude=".env" --exclude=".editorconfig" --exclude="public/storage/" --exclude="public/.htaccess" -cvzf app.tar.gz *
 
 3. COPY FILE
 scp app.tar.gz www-data@silverfish02.nine.ch:/home/www-data/marceli.to/wbg.ch/

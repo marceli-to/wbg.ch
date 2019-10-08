@@ -5,6 +5,7 @@ use App\Services\MediaService;
 use App\Models\Project;
 use App\Models\ProjectImage;
 use App\Models\GridElement;
+use App\Models\HomeGridElement;
 use App\Http\Resources\ProjectCollection;
 
 use App\Http\Controllers\Controller;
@@ -16,6 +17,7 @@ class ProjectImageController extends Controller
     protected $project;
     protected $projectImage;
     protected $gridElement;
+    protected $homeGridElement;
 
     /**
      * Constructor
@@ -24,19 +26,22 @@ class ProjectImageController extends Controller
      * @param Project $project
      * @param ProjectImage $projectImage
      * @param GridElement $gridElement
+     * @param HomeGridElement $homeGridElement
      */
 
     public function __construct(
         MediaService $mediaService,
         Project $project,
         ProjectImage $projectImage,
-        GridElement $gridElement
+        GridElement $gridElement,
+        HomeGridElement $homeGridElement
     )
     {
-        $this->mediaService = $mediaService;
-        $this->project      = $project;
-        $this->projectImage = $projectImage;
-        $this->gridElement  = $gridElement;
+        $this->mediaService     = $mediaService;
+        $this->project          = $project;
+        $this->projectImage     = $projectImage;
+        $this->gridElement      = $gridElement;
+        $this->homeGridElement  = $homeGridElement;
     }
 
     /**
@@ -148,7 +153,15 @@ class ProjectImageController extends Controller
             $projectImageCopy->save();
 
             // Clone & adjust grid element
-            $gridElement = $this->gridElement->find($data['gridElementId']);
+            if ($data['isHomeGrid'])
+            {
+                $gridElement = $this->homeGridElement->find($data['gridElementId']);
+            }
+            else
+            {
+                $gridElement = $this->gridElement->find($data['gridElementId']);
+            }
+
             $gridElement->project_image_id = $projectImageCopy->id;
             $gridElement->save();
 

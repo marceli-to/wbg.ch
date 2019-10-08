@@ -4,7 +4,7 @@
  * -----------------------------------------------------------------------------
  */
 
- .btn-secondary {
+.btn-secondary {
     @extend %btn-ib;
     background-color: $color--success;
 	border-radius: 2px;

@@ -31,6 +31,10 @@ import NewsIndex from '@/components/news/Index.vue';
 import NewsCreate from '@/components/news/Create.vue';
 import NewsEdit from '@/components/news/Edit.vue';
 
+// Home Grids
+import HomeGridIndex from '@/components/home/Index.vue';
+
+
 // Page
 import PageComponent from '@/layout/Page.vue';
 
@@ -172,22 +176,30 @@ const routes = [
         meta: { requiresAuth: true },
     },
 
+    // Home grid
+    {
+        name: 'home',
+        path: '/admin/home',
+        component: HomeGridIndex,
+        meta: { requiresAuth: true },
+    },
+
     // News
     {
-        name: 'news',
-        path: '/admin/news',
+        name: 'articles',
+        path: '/admin/article',
         component: NewsIndex,
         meta: { requiresAuth: true },
     },
     {
-        name: 'news-create',
-        path: '/admin/news/create',
+        name: 'article-create',
+        path: '/admin/article/create',
         component: NewsCreate,
         meta: { requiresAuth: true },
     },
     {
-        name: 'news-edit',
-        path: '/admin/news/edit/:id',
+        name: 'article-edit',
+        path: '/admin/article/edit/:id',
         component: NewsEdit,
         meta: { requiresAuth: true },
     },

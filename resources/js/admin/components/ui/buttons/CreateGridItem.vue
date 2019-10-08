@@ -28,13 +28,3 @@ export default {
     }
 }
 </script>
-<style scoped>
-.center {
-    /* display: flex;
-    justify-content: center; */
-}
-
-.center > div {
-    /* width: 150px; */
-}
-</style>

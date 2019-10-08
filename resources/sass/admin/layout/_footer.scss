@@ -11,8 +11,15 @@ footer.form-footer {
     left: 0;
     @include responsive-prop('height', $footer-heights);
     position: fixed;
+    transform: translateY(0);
     width: 100%;
     z-index: 90;
+    transition: transform .16s ease-out;
+
+    &.is-hidden {
+        transform: translateY(100%);
+        transition: transform .16s ease-out;
+    }
 
     > div {
         @extend %page-block;
@@ -20,6 +27,14 @@ footer.form-footer {
         @include responsive-prop('height', $footer-heights);
     }
 
+    &.is-warning {
+        > div {
+            display: grid !important;
+            grid-template-columns: 1fr auto auto;
+            grid-gap: 20px;
+        }
+    }   
+     
     a:not(.btn-preview) {
         color: $color--dark;
         @include responsive-prop('margin-left', $space-md);

@@ -59,9 +59,7 @@ export default {
       pageTitle: null,
       projectId: null,
       debounce: false,
-
       hasOverlay: false,
-      isLoading: true,
     };
   },
 

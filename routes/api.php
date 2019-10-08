@@ -103,6 +103,21 @@ Route::middleware('auth:api')->group(function() {
     Route::delete('project/grid/image/delete/{id}', 'Backend\Project\GridElementController@destroy');
 
     /**
+     * Home Grid routes
+     */
+    Route::get('home/grids', 'Backend\Home\HomeGridController@get');
+    Route::get('home/grids/deploy', 'Backend\Home\HomeGridController@deploy');
+    Route::get('home/grids/reset', 'Backend\Home\HomeGridController@reset');
+    Route::get('home/grid/store/{layoutId}', 'Backend\Home\HomeGridController@store');
+    Route::delete('home/grid/delete/{id}', 'Backend\Home\HomeGridController@destroy');
+    
+    Route::get('home/grid/layout/fetch', 'Backend\Home\HomeGridLayoutController@fetch');
+    
+    Route::post('home/grid/element/store', 'Backend\Home\HomeGridElementController@store');
+    Route::delete('home/grid/element/delete/{id}', 'Backend\Home\HomeGridElementController@destroy');
+    Route::get('home/grid/element/get/{id}', 'Backend\Home\HomeGridElementController@get');
+
+    /**
      * News routes
      */
     Route::get('news/get', 'Backend\News\NewsController@get');

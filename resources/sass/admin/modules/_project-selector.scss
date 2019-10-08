@@ -8,11 +8,8 @@
  .project-selector__item {
 
   &.is-multi {
-    border-radius: 2px;
-    border: 2px solid $color--dark;
     @include responsive-prop('margin-bottom', $space-sm);
     @include responsive-prop('padding', $space-xs);
-    padding-bottom: 5px !important;
   }
 
   h2 {
@@ -21,7 +18,6 @@
   }
 
   .project-selector__media {
-
 
     figure {
       display: inline-block;

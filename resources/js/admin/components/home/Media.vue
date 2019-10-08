@@ -3,8 +3,8 @@
     <figure :style="{ backgroundImage: 'url(' + getPreviewImage(img.name) + ')' }">
       <a
         href="javascript:;"
-        class="btn-trash is-mini"
-        @click.prevent="deleteImage(element.id, $event)">
+        class="btn-trash"
+        @click.prevent="deleteMedia(element.id, $event)">
         Löschen
       </a>
       <a 
@@ -41,6 +41,8 @@
   </div>
 </template>
 <script>
+import grid from "@/mixins/grid";
+import progress from "@/mixins/progress";
 import { Cropper } from "vue-advanced-cropper";
 
 export default {
@@ -53,6 +55,8 @@ export default {
     ratioW: Number,
     ratioH: Number
   },
+  
+  mixins: [grid, progress],
 
   data() {
     return {
@@ -86,12 +90,11 @@ export default {
 
     crop(event) {
       let btn = event.target;
-      btn.classList.add("is-loading");
 
       let data = {
         data: {
           gridElementId: this.$props.element.id,
-          isHomeGrid: false,
+          isHomeGrid: true,
           imageId: this.$props.element.imageId,
           image: this.img.name,
           coords: {
@@ -102,19 +105,23 @@ export default {
           }
         }
       };
+    
       let uri = "/api/project/image/crop";
+      let el = this.progress(event.target);
       this.axios.post(uri, data).then(response => {
         this.img.name = response.data.name;
         this.axios.get(`/media/${response.data.name}/lg`).then(response => {
-          btn.classList.remove("is-loading");
+          this.progress(el);
           this.toggleOverlay();
         });
       });
     },
 
-    deleteImage(id, event) {
-      let btn = event.target;
-      this.$parent.deleteImage(id, btn);
+    deleteMedia(elementId,event) {
+      if (confirm("Bitte löschen bestätigen!")) {
+        let el = this.progress(event.target);
+        this.$parent.deleteMedia(elementId);
+      }
     },
 
     getPreviewImage(image) {

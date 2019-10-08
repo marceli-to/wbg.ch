@@ -6,8 +6,8 @@
 <title>wbg.ch</title>
 <meta name="csrf-token" value="{{ csrf_token() }}" />
 <meta name="format-detection" content="telephone=no">
-<script src="{{ asset('assets/js/modernizr.min.js') }}"></script>
 <link href="{{ asset('assets/css/app.css') }}" type="text/css" rel="stylesheet" />
+<script src="{{ asset('assets/js/modernizr.min.js') }}"></script>
 </head>
 <body>
 <header class="site-header">

@@ -35,7 +35,7 @@
             <label>Link Text</label>
             <input type="text" v-model="news.linkText">
           </div>
-          <form-buttons :route="'news'"></form-buttons>
+          <form-buttons :route="'articles'"></form-buttons>
         </form>
       </div>
     </main>
@@ -166,8 +166,8 @@ export default {
   computed: {
     title: function() {
       return this.$props.type == "edit" 
-      ? "News bearbeiten" 
-      : "News hinzufügen";
+      ? "Artikel bearbeiten" 
+      : "Artikel hinzufügen";
     }
   }
 };

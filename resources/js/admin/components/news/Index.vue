@@ -5,8 +5,8 @@
     <div class="container">
       <main class="content" role="main">
         <div>
-          <h1>News</h1>
-          <router-link :to="{ name: 'news-create' }" class="btn-add">
+          <h1>Artikel</h1>
+          <router-link :to="{ name: 'article-create' }" class="btn-add">
             <span>Hinzufügen</span>
           </router-link>
           <div class="list-items" v-if="news.length">
@@ -25,7 +25,7 @@
                   @click.prevent="toggleStatus(n.id,$event)"
                 ></a>
                 <router-link
-                  :to="{name: 'news-edit', params: { id: n.id }}"
+                  :to="{name: 'article-edit', params: { id: n.id }}"
                   class="icon-edit icon-mini"
                 ></router-link>
                 <a href="javascript:;" class="icon-copy icon-mini" @click.prevent="clone(n.id,$event)"></a>
@@ -34,7 +34,7 @@
             </div>
           </div>
           <div v-else>
-            <p>Es sind keine News vorhanden...</p>
+            <p>Es sind keine Artikel vorhanden...</p>
           </div>
         </div>
       </main>
