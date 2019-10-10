@@ -21,6 +21,11 @@ class MediaService
     protected $path_uploads;
 
     /**
+     * Path for preview images
+     */
+    protected $path_preview;
+
+    /**
      * Path for small images
      */
     protected $path_xsmall;
@@ -116,6 +121,7 @@ class MediaService
         $this->path_sm          = $this->path_processed . 'sm/';
         $this->path_xs          = $this->path_processed . 'xs/';
         $this->path_thumbs      = $this->path_processed . 'thumbs/';
+        $this->path_preview     = $this->path_processed . 'preview/';
         $this->_mkdir();
     }
 
@@ -376,6 +382,31 @@ class MediaService
         }
     }
 
+    public function preview($image)
+    {
+        if ($image != NULL)
+        {
+            // Create image instance
+            $image = \Image::make($this->path_source . $image);
+
+            // Get width and height
+            $width  = $image->getWidth();
+            $height = $image->getHeight();
+            
+            // Resize landscape image
+            if ($height >= 647)
+            {
+                $image->resize(null, 647, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->crop('420', '567');
+            }
+
+            $image->save($this->path_preview . $image->basename);
+            return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
+        }
+    }
+
+
     /**
      * Delete a file from the storage, including all subfolders
      * 
@@ -440,7 +471,12 @@ class MediaService
         {
             File::makeDirectory($this->path_thumbs, 0775, true, true);
         }
-        
+
+        if (!File::isDirectory($this->path_preview))
+        {
+            File::makeDirectory($this->path_preview, 0775, true, true);
+        }
+
         if (!File::isDirectory($this->path_xs))
         {
             File::makeDirectory($this->path_xs, 0775, true, true);

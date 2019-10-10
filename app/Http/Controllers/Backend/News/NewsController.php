@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Backend\News;
 
 use App\Services\MediaService;
-//use App\Services\GridService;
+use App\Services\GridService;
 use App\Models\News;
 use App\Http\Resources\NewsCollection;
 
@@ -12,13 +12,13 @@ use Illuminate\Http\Request;
 class NewsController extends Controller
 {
     protected $mediaService;
-    //protected $gridService;
+    protected $gridService;
     protected $news;
 
-    public function __construct(MediaService $mediaService, News $news/*, GridService $gridService*/)
+    public function __construct(MediaService $mediaService, News $news, GridService $gridService)
     {
         $this->mediaService = $mediaService;
-        //$this->gridService = $gridService;
+        $this->gridService = $gridService;
         $this->news = $news;
     }
 
@@ -43,10 +43,11 @@ class NewsController extends Controller
     public function store(Request $request)
     {   
         $news = new News([
-            'title'    => $request->input('title'),
-            'text'     => $request->input('text'),
-            'link'     => $request->input('link'), 
-            'linkText' => $request->input('linkText'),
+            'title'         => $request->input('title'),
+            'text'          => $request->input('text'),
+            'link'          => $request->input('link'), 
+            'linkText'      => $request->input('linkText'),
+            'linkNewWindow' => $request->input('linkNewWindow'),
         ]);
 
         $news->save();
@@ -75,10 +76,11 @@ class NewsController extends Controller
     public function update($id, Request $request)
     {
         $news = $this->news->findOrFail($id);
-        $news->title    = $request->input('title');
-        $news->text     = $request->input('text');
-        $news->link     = $request->input('link') ? \AppHelper::addScheme($request->input('link')) : NULL;
-        $news->linkText = $request->input('linkText');
+        $news->title            = $request->input('title');
+        $news->text             = $request->input('text');
+        $news->link             = $request->input('link') ? \AppHelper::addScheme($request->input('link')) : NULL;
+        $news->linkText         = $request->input('linkText');
+        $news->linkNewWindow    = $request->input('linkNewWindow');
         $news->save();
         return response()->json('successfully updated');
     }
@@ -121,13 +123,13 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        // if ($this->gridService->isGridNews($id))
-        // {
-        //     return response()->json(
-        //         'Dieser News-Eintrag kann nicht gelöscht werden. (Grund: wird auf Homepage verwendet)',
-        //         422
-        //     );
-        // }
+        if ($this->gridService->isGridNews($id))
+        {
+            return response()->json(
+                'Der Artikel kann nicht gelöscht werden. (Grund: wird auf Homepage verwendet)',
+                422
+            );
+        }
 
         $news = $this->news->find($id);
         if ($news->media)

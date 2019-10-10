@@ -139,7 +139,7 @@
             //border-top: 2px solid $color--light-grey;
             display: grid;
             line-height: 1;
-            grid-template-columns: repeat(4, 18px);
+            grid-template-columns: repeat(5, 18px);
             grid-gap: 10px;
             padding: 10px;
         }
@@ -148,7 +148,18 @@
     .dz-file-preview {
         display: block;
         text-decoration: none;
+        position: relative;
         width: 100%;
+
+        .dz-file-preview__caption {
+            bottom: 10px;
+            @include font-mono();
+            @include font-size($fs-xxs);
+            left: 10px;
+            padding: 4px;
+            position: absolute;
+            width: 100%;
+        }
     }
 }
 

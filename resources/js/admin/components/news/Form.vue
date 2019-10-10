@@ -35,6 +35,29 @@
             <label>Link Text</label>
             <input type="text" v-model="news.linkText">
           </div>
+          <div class="form-row">
+            <label class="is-sm">Link in neuem Fenster öffnen?</label>
+            <div class="form-radio">
+              <input
+                v-model="news.linkNewWindow"
+                type="radio"
+                name="link_new_window_1"
+                id="link_new_window_1"
+                value="1"
+                class="visually-hidden"
+              >
+              <label for="link_new_window_1" class="form-control">Ja</label>
+              <input
+                v-model="news.linkNewWindow"
+                type="radio"
+                name="link_new_window_0"
+                id="link_new_window_0"
+                value="0"
+                class="visually-hidden"
+              >
+              <label for="link_new_window_0" class="form-control">Nein</label>
+            </div>
+          </div>
           <form-buttons :route="'articles'"></form-buttons>
         </form>
       </div>
@@ -126,7 +149,7 @@ export default {
     store() {
       let uri = "/api/news/create";
       this.axios.post(uri, this.news).then(response => {
-        this.$router.push({ name: "news" });
+        this.$router.push({ name: "articles" });
       });
     },
 
@@ -134,7 +157,7 @@ export default {
     update() {
       let uri = `/api/news/update/${this.$route.params.id}`;
       this.axios.post(uri, this.news).then(response => {
-        this.$router.push({ name: "news" });
+        this.$router.push({ name: "articles" });
       });
     },
 

@@ -90,6 +90,7 @@ Route::middleware('auth:api')->group(function() {
     Route::get('project/image/get/{projectId}', 'Backend\Project\ProjectImageController@get');
     Route::delete('project/image/delete/{file}', 'Backend\Project\ProjectImageController@unlink');
     Route::get('project/image/status/{id}', 'Backend\Project\ProjectImageController@status');
+    Route::get('project/image/preview/{id}', 'Backend\Project\ProjectImageController@preview');
     Route::post('project/image/order', 'Backend\Project\ProjectImageController@order');
     Route::post('project/image/crop', 'Backend\Project\ProjectImageController@crop');
 
@@ -127,6 +128,16 @@ Route::middleware('auth:api')->group(function() {
     Route::get('news/clone/{id}', 'Backend\News\NewsController@clone');
     Route::get('news/status/{id}', 'Backend\News\NewsController@status');
     Route::delete('news/destroy/{id}', 'Backend\News\NewsController@destroy');
+
+    /**
+     * Content routes
+     */
+    Route::get('contents/get', 'Backend\Content\ContentController@get');
+    Route::post('content/create', 'Backend\Content\ContentController@store');
+    Route::get('content/edit/{id}', 'Backend\Content\ContentController@edit');
+    Route::post('content/update/{id}', 'Backend\Content\ContentController@update');
+    Route::get('content/status/{id}', 'Backend\Content\ContentController@status');
+    Route::get('content/get/keys', 'Backend\Content\ContentController@keys');
 
     /**
      * Media routes

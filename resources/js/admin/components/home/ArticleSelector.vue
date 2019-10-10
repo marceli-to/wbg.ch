@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>News auswählen</h1>
+    <h1>Artikel auswählen</h1>
     <div class="article-selector">
       <div v-for="n in news" :key="n.id" @click.prevent="storeArticle(n.id)">
         <div class="article-selector__item">

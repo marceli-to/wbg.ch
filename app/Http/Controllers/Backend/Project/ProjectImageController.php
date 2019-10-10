@@ -85,6 +85,13 @@ class ProjectImageController extends Controller
             $gridElement->delete();
         }
 
+        // Delete home grid element
+        $homeGridElement = $this->homeGridElement->where('project_image_id', '=', $image->id)->first();
+        if ($homeGridElement)
+        {
+            $homeGridElement->delete();
+        }
+
         // Delete image from disk
         $this->mediaService->delete($filename);
 
@@ -104,6 +111,21 @@ class ProjectImageController extends Controller
         $image->save();
         return response()->json($image->publish);
     }
+
+    /**
+     * Update the preview status of the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function preview($id)
+    {
+        $image = $this->projectImage->findOrFail($id);
+        $image->is_preview = $image->is_preview == 0 ? 1 : 0;
+        $image->save();
+        return response()->json($image->is_preview);
+    }
+
 
     /**
      * Update the order of the resources.

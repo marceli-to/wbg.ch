@@ -106,6 +106,8 @@
                 :assetType="'image'"
                 :acceptedFiles="'.png,.jpg'"
                 :uploadUrl="'/api/media/upload'"
+                :hasCroppedPreview='true'
+                :hasStar='true'
               ></multi-image-upload>
             </div>
           </div>
@@ -300,6 +302,22 @@ export default {
         this.axios.get(uri).then(response => {
           const index = this.project.images.findIndex(x => x.id === asset.id);
           this.project.images[index].publish = response.data;
+          this.progress(el);
+        });
+      }
+    },
+
+    togglePreview(asset,event) {
+      if (asset.id === null) {
+          const index = this.project.images.findIndex(x => x.name === asset.name);
+          this.project.images[index].is_preview = asset.is_preview == 1 ? 0 : 1;
+      }
+      else {
+        let uri = `/api/project/image/preview/${asset.id}`;
+        let el = this.progress(event.target);
+        this.axios.get(uri).then(response => {
+          const index = this.project.images.findIndex(x => x.id === asset.id);
+          this.project.images[index].is_preview = response.data;
           this.progress(el);
         });
       }

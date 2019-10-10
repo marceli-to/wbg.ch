@@ -34,6 +34,10 @@ import NewsEdit from '@/components/news/Edit.vue';
 // Home Grids
 import HomeGridIndex from '@/components/home/Index.vue';
 
+// Static content
+import ContentIndex from '@/components/content/Index.vue';
+import ContentCreate from '@/components/content/Create.vue';
+import ContentEdit from '@/components/content/Edit.vue';
 
 // Page
 import PageComponent from '@/layout/Page.vue';
@@ -201,6 +205,26 @@ const routes = [
         name: 'article-edit',
         path: '/admin/article/edit/:id',
         component: NewsEdit,
+        meta: { requiresAuth: true },
+    },
+
+    // Content
+    {
+        name: 'contents',
+        path: '/admin/contents',
+        component: ContentIndex,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'content-create',
+        path: '/admin/content/create',
+        component: ContentCreate,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'content-edit',
+        path: '/admin/content/edit/:id',
+        component: ContentEdit,
         meta: { requiresAuth: true },
     },
 ];

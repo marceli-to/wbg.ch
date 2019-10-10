@@ -76,11 +76,11 @@ export default {
           .then(response => {
             this.news.splice(this.news.indexOf(id), 1);
             self.$notify({ type: "success", text: "Eintrag gelöscht" });
-            this.progress(el);
+            self.progress(el);
           })
           .catch(function(error) {
             self.$notify({ type: "error", text: error.response.data });
-            this.progress(el);
+            self.progress(el);
           });
       }
     },

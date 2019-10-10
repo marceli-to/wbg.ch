@@ -26,6 +26,10 @@
     @include responsive-prop('padding-top', $space-xs);
     @include responsive-prop('margin-bottom', $space-xs);
 
+    &[data-icons="2"] {
+        grid-template-columns: auto 46px;
+    }
+
     &[data-icons="5"] {
         grid-template-columns: auto 130px;
     }
@@ -90,6 +94,10 @@
     grid-template-columns: repeat(4, 18px);
     grid-gap: 10px;
     text-align: right;
+
+    &[data-icons="2"] {
+        grid-template-columns: repeat(2, 18px);
+    }
 
     &[data-icons="5"] {
         grid-template-columns: repeat(5, 18px);

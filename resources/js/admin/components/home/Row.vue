@@ -127,6 +127,7 @@
             <div v-else>
               <div class="box-buttons">
                 <button-add-image :gridId="gridId" :gridPosition="1"></button-add-image>
+                <button-add-news :gridId="gridId" :gridPosition="0"></button-add-news>
               </div>
             </div>
           </div>
@@ -194,7 +195,7 @@
             <div class="grid-stacked">
               <div class="box__a">
                 <div v-if="elements[0] && elements[0].position == '0'">
-                  <div v-if="elements[1].isMedia">
+                  <div v-if="elements[0].isMedia">
                     <grid-media :ratioW="43" :ratioH="28" :element="elements[0]"></grid-media>
                   </div>
                   <div v-if="elements[0].isArticle">

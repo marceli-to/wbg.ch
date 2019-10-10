@@ -18,6 +18,9 @@
                     <router-link :to="{ name: 'articles' }">Artikel</router-link>
                 </li>
                 <li>
+                    <router-link :to="{ name: 'contents' }">Texte</router-link>
+                </li>
+                <li>
                     <router-link :to="{ name: 'projects' }">Projekte</router-link>
                 </li>
                 <li>

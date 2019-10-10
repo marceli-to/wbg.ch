@@ -31,6 +31,11 @@ class MediaController extends Controller
         return $this->mediaService->thumbnail($image);
     }
 
+    public function preview($image = NULL)
+    {
+        return $this->mediaService->preview($image);
+    }
+
     public function source($image = NULL)
     {
         return $this->mediaService->source($image);

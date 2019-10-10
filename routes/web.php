@@ -21,6 +21,7 @@ Route::get('projekt/{id}/{slug?}', 'Frontend\ProjectsController@project')->name(
  */
 
 Route::get('media/thumbnail/{file}', 'MediaController@thumbnail');
+Route::get('media/preview/{file}', 'MediaController@preview');
 Route::get('media/{file}/{size?}', 'MediaController@resize');
 
 /**

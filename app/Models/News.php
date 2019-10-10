@@ -9,6 +9,6 @@ class News extends Model
         'text',
         'link',
         'linkText',
+        'linkNewWindow',
     ];
-
 }

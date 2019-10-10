@@ -4,7 +4,7 @@
       href="javascript:;"
       class="btn-add-article"
       @click.prevent="createArticle(gridId,gridPosition);"
-    >News auswählen</a>
+    >Artikel auswählen</a>
   </div>
 </template>
 <script>
@@ -13,7 +13,6 @@ export default {
     gridId: Number,
     gridPosition: Number,
   },
-
   methods: {
     createArticle(gridId,position) {
       this.$parent.createArticle(gridId, position);

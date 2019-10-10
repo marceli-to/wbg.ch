@@ -21,6 +21,7 @@
           >
             <a :href="getAssetUri(asset.name)" target="_blank" class="dz-file-preview">
               <img :src="getAssetSource(asset.name)" height="300" width="300">
+              <div class="dz-file-preview__caption" v-if="asset.caption">{{ asset.caption | truncate(20, '...') }}</div>
             </a>
             <div class="dz-toolbar">
               <a
@@ -43,6 +44,11 @@
                 class="icon-trash icon-mini"
                 @click.prevent="deleteUpload(asset.name,$event)">
               </a>
+              <a v-if="hasStar"
+                href="javascript:;"
+                :class="[asset.is_preview == 1 ? 'icon-star' : 'icon-star-off', 'icon-mini']"
+                @click.prevent="togglePreview(asset,$event)">
+              </a>
             </div>
             <div class="overlay-asset">
               <div>
@@ -50,6 +56,9 @@
                   <div>
                     <img :src="getAssetUri(asset.name)" height="300" width="300">
                     <figcaption>{{asset.caption}}</figcaption>
+                    <!-- <div v-if="hasCroppedPreview">
+                      <img :src="getAssetCroppedUri(asset.name)" height="300" width="300">
+                    </div> -->
                   </div>
                   <div>
                     <div class="form-row">
@@ -95,7 +104,9 @@ export default {
     acceptedFiles: String,
     maxFiles: Number,
     maxFilesize: Number,
-    uploadUrl: String
+    uploadUrl: String,
+    hasStar: Boolean,
+    hasCroppedPreview: Boolean
   },
 
   data() {
@@ -112,6 +123,8 @@ export default {
     this.dropzoneConfig.acceptedFiles = this.acceptedFiles;
     this.dropzoneConfig.maxFiles = this.maxFiles;
     this.dropzoneConfig.maxFilesize = this.maxFilesize;
+
+    console.log(this.$props);
   },
 
   methods: {
@@ -127,6 +140,10 @@ export default {
 
     toggleAsset(asset,event) {
       this.$parent.toggleAsset(asset,event);
+    },
+
+    togglePreview(asset,event) {
+      this.$parent.togglePreview(asset,event);
     },
 
     showAssetEdit(e) {
@@ -145,6 +162,10 @@ export default {
 
     getAssetUri(asset) {
       return `/media/${asset}/sm`;
+    },
+
+    getAssetCroppedUri(asset) {
+      return `/media/preview/${asset}`;
     },
 
     getAssetSource(asset) {
