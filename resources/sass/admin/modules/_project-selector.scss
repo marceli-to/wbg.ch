@@ -5,11 +5,23 @@
  *
  */
 
+.project-selector {
+  .select-wrapper {
+    &:after {
+      background-color: $color--medium-grey;
+    }
+  }
+
+  select {
+    border: 2px solid $color--medium-grey;
+  }
+}
+
  .project-selector__item {
 
   &.is-multi {
     @include responsive-prop('margin-bottom', $space-sm);
-    @include responsive-prop('padding', $space-xs);
+    @include responsive-prop('padding-top', $space-xs);
   }
 
   h2 {

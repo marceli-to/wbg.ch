@@ -16,7 +16,7 @@
               :key="client.id"
             >
               <div class="list-item-body">
-                <strong>{{ client.name }}</strong>, {{ client.location }}
+                <strong>{{ client.name }}</strong><span style="display:inline" v-if="client.location">, {{ client.location }}</span>
               </div>
               <div class="list-item-action">
                 <a
@@ -52,7 +52,7 @@
                    @click.prevent="clearSearch()"
                 >
                 </a>
-                <input type="text" class="search" v-model="search" placeholder="Filter nach Name oder Ort">
+                <input type="text" class="search" v-model="search" placeholder="Suche nach Name">
               </div>
             </div>
           </footer>
@@ -137,8 +137,7 @@ export default {
       return this.clients.filter(client => {
         let name = client.name, location = client.location;
         if (
-            name.toLowerCase().includes(this.search.toLowerCase()) || 
-            location.toLowerCase().includes(this.search.toLowerCase())
+            name.toLowerCase().includes(this.search.toLowerCase())
         ) {
           return client;
         }

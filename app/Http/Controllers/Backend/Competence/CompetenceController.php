@@ -111,7 +111,7 @@ class CompetenceController extends Controller
         $competence = $this->competence->findOrFail($id);
         $competence->title       = $request->input('title');
         $competence->description = $request->input('description');
-        $competence->category_id = $request->input('category_id') ? $request->input('category_id') : null;
+        $competence->category_id = $request->input('category_id') != 'NULL' ? $request->input('category_id') : null;
         $competence->save();
 
         if (!empty($request->media))

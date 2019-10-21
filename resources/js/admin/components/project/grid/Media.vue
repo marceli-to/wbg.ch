@@ -69,7 +69,7 @@ export default {
   },
 
   created() {
-    this.img.uri = `/media/${this.$props.element.image}/lg`;
+    this.img.uri = `/media/${this.$props.element.image}/xl`;
     this.img.name = this.$props.element.image;
   },
 
@@ -102,10 +102,12 @@ export default {
           }
         }
       };
+      
       let uri = "/api/project/image/crop";
       this.axios.post(uri, data).then(response => {
         this.img.name = response.data.name;
-        this.axios.get(`/media/${response.data.name}/lg`).then(response => {
+        this.img.uri  = `/media/${this.img.name}/xl`;
+        this.axios.get(`/media/${response.data.name}/xl`).then(response => {
           btn.classList.remove("is-loading");
           this.toggleOverlay();
         });

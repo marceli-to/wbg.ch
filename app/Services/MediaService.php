@@ -93,12 +93,12 @@ class MediaService
     /**
      * Maximum width for extra large landscape images
      */    
-    protected $max_width_xl = 2400;    
+    protected $max_width_xl = 3000;    
 
     /**
      * Maximum height for extra large portrait images
      */    
-    protected $max_height_xl = 1600;
+    protected $max_height_xl = 3000;
 
     /**
      * Image prefix
@@ -135,7 +135,7 @@ class MediaService
     {
         $file = $request->file('file');
         $name = $this->_sanitizeFilename(trim($file->getClientOriginalName()));
-        $name = uniqid() . '_' . $this->prefix . '_' . $name;
+        $name = uniqid() . '_' . $name;
         $file->move($this->path_source, $name);
 
         // Get file extension to store in media model
@@ -143,6 +143,9 @@ class MediaService
 
         // Create thumbnail for preview
         $this->thumbnail($name);
+
+        // Create extra large file
+        // $this->resize($name, 'xl');
 
         return ['name' => $name, 'filetype' => $filetype];
     }
@@ -336,7 +339,7 @@ class MediaService
                         });
                     }
 
-                    $image->save($this->path_xl . $image->basename);
+                    $image->save($this->path_xl . $image->basename, 100);
                     return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
                 }
                 else
@@ -357,26 +360,26 @@ class MediaService
         // Create intervention image
         if (isset($data['image']))
         {
-            $image = \Image::make($this->path_source . $data['image']);
+            $image = \Image::make($this->path_xl . $data['image']);
 
             // Create new filename by removing existing unique id first
             $name = substr($image->filename, 14, strlen($image->filename));
 
             // Add cropped prefix & unique id
-            $name = $this->prefix_cropped . uniqid() . '_' . $name . '.' . $image->extension;
+            $name = uniqid() . '_' . $name . '.' . $image->extension;
     
             // Crop (w, h, x, y)
             if (!empty($data['coords']))
             {
                 $c = $data['coords'];
-                $image->crop(floor($c['w']), floor($c['h']), floor($c['x']), floor($c['y']));
+                $image->crop(ceil($c['w']), ceil($c['h']), ceil($c['x']), ceil($c['y']));
             }
 
             // Save the image
-            $image->save($this->path_lg . $name);
+            $image->save($this->path_xl . $name, 100);
 
             // Also save a copy to the source folder so it can be cropped again
-            $image->save($this->path_source . $name);
+            $image->save($this->path_source . $name, 100);
 
             return ['name' => $name];
         }
@@ -406,6 +409,24 @@ class MediaService
         }
     }
 
+    /**
+     * Return the source of an image.
+     * 
+     * @param  str $image
+     * @return \Illuminate\Http\Response
+     */
+
+    public function source($image = NULL)
+    {
+        if (File::exists($this->path_source . $image))
+        {
+            $filename = $image;
+            $img = \Image::cache(function($image) use ($filename) {
+                return $image->make($this->path_source . $filename);
+            }, 300, false);
+            return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
+        }
+    }
 
     /**
      * Delete a file from the storage, including all subfolders
@@ -431,12 +452,12 @@ class MediaService
      * @param boolean  $anal - If set to *true*, will remove all non-alphanumeric characters.
      */
 
-    private function _sanitizeFilename($string, $force_lowercase = true, $anal = false)
+    private function _sanitizeFilename($string, $force_lowercase = true, $anal = true)
     {
-        $strip = array("~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "=", "+", "[", "{", "]", "}", "\\", "|", ";", ":", "\"", "'", "&#8216;", "&#8217;", "&#8220;", "&#8221;", "&#8211;", "&#8212;", "â€”", "â€“", ",", "<", ">", "/", "?");
+        $strip = array("~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "=", "+", "[", "{", "]", "}", "\\", "|", ";", ":", "\"", "'", "&#8216;", "&#8217;", "&#8220;", "&#8221;", "&#8211;", "&#8212;", "â€”", "â€“", ",", "<", ">", "/", "?");
         $clean = trim(str_replace($strip, "", strip_tags($string)));
         $clean = preg_replace('/\s+/', "-", $clean);
-        $clean = ($anal) ? preg_replace("/[^a-zA-Z0-9]/", "", $clean) : $clean ;
+        $clean = ($anal) ? preg_replace("/[^a-zA-Z0-9._\-]/", "", $clean) : $clean ;
         return ($force_lowercase) ? (function_exists('mb_strtolower')) ? mb_strtolower($clean, 'UTF-8') : strtolower($clean) : $clean;
     }
 

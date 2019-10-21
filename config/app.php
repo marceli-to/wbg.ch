@@ -226,6 +226,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'AppHelper' => App\Helpers\AppHelper::class,
+        'ImageHelper' => App\Helpers\ImageHelper::class,
         'Image' => Intervention\Image\Facades\Image::class,
     ],
 

@@ -26,11 +26,10 @@
                 v-model="client.name"
               >
             </div>
-            <div class="form-row" :class="errors.location ? 'has-error': ''">
-              <label>Ort *</label>
+            <div class="form-row">
+              <label>Ort</label>
               <input 
                 type="text" 
-                @focus="removeError('location')" 
                 name="name" 
                 v-model="client.location"
               >
@@ -76,7 +75,6 @@ export default {
       // fields to validate
       errors: {
         name: false,
-        location: false,
         project_id: false
       },
 
@@ -112,17 +110,12 @@ export default {
   methods: {
     // Validation methods
     validate() {
-      if (this.client.name && this.client.location) {
+      if (this.client.name) {
         return true;
       }
 
       if (!this.client.name) {
         this.errors.name = true;
-        this.tabs.data.error = true;
-      }
-
-      if (!this.client.location) {
-        this.errors.location = true;
         this.tabs.data.error = true;
       }
 

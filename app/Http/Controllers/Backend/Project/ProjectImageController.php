@@ -57,7 +57,6 @@ class ProjectImageController extends Controller
                               ->where('project_id', '=', $projectId)
                               ->where('publish', '=', 1)
                               ->orderBy('parent_id', 'ASC')
-                              ->notInGrid()
                               ->get();
 
         return new ProjectCollection($projectImages);
@@ -69,30 +68,98 @@ class ProjectImageController extends Controller
      * @param  str $filename
      * @return \Illuminate\Http\Response
      */
-    public function unlink($filename)
+    public function delete($filename)
     {
-        // Delete image
+        // Get image model by filename
         $image = $this->projectImage->where('name', $filename)->first();
+        
+        if ($image)
+        {
+            // Get all versions of the image
+            if ($image->parent_id > 0)
+            {
+                $images = $this->projectImage->withCrop($image->parent_id)->get();
+                if ($images)
+                {
+                    foreach($images as $image)
+                    {
+                        $image->delete();
+                
+                        // Delete grid element
+                        if ($gridElement = $this->gridElement->where('project_image_id', '=', $image->id)->first())
+                        {
+                            $gridElement->delete();
+                        }
+            
+                        // Delete home grid element
+                        if ($homeGridElement = $this->homeGridElement->where('project_image_id', '=', $image->id)->first())
+                        {
+                            $homeGridElement->delete();
+                        }
+    
+                        // Delete image from disk   
+                        $this->mediaService->delete($image->name);
+                    }
+                }
+            }
+            else
+            {
+                $image->delete();
+                
+                // Delete grid element
+                if ($gridElement = $this->gridElement->where('project_image_id', '=', $image->id)->first())
+                {
+                    $gridElement->delete();
+                }
+    
+                // Delete home grid element
+                if ($homeGridElement = $this->homeGridElement->where('project_image_id', '=', $image->id)->first())
+                {
+                    $homeGridElement->delete();
+                }
+
+                // Delete image from disk   
+                $this->mediaService->delete($image->name);
+            }
+        }
+        else
+        {
+            // Delete image from disk   
+            $this->mediaService->delete($filename);
+        }
+
+        return response()->json('successfully deleted');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  str $filename
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteCropped($filename)
+    {
+        // Get image model by filename
+        $image = $this->projectImage->where('name', $filename)->first();
+        
         if ($image)
         {
             $image->delete();
+    
+            // Delete grid element
+            if ($gridElement = $this->gridElement->where('project_image_id', '=', $image->id)->first())
+            {
+                $gridElement->delete();
+            }
+
+            // Delete home grid element
+            if ($homeGridElement = $this->homeGridElement->where('project_image_id', '=', $image->id)->first())
+            {
+                $homeGridElement->delete();
+            }
         }
 
-        // Delete grid element
-        $gridElement = $this->gridElement->where('project_image_id', '=', $image->id)->first();
-        if ($gridElement)
-        {
-            $gridElement->delete();
-        }
-
-        // Delete home grid element
-        $homeGridElement = $this->homeGridElement->where('project_image_id', '=', $image->id)->first();
-        if ($homeGridElement)
-        {
-            $homeGridElement->delete();
-        }
-
-        // Delete image from disk
+        // Delete image from disk   
         $this->mediaService->delete($filename);
 
         return response()->json('successfully deleted');
@@ -125,7 +192,6 @@ class ProjectImageController extends Controller
         $image->save();
         return response()->json($image->is_preview);
     }
-
 
     /**
      * Update the order of the resources.
@@ -165,7 +231,7 @@ class ProjectImageController extends Controller
             // Clone & adjust project image
             $projectImage = $this->projectImage->find($data['imageId']);
             $projectImage->is_grid = 0;
-            $projectImage->parent_id = $projectImage->id;
+            $projectImage->parent_id = ($projectImage->parent_id == 0) ? $projectImage->id : $projectImage->parent_id;
             $projectImage->save();
 
             $projectImageCopy = $projectImage->replicate();

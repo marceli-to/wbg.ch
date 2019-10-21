@@ -6,43 +6,43 @@
 
     @if ($g['key'] == '1fr')
       @if (isset($g['elements']))
-        @include('web.partials.boxes.1fr', array('elements' => $g['elements']))
+        @include('web.partials.boxes.project.1fr', array('elements' => $g['elements']))
       @endif
     @endif
 
     @if ($g['key'] == '1fr-1fr_stacked')
       @if (isset($g['elements']))
-        @include('web.partials.boxes.1fr-1fr_stacked', array('elements' => $g['elements']))
+        @include('web.partials.boxes.project.1fr-1fr_stacked', array('elements' => $g['elements']))
       @endif
     @endif
 
     @if ($g['key'] == '1fr_stacked-1fr')
       @if (isset($g['elements']))
-        @include('web.partials.boxes.1fr_stacked-1fr', array('elements' => $g['elements']))
+        @include('web.partials.boxes.project.1fr_stacked-1fr', array('elements' => $g['elements']))
       @endif
     @endif
 
     @if ($g['key'] == '1fr-wide')
       @if (isset($g['elements']))
-        @include('web.partials.boxes.1fr-wide', array('elements' => $g['elements']))
+        @include('web.partials.boxes.project.1fr-wide', array('elements' => $g['elements']))
       @endif
     @endif
 
     @if ($g['key'] == '2x1fr-wide')
       @if (isset($g['elements']))
-        @include('web.partials.boxes.2x1fr-wide', array('elements' => $g['elements']))
+        @include('web.partials.boxes.project.2x1fr-wide', array('elements' => $g['elements']))
       @endif
     @endif
 
     @if ($g['key'] == '2x1fr')
       @if (isset($g['elements']))
-        @include('web.partials.boxes.2x1fr', array('elements' => $g['elements']))
+        @include('web.partials.boxes.project.2x1fr', array('elements' => $g['elements']))
       @endif
     @endif
 
     @if ($g['key'] == '1fr-portrait')
       @if (isset($g['elements']))
-        @include('web.partials.boxes.1fr-portrait', array('elements' => $g['elements']))
+        @include('web.partials.boxes.project.1fr-portrait', array('elements' => $g['elements']))
       @endif
     @endif
 

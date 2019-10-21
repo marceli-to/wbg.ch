@@ -77,7 +77,7 @@ class ContentController extends Controller
   {
     $content = $this->content->findOrFail($id);
     $content->key  = $request->input('key');
-    $content->text = $request->input('title');
+    $content->text = $request->input('text');
     $content->save();
     return response()->json('successfully updated');
   }

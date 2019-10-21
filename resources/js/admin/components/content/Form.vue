@@ -18,7 +18,7 @@
                 </select>
               </div>
             </div>
-            <div class="form-row">
+            <div class="form-row" :class="errors.text ? 'has-error': ''">
               <label>Text</label>
               <tinymce-editor
                 api-key="vuaywur9klvlt3excnrd9xki1a5lj25v18b2j0d0nu5tbwro"

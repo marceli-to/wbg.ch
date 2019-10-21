@@ -49,7 +49,6 @@ class ProjectsController extends Controller
    */
   public function project($id = NULL, $slug = NULL)
   {
-   
     $project = $this->project->with('client')->findOrFail($id);
     return view(
         $this->view_path . '.project',
@@ -77,7 +76,6 @@ class ProjectsController extends Controller
         $sorted = $g->elements->sortBy('position');
         $project_grids[$g->id]['elements'] = $sorted->values()->all();
       }
-
       return $project_grids;
   }
 }

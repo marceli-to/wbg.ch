@@ -172,11 +172,11 @@
               <figure v-for="image in images" :key="image.id">
                 <a
                   v-if="image.is_crop"
-                  @click.prevent="destroyImage($event,image.name)"
+                  @click.prevent="deleteCroppedImage($event,image.name)"
                   class="btn-trash-mini"
                 ></a>
                 <a href @click.prevent="storeImage(image.id)">
-                  <img :src="getAssetSource(image.name)" height="50" width="50">
+                  <img :src="getAssetSource(image.name)" height="120" width="70">
                 </a>
               </figure>
             </div>
@@ -295,10 +295,10 @@ export default {
       });
     },
 
-    destroyImage(event, image) {
+    deleteCroppedImage(event, image) {
       event.stopPropagation();
       if(confirm('Bitte löschen bestätigen!')) {
-        let uri = `/api/project/image/delete/${image}`;
+        let uri = `/api/project/image/delete/cropped/${image}`;
         this.axios.delete(uri).then(response => {
           const index = this.images.findIndex(x => x.name === image);
           this.images.splice(index, 1);

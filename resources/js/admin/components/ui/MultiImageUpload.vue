@@ -123,8 +123,6 @@ export default {
     this.dropzoneConfig.acceptedFiles = this.acceptedFiles;
     this.dropzoneConfig.maxFiles = this.maxFiles;
     this.dropzoneConfig.maxFilesize = this.maxFilesize;
-
-    console.log(this.$props);
   },
 
   methods: {

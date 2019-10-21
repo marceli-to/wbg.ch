@@ -73,7 +73,7 @@ export default {
   },
 
   created() {
-    this.img.uri = `/media/${this.$props.element.image}/lg`;
+    this.img.uri = `/media/${this.$props.element.image}/xl`;
     this.img.name = this.$props.element.image;
   },
 
@@ -110,7 +110,8 @@ export default {
       let el = this.progress(event.target);
       this.axios.post(uri, data).then(response => {
         this.img.name = response.data.name;
-        this.axios.get(`/media/${response.data.name}/lg`).then(response => {
+        this.img.uri  = `/media/${this.img.name}/xl`;
+        this.axios.get(`/media/${response.data.name}/xl`).then(response => {
           this.progress(el);
           this.toggleOverlay();
         });

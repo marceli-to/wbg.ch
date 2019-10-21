@@ -37,5 +37,17 @@ class ProjectImage extends Model
     public function scopeNotInGrid($query)
     {
         return $query->where('is_grid', '=', 0);
+    }
+
+    /**
+     * Scope a query to show elements by project.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+
+    public function scopeWithCrop($query, $parent_id)
+    {
+        return $query->where('parent_id', '=', $parent_id);
     } 
 }

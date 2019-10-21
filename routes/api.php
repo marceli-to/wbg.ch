@@ -88,7 +88,9 @@ Route::middleware('auth:api')->group(function() {
     Route::delete('project/destroy/{id}', 'Backend\Project\ProjectController@destroy');
     
     Route::get('project/image/get/{projectId}', 'Backend\Project\ProjectImageController@get');
-    Route::delete('project/image/delete/{file}', 'Backend\Project\ProjectImageController@unlink');
+    Route::delete('project/image/delete/{file}', 'Backend\Project\ProjectImageController@delete');
+    Route::delete('project/image/delete/cropped/{file}', 'Backend\Project\ProjectImageController@deleteCropped');
+
     Route::get('project/image/status/{id}', 'Backend\Project\ProjectImageController@status');
     Route::get('project/image/preview/{id}', 'Backend\Project\ProjectImageController@preview');
     Route::post('project/image/order', 'Backend\Project\ProjectImageController@order');
@@ -109,6 +111,7 @@ Route::middleware('auth:api')->group(function() {
     Route::get('home/grids', 'Backend\Home\HomeGridController@get');
     Route::get('home/grids/deploy', 'Backend\Home\HomeGridController@deploy');
     Route::get('home/grids/reset', 'Backend\Home\HomeGridController@reset');
+    Route::post('home/grids/order', 'Backend\Home\HomeGridController@order');
     Route::get('home/grid/store/{layoutId}', 'Backend\Home\HomeGridController@store');
     Route::delete('home/grid/delete/{id}', 'Backend\Home\HomeGridController@destroy');
     
@@ -145,6 +148,7 @@ Route::middleware('auth:api')->group(function() {
 
     Route::post('media/upload','MediaController@upload');
     Route::post('media/upload/document','MediaController@uploadDocument');
+    Route::get('media/source/{file}', 'MediaController@source');
     Route::get('media/{file}/{size?}', 'MediaController@resize');
 
 });

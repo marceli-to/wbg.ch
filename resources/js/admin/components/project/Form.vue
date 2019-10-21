@@ -266,8 +266,9 @@ export default {
     // Upload & asset methods
     afterUpload(file) {
       if (file.status == "error" && file.accepted == false) {
-        this.$notify({type: "error", text: "Ungültiges Dateiformat."});
-      } 
+        console.log(file);
+        this.$notify({type: "error", text: "Dateiformat ungültig oder Datei zu gross"});
+      }
       else {
         let file_response = JSON.parse(file.xhr.response);
         file_response.id = null;

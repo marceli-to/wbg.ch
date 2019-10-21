@@ -1,12 +1,79 @@
 <?php
 namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
+
+use App\Services\MediaService;
+use App\Services\MenuService;
+
+use App\Models\Project;
+use App\Models\HomeGrid;
+use App\Models\HomeGridElement;
+
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+
+  // Services
+  protected $menuService;
+  protected $mediaService;
+
+  // Models
+  protected $project;
+  protected $homeGrid;
+
+  // View path
+  protected $view_path = 'web.home';
+
+
+  public function __construct(
+      MenuService $menuService,
+      MediaService $mediaService,
+      Project $project,
+      HomeGrid $homeGrid,
+      HomeGridElement $homeGridElement
+  )
+  {
+      $this->project          = $project;
+      $this->homeGrid         = $homeGrid;
+      $this->homeGridElement  = $homeGridElement;
+      $this->menuService      = $menuService;
+      $this->menu             = $this->menuService->boot();
+
+  }
+
   public function index()
   {
-    return view('web.home.index');
+    return view(
+      $this->view_path . '.index', 
+      [
+        'grids' => $this->getGrids()
+      ]
+    );
+  }
+
+  /**
+   * Return grids
+   */
+
+  private function getGrids()
+  {
+    $grids = $this->homeGrid->with('layout')
+                            ->with('elements.projectimage.project')
+                            ->with('elements.news')
+                            ->orderBy('order')
+                            ->get();
+    
+    $home_grids = [];
+    foreach($grids as $g)
+    {
+        $home_grids[$g->id]['key'] = $g->layout->key;
+
+        // Filter by environment & sort by position
+        $sorted = $g->elements->where('environment', 'production')->sortBy('position');
+        $home_grids[$g->id]['elements'] = $sorted->values()->all();
+    }
+
+    return $home_grids;
   }
 }

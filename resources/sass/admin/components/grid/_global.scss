@@ -13,6 +13,18 @@
     &.grid-row--highlight {
         @include responsive-prop('margin-bottom', $space-lg); 
     }
+
+    &.is-list {
+        margin-bottom: 0 !important;
+        padding-bottom: 10px;
+        padding-top: 10px !important;
+        transition: background-color .12s ease-out;
+
+        &:hover {
+            background-color: #eee;
+            cursor: move;
+        }
+    }
 }
 
 .grid-layout-selector {
@@ -212,14 +224,6 @@
             min-height: 440px;
         }
     }
-
-    // .grid-1fr_stacked-1fr .span,
-    // .grid-1fr-1fr_stacked .span {
-    //     min-height: 200px;
-    //     figure {
-    //         min-height: 200px;
-    //     }
-    // }
 
     .grid-stacked {
         display: grid;

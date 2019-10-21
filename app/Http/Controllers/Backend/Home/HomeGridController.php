@@ -130,4 +130,23 @@ class HomeGridController extends Controller
     $this->homeGridElement->where('grid_id', '=', $id)->delete();
     return response()->json('successfully deleted');
   }
+
+    /**
+     * Update the order of the resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function order(Request $request)
+    {
+        $grids = $request->get('grids');
+        foreach($grids as $grid)
+        {
+            $g = $this->homeGrid->find($grid['id']);
+            $g->order = $grid['order'];
+            $g->save(); 
+        }
+        return response()->json('successfully updated');
+    }
 }

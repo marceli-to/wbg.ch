@@ -8,3 +8,15 @@
     pointer-events: none;
   }
 }
+
+.icon-grid-list {
+  display: block;
+  height: auto;
+  width: auto;
+
+  img {
+    display: block;
+    height: auto;
+    width: 60px;
+  }
+}

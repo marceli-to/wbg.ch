@@ -50,7 +50,7 @@
                   name="category_id"
                   @focus="removeError('category_id')"
                 >
-                  <option selected="selected">Bitte wählen...</option>
+                  <option value="NULL" selected="selected">Bitte wählen...</option>
                   <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option>
                 </select>
               </div>

@@ -6,21 +6,36 @@
       <main class="content" role="main">
         <div>
           <h1>Layout für Projekt «{{pageTitle}}»</h1>
+          <a href="javascript:;"
+            class="icon-layout"
+            @click.prevent="toggleView()">
+            <span v-if="layout == 'grid'">Grid</span>
+            <span v-if="layout == 'list'">Liste</span>
+          </a>
           <grid-selector></grid-selector>
-          <div class="grid-rows">
+          
+          <div class="grid-rows" v-if="layout == 'grid'">
+            <div class="grid-row" v-for="grid in grids" :key="grid.id">
+              <a
+                href="javascript:;"
+                class="btn-trash"
+                @click.prevent="destroy(grid.id,$event)"
+              >Zeile löschen</a>
+              <grid-row :layout="grid.layout.key" :gridId="grid.id" :projectId="projectId"></grid-row>
+            </div>
+          </div>
+
+          <div class="grid-rows" v-if="layout == 'list'">
             <draggable 
-              :disabled="true"
+              :disabled="false"
               v-model="grids" 
               @end="updateOrder"
               ghost-class="draggable-ghost"
               draggable=".grid-row">
-              <div class="grid-row grid-row--draggable" v-for="grid in grids" :key="grid.id">
-                <a
-                  href="javascript:;"
-                  class="btn-trash"
-                  @click.prevent="destroy(grid.id,$event)"
-                >Zeile löschen</a>
-                <grid-row :layout="grid.layout.key" :gridId="grid.id" :projectId="projectId"></grid-row>
+              <div class="grid-row is-list is-draggable" v-for="grid in grids" :key="grid.id">
+                <span class="icon-grid-list">
+                  <img :src="'/assets/admin/img/icons/grid-layout-' + grid.layout.key + '.svg'" height="172" width="126">
+                </span>
               </div>
             </draggable>
           </div>
@@ -60,6 +75,7 @@ export default {
       projectId: null,
       debounce: false,
       hasOverlay: false,
+      layout: 'grid',
     };
   },
 
@@ -122,6 +138,10 @@ export default {
           self.$notify({type: 'success', text: 'Zeile gelöscht'});
         }, 200);
       });
+    },
+
+    toggleView() {
+      this.layout = this.layout == 'grid' ? 'list' : 'grid';
     }
   },
 
