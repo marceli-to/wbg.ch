@@ -4,7 +4,6 @@
  * -----------------------------------------------------------------------------
  */
 
-// Base layout
 html {
 	overflow-y: auto;
 }
@@ -29,8 +28,9 @@ body {
 main {
 	padding: $header-height-sm $space-md $space-md $space-md;
 	position: relative;
-	
+
 	@include bp-lg() {
+		padding-top: $header-height-lg;
 		padding-left: 0;
 		padding-right: 0;
 	}

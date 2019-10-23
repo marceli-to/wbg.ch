@@ -17,20 +17,40 @@
       <a href="/" class="logo" title="WBG - Home">WBG</a>
       <hr>
     </div>
+    <div class="span header-title">
+      <h1 class="page-title">@if (isset($page_title)) {{ $page_title }} @else &nbsp; @endif</h1>
+      <hr>
+    </div>
     <div class="span header-navigation">
       <nav class="header" role="navigation">
         <ul>
           <li>
-            <a href="" title="Projekte">Projekte</a>
+            <a href="{{ route('project.index') }}" 
+               title="Projekte"
+               class="{{ request()->routeIs('project.*') ? 'is-active' : ''}}">
+               Projekte
+            </a>
           </li>
           <li>
-            <a href="" title="Profil">Profil</a>
+            <a href="{{ route('profile.attitude') }}"
+               title="Profil"
+               class="{{ request()->routeIs('profile.*') ? 'is-active' : ''}}">
+               Profil
+            </a>
           </li>
           <li>
-            <a href="" title="Team">Team</a>
+            <a href="{{ route('team') }}"
+               title="Team"
+               class="{{ request()->routeIs('team') ? 'is-active' : ''}}">
+               Team
+            </a>
           </li>
           <li>
-            <a href="" title="Kontakt">Kontakt</a>
+            <a href="{{ route('contact') }}"
+               title="Team"
+               class="{{ request()->routeIs('contact') ? 'is-active' : ''}}">
+               Kontakt
+            </a>
           </li>
         </ul>
       </nav>
@@ -42,58 +62,72 @@
   <nav class="sidebar js-menu">
     <ul class="is-project">
       <li>
-        <a href="">Projekte</a>
-        <ul>
-          <li>
-            <a href="">Identity</a>
-            <ul>
-              <li>
-                <a href="">Muster 1</a>
-              </li>
-              <li>
-                  <a href="">Muster 2</a>
-                </li>
-            </ul>
-          </li>
-          <li>
-            <a href="">Signaletik</a>
-          </li>
-          <li>
-            <a href="">Print</a>
-          </li>
-          <li>
-            <a href="">Panoptikum</a>
-          </li>
+        <a href="javascript:;" class="{{ request()->routeIs('project.*') ? 'is-active' : '' }} js-btn-toggle-sub">Projekte</a>
+        <ul style="{{ request()->routeIs('project.*') ? 'display:block' : 'display:none' }}">
+          @foreach($menu['projects'] as $menu_project)
+            <li>
+              <a href="{{ $menu_project['slug'] }}" 
+                 class="{{ $menu_project['is-active'] ? 'is-active' : '' }}">
+                 {{ $menu_project['category'] }}
+              </a>
+              <ul class="{{ $menu_project['is-active'] ? 'is-visible' : '' }}">
+                @foreach($menu_project['items'] as $menu_item)
+                  <li>
+                    <a 
+                      href="{{ $menu_item['slug'] }}"
+                      class="{{ $menu_item['is-active'] ? 'is-active hide-sm' : 'hide-sm' }}">
+                      {{ $menu_item['name'] }}
+                    </a>
+                  </li>
+                @endforeach
+              </ul>
+            </li>
+          @endforeach
         </ul>
       </li>
     </ul>
     <ul class="is-profile">
       <li>
-        <a href="">Profil</a>
-        <ul>
+        <a href="javascript:;" 
+           class="js-btn-toggle-sub {{ request()->routeIs('profile.*') ? 'is-active' : '' }}">
+           Profil
+        </a>
+        <ul style="{{ request()->routeIs('profile.*') ? 'display:block' : 'display:none' }}">
           <li>
-            <a href="">Haltung</a>
+            <a href="{{ route('profile.attitude') }}"
+                class="{{ request()->routeIs('profile.attitude') ? 'is-active' : '' }}">
+              Haltung
+            </a>
           </li>
           <li>
-            <a href="">Kompetenzen</a>
+            <a href="{{ route('profile.competences') }}"
+                class="{{ request()->routeIs('profile.competences') ? 'is-active' : '' }}">
+              Kompetenzen
+            </a>
           </li>
           <li>
-            <a href="">Kunden</a>
+            <a href="{{ route('profile.clients') }}"
+                class="{{ request()->routeIs('profile.clients') ? 'is-active' : '' }}">
+              Kunden
+            </a>
           </li>
           <li>
-            <a href="">Impressum</a>
+            <a href="{{ route('profile.imprint') }}"
+                class="{{ request()->routeIs('profile.imprint') ? 'is-active' : '' }}">
+              Impressum
+            </a>
           </li>
         </ul>
       </li>
     </ul>
     <ul class="hide-md">
       <li>
-        <a href="">Team</a>
+        <a href="{{ route('team') }}" class="{{ request()->routeIs('team') ? 'is-active' : '' }}">Team</a>
       </li>
     </ul>
     <ul class="hide-md">
       <li>
-        <a href="">Kontakt</a>
+        <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'is-active' : '' }}">Kontakt</a>
       </li>
     </ul>
   </nav>

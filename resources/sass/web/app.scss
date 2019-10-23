@@ -35,10 +35,14 @@
 @import 'components/boxes/global';
 @import 'components/boxes/ratio';
 @import 'components/buttons/menu';
-@import 'components/headings';
+@import 'components/icons/global';
+@import 'components/icons/browse';
+@import 'components/icons/back';
+@import 'components/headings/global';
+@import 'components/headings/h1';
+@import 'components/headings/h2';
 @import 'components/hr';
 @import 'components/logo';
-@import 'components/icons';
 @import 'components/images';
 
 // Layout
@@ -49,6 +53,7 @@
 @import 'layout/footer';
 
 // Navigation
+@import 'navigation/browse';
 @import 'navigation/header';
 @import 'navigation/sidebar';
 
@@ -58,5 +63,6 @@
 
 
 // Views
-@import 'views/content';
-@import 'views/print';
+@import 'views/global';
+@import 'views/project';
+// @import 'views/print';

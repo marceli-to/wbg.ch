@@ -99,19 +99,17 @@ class ContentController extends Controller
   /**
    * Remove the specified resource from storage.
    *
-   * @param  str $filename
+   * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function unlink($filename)
+  public function destroy($id)
   {
-    $content = $this->content->where('media', $filename)->first();
-    if ($content)
-    {
-      $content->media = null;
-      $content->save();
-    }
-    $this->mediaService->delete($filename);
-    return response()->json('successfully deleted');
+      $content = $this->content->find($id);
+      if ($content)
+      {
+        $content->delete();
+      }
+      return response()->json('successfully deleted');
   }
 
   /**

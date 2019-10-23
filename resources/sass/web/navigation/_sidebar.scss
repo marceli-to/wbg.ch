@@ -50,15 +50,6 @@ nav.sidebar {
 
   nav.sidebar {
     height: auto;
-    // padding: 0;
-    //right: auto;
-    //position: relative;
-    //top: 0;
-    // width: auto;
-
-    // fixed header
-    //background-color: #ddd;
-    //left: 0;
     padding: 16px 0 0 0;
     position: fixed;
     right: auto;
@@ -110,5 +101,16 @@ nav.sidebar {
 @include bp-lg() {
   nav.sidebar {
     max-width: 275px;
+  }
+}
+
+.is-hidden,
+.hide-sm {
+  display: none !important;
+}
+
+.is-visible .hide-sm {
+  @include bp-sm() {
+    display: block !important;
   }
 }

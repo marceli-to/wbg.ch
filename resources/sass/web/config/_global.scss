@@ -28,6 +28,7 @@ $url-svg:    '../img/svg/';
 /* Breakpoints
  * -------------------- */
 
+$bp-xs:  500px;
 $bp-sm:  720px;
 $bp-md: 1024px;
 $bp-lg: 1168px;
@@ -42,6 +43,7 @@ $breakpoints: (
  * -------------------- */
 
 // Page
+$page-max-width-xs: 446px;
 $page-max-width: 1142px;
 
 // Header

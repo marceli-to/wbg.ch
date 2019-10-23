@@ -91,24 +91,19 @@ class MediaService
     protected $max_height_lg = 1200;
 
     /**
-     * Maximum width for extra large landscape images
+     * Maximum width for source images
      */    
-    protected $max_width_xl = 3000;    
+    protected $max_width_source = 3000;    
 
     /**
-     * Maximum height for extra large portrait images
+     * Maximum height for source images
      */    
-    protected $max_height_xl = 3000;
+    protected $max_height_source = 3000;
 
     /**
      * Image prefix
      */
     protected $prefix = 'wbg.ch';
-
-    /**
-     * Cropped images prefix
-     */
-    protected $prefix_cropped = 'c_';
     
     public function __construct()
     {
@@ -116,7 +111,6 @@ class MediaService
         $this->path_processed   = storage_path('app/public/media/images/processed/');
         $this->path_downloads   = storage_path('app/public/media/downloads');
         $this->path_uploads     = storage_path('app/public/tmp/uploads');
-        $this->path_xl          = $this->path_processed . 'xl/';
         $this->path_lg          = $this->path_processed . 'lg/';
         $this->path_sm          = $this->path_processed . 'sm/';
         $this->path_xs          = $this->path_processed . 'xs/';
@@ -144,8 +138,8 @@ class MediaService
         // Create thumbnail for preview
         $this->thumbnail($name);
 
-        // Create extra large file
-        // $this->resize($name, 'xl');
+        // Resize file and save as source
+        $this->resize($name, 'source');
 
         return ['name' => $name, 'filetype' => $filetype];
     }
@@ -313,44 +307,32 @@ class MediaService
                 }
             }
 
-            // Generate large images
-            if ($size == 'xl')
+            // Resize source images
+            if ($size == 'source')
             {
-                if (!File::exists($this->path_xl . $image))
+                // Create image instance
+                $image = \Image::make($this->path_source . $image);
+
+                // Get width and height
+                $width  = $image->getWidth();
+                $height = $image->getHeight();
+                
+                // Resize landscape image
+                if ($width > $height && $width >= $this->max_width_source)
                 {
-                    // Create image instance
-                    $image = \Image::make($this->path_source . $image);
-
-                    // Get width and height
-                    $width  = $image->getWidth();
-                    $height = $image->getHeight();
-                    
-                    // Resize landscape image
-                    if ($width > $height && $width >= $this->max_width_xl)
-                    {
-                        $image->resize($this->max_width_xl, null, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                    }
-                    else if ($height >= $this->max_height_xl)
-                    {
-                        $image->resize(null, $this->max_height_xl, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                    }
-
-                    $image->save($this->path_xl . $image->basename, 100);
-                    return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
+                    $image->resize($this->max_width_source, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
                 }
-                else
-                {   
-                    $filename = $image;
-                    $img = \Image::cache(function($image) use ($filename) {
-                        return $image->make($this->path_xl . $filename);
-                    }, 300, false);
-                    
-                    return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
+                else if ($height >= $this->max_height_source)
+                {
+                    $image->resize(null, $this->max_height_source, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
                 }
+
+                $image->save($this->path_source . $image->basename, 100);
+                return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
             }
         }
     }
@@ -360,7 +342,7 @@ class MediaService
         // Create intervention image
         if (isset($data['image']))
         {
-            $image = \Image::make($this->path_xl . $data['image']);
+            $image = \Image::make($this->path_source . $data['image']);
 
             // Create new filename by removing existing unique id first
             $name = substr($image->filename, 14, strlen($image->filename));
@@ -376,9 +358,6 @@ class MediaService
             }
 
             // Save the image
-            $image->save($this->path_xl . $name, 100);
-
-            // Also save a copy to the source folder so it can be cropped again
             $image->save($this->path_source . $name, 100);
 
             return ['name' => $name];
@@ -397,11 +376,11 @@ class MediaService
             $height = $image->getHeight();
             
             // Resize landscape image
-            if ($height >= 647)
+            if ($height >= 600)
             {
-                $image->resize(null, 647, function ($constraint) {
+                $image->resize(null, 600, function ($constraint) {
                     $constraint->aspectRatio();
-                })->crop('420', '567');
+                })->crop('380', '512');
             }
 
             $image->save($this->path_preview . $image->basename);
@@ -511,11 +490,6 @@ class MediaService
         if (!File::isDirectory($this->path_lg))
         {
             File::makeDirectory($this->path_lg, 0775, true, true);
-        }
-
-        if (!File::isDirectory($this->path_xl))
-        {
-            File::makeDirectory($this->path_xl, 0775, true, true);
         }
     }
 }

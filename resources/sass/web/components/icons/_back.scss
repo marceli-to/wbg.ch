@@ -1,0 +1,17 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/icons/back
+ * -----------------------------------------------------------------------------
+ */
+
+ .icon-back {
+  @extend %icon-ib;
+  @extend %icon-img;
+  height: 10px;
+  width: 10px;
+
+  svg {
+    fill: #000000;
+    transition: fill .1s ease-out;
+  }
+}

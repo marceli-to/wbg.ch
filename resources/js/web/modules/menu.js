@@ -9,6 +9,7 @@ var Menu = (function() {
         html:           'html',
         body:           'body',
         btnMenu:        '.js-btn-menu',
+        btnSub:         '.js-btn-toggle-sub',
         menu:           '.js-menu',
 	};
 
@@ -18,6 +19,7 @@ var Menu = (function() {
         visible: 'is-visible',
         open:    'is-open',
         parent:  'is-parent',
+        hasMenu: 'has-menu',
     };
 
     // media queries
@@ -42,12 +44,22 @@ var Menu = (function() {
         $(selectors.body).on('click', selectors.btnMenu, function(){
             _toggle();
         });
+
+        $(selectors.body).on('click', selectors.btnSub, function(){
+            _toggleSub($(this));
+        });
     };
 
     var _toggle = function() {
         $(selectors.menu).toggleClass(classes.visible);
         $(selectors.btnMenu).toggleClass(classes.active);
+        $(selectors.html).toggleClass(classes.hasMenu);
     };
+
+    var _toggleSub = function(btn) {
+        $(btn).next('ul').toggle();
+    };
+
 
 
     /* --------------------------------------------------------------

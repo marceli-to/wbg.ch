@@ -20,12 +20,20 @@ header.site-header {
 
     .span {
         @include font-size($fs-sm);
+        float: left;
         line-height: 1 !important;
         padding: $space-xl 0;
         position: relative;
 
         &.header-logo {
-            width: 100%;
+            width: 50px;
+        }
+
+        &.header-title {
+            width: calc(100% - 50px);
+            @include bp-sm() {
+                display: none;
+            }
         }
 
         &.header-navigation {
@@ -33,7 +41,6 @@ header.site-header {
         }
 
         @include bp-sm() {
-            float: left;
             padding-bottom: 28px;
 
             &.header-logo {

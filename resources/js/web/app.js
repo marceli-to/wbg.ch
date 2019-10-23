@@ -6,9 +6,8 @@
 
 require('./bootstrap');
 
-/**
- * Import Modules
- */
+// Lazyload
+require('./vendor/lazysizes.js');
 
 // Menu
 require('./modules/menu.js');

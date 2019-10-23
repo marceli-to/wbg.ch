@@ -87,6 +87,10 @@ Route::middleware('auth:api')->group(function() {
     Route::post('project/order', 'Backend\Project\ProjectController@order');
     Route::delete('project/destroy/{id}', 'Backend\Project\ProjectController@destroy');
     
+    Route::get('project/relations/get/{projectId}', 'Backend\Project\ProjectRelationController@get');
+    Route::post('project/relation/create', 'Backend\Project\ProjectRelationController@store');
+    Route::delete('project/relation/destroy/{id}', 'Backend\Project\ProjectRelationController@delete');
+
     Route::get('project/image/get/{projectId}', 'Backend\Project\ProjectImageController@get');
     Route::delete('project/image/delete/{file}', 'Backend\Project\ProjectImageController@delete');
     Route::delete('project/image/delete/cropped/{file}', 'Backend\Project\ProjectImageController@deleteCropped');
@@ -141,6 +145,8 @@ Route::middleware('auth:api')->group(function() {
     Route::post('content/update/{id}', 'Backend\Content\ContentController@update');
     Route::get('content/status/{id}', 'Backend\Content\ContentController@status');
     Route::get('content/get/keys', 'Backend\Content\ContentController@keys');
+    Route::delete('content/destroy/{id}', 'Backend\Content\ContentController@destroy');
+
 
     /**
      * Media routes

@@ -18,7 +18,7 @@
       <div>
         @if (isset($elements[2]))
           <img src="{!! ImageHelper::get($elements[2]->image->name, 'lg') !!}" height="430" width="280" alt="{{$elements[2]->image->caption}}">
-          @endif
+        @endif
       </div>
     </div>
   </div>

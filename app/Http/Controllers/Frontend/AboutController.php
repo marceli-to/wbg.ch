@@ -21,8 +21,8 @@ class AboutController extends Controller
    * 
    * @param MediaService $mediaService
    * @param Client $client
-  * @param Competence $competence
-  * @param CompetenceMedia $competenceMedia
+   * @param Competence $competence
+   * @param CompetenceMedia $competenceMedia
    */
 
   public function __construct(

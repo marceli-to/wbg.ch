@@ -11,10 +11,26 @@
  * Page routes
  */
 
+// Home
 Route::get('/', 'Frontend\HomeController@index')->name('home');
 
+// Projects
 Route::get('projekte', 'Frontend\ProjectsController@projects')->name('project.index');
+Route::get('projekte/{category}/{slug?}', 'Frontend\ProjectsController@category')->name('project.category');
 Route::get('projekt/{id}/{slug?}', 'Frontend\ProjectsController@project')->name('project.detail');
+
+// Profil
+Route::get('/profil', 'Frontend\ProfileController@index')->name('profile.index');
+Route::get('/profil/haltung', 'Frontend\ProfileController@attitude')->name('profile.attitude');
+Route::get('/profil/kompetenzen', 'Frontend\ProfileController@competences')->name('profile.competences');
+Route::get('/profil/kunden', 'Frontend\ProfileController@clients')->name('profile.clients');
+Route::get('/profil/impressum', 'Frontend\ProfileController@imprint')->name('profile.imprint');
+
+// Team
+Route::get('/team', 'Frontend\TeamController@index')->name('team');
+
+// Kontakt
+Route::get('/kontakt', 'Frontend\ContactController@index')->name('contact');
 
 /**
  * Image routes

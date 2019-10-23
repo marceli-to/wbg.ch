@@ -17,7 +17,7 @@
               <figure v-for="image in project.images" :key="image.id">
                 <a
                   v-if="image.is_crop"
-                  @click.prevent="destroyImage($event,image.name)"
+                  @click.prevent="deleteCroppedImage($event,image.name)"
                   class="btn-trash-mini"
                 ></a>
                 <a href @click.prevent="storeMedia(image.id)">
@@ -50,11 +50,10 @@ export default {
       this.$parent.storeMedia(imageId);
     },
 
-    destroyImage(event,image) {
+    deleteCroppedImage(event,image) {
       event.stopPropagation();
       if (confirm('Bitte löschen bestätigen!')) {
-        let uri = `/api/project/image/delete/${image}`,
-            elem = event.target;
+        let uri = `/api/project/image/delete/cropped/${image}`, elem = event.target;
         this.axios.delete(uri).then(response => {
             elem.parentNode.remove();
         });

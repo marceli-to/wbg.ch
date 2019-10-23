@@ -30,6 +30,10 @@
         grid-template-columns: auto 46px;
     }
 
+    &[data-icons="3"] {
+        grid-template-columns: auto 74px;
+    }
+
     &[data-icons="5"] {
         grid-template-columns: auto 130px;
     }
@@ -95,8 +99,17 @@
     grid-gap: 10px;
     text-align: right;
 
+    &[data-icons="1"] {
+        grid-template-columns: 1fr;
+        justify-items: flex-end;
+    }
+
     &[data-icons="2"] {
         grid-template-columns: repeat(2, 18px);
+    }
+
+    &[data-icons="3"] {
+        grid-template-columns: repeat(3, 18px);
     }
 
     &[data-icons="5"] {

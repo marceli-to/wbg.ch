@@ -41,13 +41,17 @@ class MenuService
    * @param int $categoryTypeId
    */
 
-  private function getProjects($projectId = NULL, $categoryId = NULL, $typeId = NULL)
+  private function getProjects($projectId = NULL, $categoryId = NULL)
   {
     // Get projects
     $projects = $this->project->published()
                               ->with('category')
+                              ->orderBy('order')
                               ->get()
                               ->groupBy('category.id');
+
+    // Get project
+    $project = $this->project->find($projectId);
     
     // Get categories
     $categories = $this->category->published()
@@ -56,14 +60,32 @@ class MenuService
 
     // Menu
     $menu = [];
-    foreach($categories as $key => $category)
+    foreach($categories as $k => $c)
     {
-      $menu[] = [
-        'category' => $category->name,
-        'id'       => $category->id,
-        'projects' => $projects[$category->id]
-      ];
+      $menu_items = [];
+
+      if (isset($projects[$c->id]))
+      {
+        foreach($projects[$c->id] as $p)
+        {
+          $menu_items[] = [
+            'id'        => $p->id,
+            'name'      => $p->name,
+            'slug'      => '/projekt/' . $p->id . '/' . str_slug($p->name),
+            'is-active' => $projectId == $p->id ? TRUE : FALSE,
+          ];
+        }
+              
+        $menu[] = [
+          'category'  => $c->name,
+          'id'        => $c->id,
+          'slug'      => '/projekte/' . $c->id . '/' . str_slug($c->name),
+          'is-active' => ($categoryId == $c->id || ($project && $project->category_id == $c->id)) ? TRUE : FALSE,
+          'items'     => $menu_items
+        ];
+      }
     }
+    return $menu;
   }
 
 

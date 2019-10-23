@@ -1,0 +1,98 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: views/Project
+ * -----------------------------------------------------------------------------
+ */
+
+// Project listing
+.project-list {
+
+  .project-teaser {
+    display: block;
+    margin-top: $space-xl;
+
+    @include bp-sm() {
+      margin-top: 0;
+    }
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    h2 {
+      //@include font-bold();
+      @include font-size($fs-sm);
+      margin-bottom: $space-xl;
+      @include bp-sm() {
+        display: none;
+      }
+    }
+
+    a {
+      display: block;
+      opacity: 1;
+      text-decoration: none;
+      transition: opacity .12s ease-out;
+
+      &:hover {
+        opacity: .8;
+      }
+    }
+
+    img {
+      @extend %is-responsive;
+    }
+  }
+}
+
+// Project detail
+.project-detail {
+
+  .project-header {
+    margin-bottom: $space-xl;
+    @include bp-sm() {
+      display: none !important;
+    }
+    h2 {
+      @include font-size($fs-sm);
+    }
+  }
+
+  .project-info {
+    margin-top: $space-md;
+    @include bp-sm() {
+      left: 0;
+    }
+  }
+}
+
+// Project grid
+.cssgrid {
+  .project-list {
+    display: -ms-grid;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 0;
+
+    @include bp-sm() {
+      grid-template-columns: repeat(5, 1fr);
+      grid-gap: $space-md;
+    }
+  }
+
+  .project-header {
+    display: -ms-grid;
+    display: grid;
+    grid-template-columns: auto 50px;
+    grid-gap: 0;
+
+    .span {
+        &:last-child {
+          text-align: right;
+        }
+    }
+  }
+}
+
+
+

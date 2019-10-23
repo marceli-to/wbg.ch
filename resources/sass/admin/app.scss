@@ -101,8 +101,9 @@
 @import 'ui';
 
 // Modules
-@import 'modules/project-selector';
 @import 'modules/article-selector';
+@import 'modules/project-selector';
+@import 'modules/project-relations';
 
 // Vendor - Dropzone
 @import 'vendor/dropzone';

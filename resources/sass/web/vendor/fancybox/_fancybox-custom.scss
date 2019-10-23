@@ -42,7 +42,6 @@
 .fancybox-infobar {
     color: $color--black;
     @include font-regular();
-    @include font-size($fs-lg);
     font-weight: normal;
     height: auto;
     left: auto;

@@ -20,6 +20,13 @@
                 :class="tabs.media.active ? 'is-active' : ''"
               >Bilder</a>
             </li>
+            <li v-if="this.$props.type == 'edit'">
+              <a
+                href="javascript:;"
+                @click="changeTab('relations')"
+                :class="tabs.relations.active ? 'is-active' : ''"
+              >Relationen</a>
+            </li>
           </ul>
         </nav>
         <form @submit.prevent="submit">
@@ -111,6 +118,36 @@
               ></multi-image-upload>
             </div>
           </div>
+          <div v-show="tabs.relations.active">
+            <div class="project-relations">
+              <label>Relation hinzufügen</label>
+              <div class="project-relations__grid">
+                <div class="select-wrapper">
+                  <select v-model="relation" name="related_project_id">
+                    <option selected="selected">Bitte wählen...</option>
+                    <option v-for="p in projects" :key="p.id" :value="p.id">{{ p.name }}</option>
+                  </select>
+                </div>
+                <div>
+                  <a href="" @click.prevent="addRelation()" class="btn-primary">Hinzufügen</a>
+                </div>
+              </div>
+            </div>
+            <div class="list-items" v-if="project.relations.length">
+              <label>Vorhandene Relationen</label>
+              <div
+                :class="[relation.publish == 0 ? 'is-disabled' : '', 'list-item']"
+                v-for="relation in project.relations"
+                :key="relation.id">
+                  <div class="list-item-body">
+                    {{relation.related.name}}
+                  </div>
+                  <div class="list-item-action" data-icons="1">
+                    <a href="javascript:;" @click.prevent="destroyRelation(relation.id, $event)" class="icon-trash icon-mini"></a>
+                  </div>
+              </div>
+            </div>
+          </div>
           <form-buttons :route="'projects'"></form-buttons>
         </form>
       </div>
@@ -157,6 +194,10 @@ export default {
         media: {
           active: false,
           error: false
+        },
+        relations: {
+          active: false,
+          error: false
         }
       },
 
@@ -168,11 +209,15 @@ export default {
         category_id: null,
         client_id: null,
         publish: null,
-        images: []
+        images: [],
+        relations: []
       },
 
       categories: [],
       clients: [],
+      projects: [],
+
+      relation: null,
 
       // tinymce config
       tinyConfig: tinyConfig
@@ -187,7 +232,6 @@ export default {
       let uri = `/api/project/edit/${this.$route.params.id}`;
       this.axios.get(uri).then(response => {
         this.project = response.data;
-
         // show only original images
         this.project.images = this.project.original_images;
       });
@@ -203,6 +247,12 @@ export default {
     let clientsUri = `/api/clients/get`;
     this.axios.get(clientsUri).then(response => {
       this.clients = response.data.data;
+    });
+
+    // Get projects for dropdown
+    let projectsUri = `/api/projects/fetch/1`
+    this.axios.get(projectsUri).then(response => {
+      this.projects = response.data.data;
     });
   },
 
@@ -323,6 +373,38 @@ export default {
         });
       }
     },
+
+    addRelation() {
+      let uri = "/api/project/relation/create";
+      let data = {
+        project_id: this.project.id,
+        related_project_id: this.relation
+      }
+      this.axios.post(uri, data).then(response => {
+        this.relation = null;
+        this.getRelations(this.project.id);
+      });
+    },
+
+    destroyRelation(id,event) {
+      if (confirm("Bitte löschen bestätigen!")) {
+        let uri = `/api/project/relation/destroy/${id}`;
+        let el = this.progress(event.target);
+        this.axios.delete(uri).then(response => {
+          this.$notify({ type: "success", text: "Eintrag gelöscht" });
+          this.progress(el);
+          this.getRelations(this.project.id);
+        });
+      }
+    },
+
+    getRelations(id) {
+      let uri = `/api/project/relations/get/${id}`
+      this.axios.get(uri).then(response => {
+        console.log(response.data.data);
+        this.project.relations = response.data.data;
+      });
+    }
   },
 
   computed: {

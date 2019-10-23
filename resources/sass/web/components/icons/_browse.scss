@@ -1,0 +1,34 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/icons/browse
+ * -----------------------------------------------------------------------------
+ */
+
+.icon-browse {
+  @extend %icon;
+  @extend %icon-img;
+  height: 20px;
+  fill: #828282;
+  position: absolute;
+  top: 0;
+  width: 25px;
+
+  &.is-prev {
+    left: 0;
+  }
+
+  &.is-next {
+    right: 0;
+  }
+
+  svg {
+    fill: #828282;
+    transition: fill .1s ease-out;
+  }
+
+  &:hover {
+    svg {
+      fill: #e6e6e6;
+    }
+  }
+}

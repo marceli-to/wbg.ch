@@ -14,13 +14,13 @@
               :class="[c.publish == 0 ? 'is-disabled' : '', 'list-item']"
               v-for="c in content"
               :key="c.id"
-              data-icons="2"
+              data-icons="3"
             >
               <div class="list-item-body">
                 <span v-html="c.text">{{ c.text }}</span>
                 <span class="bubble is-info" style="margin-top: 3px">Seite: <strong>{{ getKey(c.key) }}</strong></span>
               </div>
-              <div class="list-item-action" data-icons="2">
+              <div class="list-item-action" data-icons="3">
                 <a
                   href="javascript:;"
                   :class="[c.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']"
@@ -30,6 +30,11 @@
                   :to="{name: 'content-edit', params: { id: c.id }}"
                   class="icon-edit icon-mini"
                 ></router-link>
+                <a
+                  href="javascript:;"
+                  class="icon-trash icon-mini"
+                  @click.prevent="destroy(c.id,$event)"
+                ></a>
               </div>
             </div>
           </div>
@@ -60,16 +65,33 @@ export default {
   mixins: [Progress],
 
   created() {
-    this.axios.get('/api/contents/get').then(response => {
-      this.content = response.data.data;
-    });
-
-    this.axios.get('/api/content/get/keys').then(response => {
-      this.keys = response.data;
-    });
+    this.fetch();
   },
 
   methods: {
+
+    fetch() {
+      this.axios.get('/api/contents/get').then(response => {
+        this.content = response.data.data;
+      });
+
+      this.axios.get('/api/content/get/keys').then(response => {
+        this.keys = response.data;
+      });
+    },
+
+    destroy(id,event) {
+      if (confirm("Bitte löschen bestätigen!")) {
+        let uri = `/api/content/destroy/${id}`;
+        let el = this.progress(event.target);
+        this.axios.delete(uri).then(response => {
+          this.$notify({ type: "success", text: "Eintrag gelöscht" });
+          this.progress(el);
+          this.fetch();
+        });
+      }
+    },
+
     toggleStatus(id,event) {
       let uri = `/api/content/status/${id}`;
       let el = this.progress(event.target);

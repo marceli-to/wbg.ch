@@ -41,12 +41,11 @@ class ClearImages extends Command
     {
         $directories = Storage::allDirectories('public');
         $deletable   = [
-            'public/media/images/processed/xl',
             'public/media/images/processed/lg',
             'public/media/images/processed/sm',
             'public/media/images/processed/xs',
             'public/media/images/processed/preview',
-            'public/media/images/processed/thumbs',
+            //'public/media/images/processed/thumbs',
         ];
 
         foreach($directories as $directory)

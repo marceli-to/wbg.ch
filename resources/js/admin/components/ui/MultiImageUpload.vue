@@ -56,9 +56,6 @@
                   <div>
                     <img :src="getAssetUri(asset.name)" height="300" width="300">
                     <figcaption>{{asset.caption}}</figcaption>
-                    <!-- <div v-if="hasCroppedPreview">
-                      <img :src="getAssetCroppedUri(asset.name)" height="300" width="300">
-                    </div> -->
                   </div>
                   <div>
                     <div class="form-row">

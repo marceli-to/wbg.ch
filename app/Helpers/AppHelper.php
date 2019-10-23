@@ -47,4 +47,26 @@ class AppHelper
         
         return (string) str_replace($search, $replace, mb_strtolower($string, 'UTF-8'));
     }
+
+    public static function slug($project = NULL)
+    {
+        $slug = '';
+
+        if (is_array($project))
+        {
+            // $slug = $project['id'] .'/'.
+            //     str_slug(
+            //         AppHelper::transliterate($project['name']['de']) . '-' .
+            //         AppHelper::transliterate($project['location']['de']) . '-' .
+            //         $project['year']
+            //         , '-'
+            //     );
+        }
+        else
+        {
+            $slug = $project->id .'/'. str_slug(AppHelper::transliterate($project->name), '-');
+        }
+        
+        return $slug;
+    }
 }

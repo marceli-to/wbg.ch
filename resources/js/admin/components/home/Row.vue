@@ -319,7 +319,7 @@ export default {
                 projectId: img.project.id || null,
                 image: img.name || null,
                 imageId: img.id,
-                caption: `${img.project.name})`,
+                caption: `${img.project.name}`,
               };
               els[e.position] = el;
             }

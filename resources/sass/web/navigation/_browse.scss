@@ -1,0 +1,17 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: layout/navigation/browse
+ * -----------------------------------------------------------------------------
+ */
+
+nav.project-browse {
+  display: none;
+  height: 21px;
+  margin-bottom: $space-lg;
+  position: relative;
+  width: 100%;
+
+  @include bp-sm() {
+    display: block;
+  }
+}

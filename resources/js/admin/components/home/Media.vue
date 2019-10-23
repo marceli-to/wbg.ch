@@ -73,7 +73,7 @@ export default {
   },
 
   created() {
-    this.img.uri = `/media/${this.$props.element.image}/xl`;
+    this.img.uri = `/media/source/${this.$props.element.image}`;
     this.img.name = this.$props.element.image;
   },
 
@@ -90,7 +90,6 @@ export default {
 
     crop(event) {
       let btn = event.target;
-
       let data = {
         data: {
           gridElementId: this.$props.element.id,
@@ -110,8 +109,8 @@ export default {
       let el = this.progress(event.target);
       this.axios.post(uri, data).then(response => {
         this.img.name = response.data.name;
-        this.img.uri  = `/media/${this.img.name}/xl`;
-        this.axios.get(`/media/${response.data.name}/xl`).then(response => {
+        this.img.uri  = `/media/source/${this.img.name}`;
+        this.axios.get(`/media/source/${this.img.name}`).then(response => {
           this.progress(el);
           this.toggleOverlay();
         });

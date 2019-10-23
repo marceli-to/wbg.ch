@@ -35,6 +35,14 @@ class Project extends Model
     }
 
     /**
+     * Relation 'previewImages'
+     */
+    public function previewImages()
+    {
+        return $this->hasMany('App\Models\ProjectImage')->where('is_preview', '=', 1);
+    }
+
+    /**
      * Relation 'client'
      */
     public function client()
@@ -48,6 +56,15 @@ class Project extends Model
     public function category()
     {
         return $this->hasOne('App\Models\Category', 'id', 'category_id');
+    }
+
+    /**
+     * Relation 'projects'
+     */
+
+    public function relations()
+    {
+        return $this->hasMany('App\Models\ProjectRelation', 'project_id', 'id');
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Services\MediaService;
 use App\Services\MenuService;
 
 use App\Models\Project;
+use App\Models\Content;
 use App\Models\HomeGrid;
 use App\Models\HomeGridElement;
 
@@ -21,25 +22,28 @@ class HomeController extends Controller
   // Models
   protected $project;
   protected $homeGrid;
+  protected $content;
 
   // View path
   protected $view_path = 'web.home';
 
+  // Key for content
+  protected $content_key = 'home';
 
   public function __construct(
-      MenuService $menuService,
-      MediaService $mediaService,
-      Project $project,
-      HomeGrid $homeGrid,
-      HomeGridElement $homeGridElement
+    MenuService $menuService,
+    MediaService $mediaService,
+    Project $project,
+    HomeGrid $homeGrid,
+    HomeGridElement $homeGridElement,
+    Content $content
   )
   {
-      $this->project          = $project;
-      $this->homeGrid         = $homeGrid;
-      $this->homeGridElement  = $homeGridElement;
-      $this->menuService      = $menuService;
-      $this->menu             = $this->menuService->boot();
-
+    $this->project          = $project;
+    $this->homeGrid         = $homeGrid;
+    $this->homeGridElement  = $homeGridElement;
+    $this->menuService      = $menuService;
+    $this->content          = $content;
   }
 
   public function index()
@@ -47,7 +51,9 @@ class HomeController extends Controller
     return view(
       $this->view_path . '.index', 
       [
-        'grids' => $this->getGrids()
+        'menu'   => $this->menuService->boot(),
+        'grids'  => $this->getGrids(),
+        'intro'  => $this->content->where('key', '=', $this->content_key)->get()->first()
       ]
     );
   }
