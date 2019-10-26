@@ -10,16 +10,16 @@
 <script src="{{ asset('assets/js/modernizr.min.js') }}"></script>
 </head>
 <body>
-<header class="site-header">
+<header class="site-header js-header">
   <div>
     <a href="javascript:;" class="btn-menu js-btn-menu"></a>
     <div class="span header-logo">
       <a href="/" class="logo" title="WBG - Home">WBG</a>
-      <hr>
+      {{-- <hr> --}}
     </div>
     <div class="span header-title">
-      <h1 class="page-title">@if (isset($page_title)) {{ $page_title }} @else &nbsp; @endif</h1>
-      <hr>
+      <h1 class="page-title">@if (isset($pageTitle)) {{ $pageTitle }} @else &nbsp; @endif</h1>
+      {{-- <hr> --}}
     </div>
     <div class="span header-navigation">
       <nav class="header" role="navigation">
@@ -54,7 +54,7 @@
           </li>
         </ul>
       </nav>
-      <hr>
+      {{-- <hr> --}}
     </div>
   </div>
 </header>
@@ -131,11 +131,9 @@
       </li>
     </ul>
   </nav>
-  <section class="site-content">
-    @yield('content')
-  </section>
+  @yield('content')
 </main>
-<footer class="site-footer">
+<footer class="site-footer js-footer">
   WBG AG – VISUELLE KOMMUNIKATION<br>BINZSTRASSE 39, CH-8045 ZÜRICH, +41 44 269 43 43, MAIL@WBG.CH
 </footer>
 <script src="{{ asset('assets/js/app.js') }}" type="text/javascript"></script>

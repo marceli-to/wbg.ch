@@ -1,4 +1,4 @@
 @extends('web.layout.app')
 @section('content')
-@include('web.partials.projects.project-list', array('projects' => $projects))
+@include('web.partials.projects.list', array('projects' => $projects))
 @endsection

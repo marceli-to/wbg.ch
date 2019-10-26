@@ -14,6 +14,7 @@ class Project extends Model
         'meta_description',
         'category_id',
         'client_id',
+        'subcategory_id',
         'publish',
         'order'
     ];

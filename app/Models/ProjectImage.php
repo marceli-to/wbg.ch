@@ -13,8 +13,10 @@ class ProjectImage extends Model
         'caption',
         'order',
         'publish',
+        'url',
         'project_id',
         'is_grid',
+        'is_preview',
         'is_crop'
     ];
 

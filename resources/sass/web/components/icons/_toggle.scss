@@ -1,0 +1,18 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/icons/toggle
+ * -----------------------------------------------------------------------------
+ */
+
+.icon-toggle {
+  @extend %icon;
+  @extend %icon-bg;
+  background-image: url($url-icons + 'toggle-plus-sm.svg');
+  background-size: contain;
+  background-position: center left;
+  height: 12px;
+  right: 0;
+  position: absolute;
+  top: 4px;
+  width: 20px;
+}

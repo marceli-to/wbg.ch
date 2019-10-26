@@ -24,10 +24,10 @@ class MenuService
     $this->category = $category;
   }
 
-  public function boot($projectId = NULL, $categoryId = NULL)
+  public function boot($projectId = NULL, $categoryId = NULL, $subcategoryId = NULL)
   {
     $menu = [
-      'projects'      => $this->getProjects($projectId,$categoryId),
+      'projects'      => $this->getProjects($projectId,$categoryId,$subcategoryId),
       'about'         => $this->getAbout(),
     ];
     return $menu;
@@ -41,7 +41,7 @@ class MenuService
    * @param int $categoryTypeId
    */
 
-  private function getProjects($projectId = NULL, $categoryId = NULL)
+  private function getProjects($projectId = NULL, $categoryId = NULL, $subcategoryId = NULL)
   {
     // Get projects
     $projects = $this->project->published()
@@ -66,16 +66,37 @@ class MenuService
 
       if (isset($projects[$c->id]))
       {
-        foreach($projects[$c->id] as $p)
+        // Special case 'Panoptikum'
+        if ($c->id == $this->category->panoptikumId)
         {
-          $menu_items[] = [
-            'id'        => $p->id,
-            'name'      => $p->name,
-            'slug'      => '/projekt/' . $p->id . '/' . str_slug($p->name),
-            'is-active' => $projectId == $p->id ? TRUE : FALSE,
-          ];
+          foreach($projects[$c->id] as $p)
+          {
+            if ($p->subcategory_id)
+            {
+              $menu_items[$p->subcategory_id] = [
+                'id'        => array_search($p->subcategory_id, $this->category->subcategories),
+                'name'      => $this->category->subcategories[$p->subcategory_id],
+                'slug'      => '/projekte/3/panoptikum/' . $p->subcategory_id . '/' . str_slug($this->category->subcategories[$p->subcategory_id]),
+                'is-active' => $subcategoryId == $p->subcategory_id ? TRUE : FALSE,
+              ];
+            }
+          }
+
+          $menu_items = collect($menu_items)->sortBy('name')->toArray();
         }
-              
+        else
+        {
+          foreach($projects[$c->id] as $p)
+          {
+            $menu_items[] = [
+              'id'        => $p->id,
+              'name'      => $p->name,
+              'slug'      => '/projekt/' . $p->id . '/' . str_slug($p->name),
+              'is-active' => $projectId == $p->id ? TRUE : FALSE,
+            ];
+          }
+        }
+
         $menu[] = [
           'category'  => $c->name,
           'id'        => $c->id,

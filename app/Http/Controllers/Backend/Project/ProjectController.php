@@ -95,8 +95,9 @@ class ProjectController extends Controller
             'principal'         => $request->input('principal'),
             'description'       => $request->input('description'),
             'meta_description'  => $request->input('meta_description'),
-            'category_id'       => $request->input('category_id') ? $request->input('category_id') : null,
-            'client_id'         => $request->input('client_id') ? $request->input('client_id') : null,
+            'category_id'       => $request->input('category_id') ? $request->input('category_id') : NULL,
+            'subcategory_id'    => $request->input('subcategory_id') != 'NULL' ? $request->input('subcategory_id') : NULL,
+            'client_id'         => $request->input('client_id') ? $request->input('client_id') : NULL,
         ]);
         $project->save();
 
@@ -109,6 +110,8 @@ class ProjectController extends Controller
                     'name'          => $i['name'],
                     'caption'       => $i['caption'],
                     'publish'       => $i['publish'],
+                    'url'           => $i['url'],
+                    'is_preview'    => $i['is_preview'],
                 ]);
                 $image->save();
             }
@@ -147,8 +150,9 @@ class ProjectController extends Controller
         $project->principal         = $request->input('principal');
         $project->description       = $request->input('description');
         $project->meta_description  = $request->input('meta_description');
-        $project->category_id       = $request->input('category_id') ? $request->input('category_id') : null;
-        $project->client_id         = $request->input('client_id') ? $request->input('client_id') : null;
+        $project->category_id       = $request->input('category_id') ? $request->input('category_id') : NULL;
+        $project->subcategory_id    = $request->input('subcategory_id') != 'NULL' ? $request->input('subcategory_id') : NULL;
+        $project->client_id         = $request->input('client_id') ? $request->input('client_id') : NULL;
         $project->save();
 
         if (!empty($request->images))
@@ -161,7 +165,9 @@ class ProjectController extends Controller
                         'project_id'    => $project->id,
                         'name'          => $i['name'],
                         'caption'       => $i['caption'],
-                        'publish'       => $i['publish']
+                        'publish'       => $i['publish'],
+                        'url'           => $i['url'],
+                        'is_preview'    => $i['is_preview'],
                     ]
                 );
             }

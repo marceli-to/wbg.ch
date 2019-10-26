@@ -1,0 +1,28 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: views/clients
+ * -----------------------------------------------------------------------------
+ */
+
+.clients {
+
+  .client-group {
+    margin-bottom: $space-xl;
+  }
+
+  .client-index {
+    margin-bottom: $space-sm;
+  }
+
+  .client {
+    line-height: 2.2;
+
+    a {
+      color: $color--black;
+      transition: color .1s ease-out;
+      &:hover {
+        color: $color--red;
+      }
+    }
+  }
+}

@@ -66,6 +66,10 @@
                       <label>Legende:</label>
                       <input type="text" v-model="asset.caption" class="is-caption">
                     </div>
+                    <div class="form-row" v-if="hasUrl">
+                      <label>Link:</label>
+                      <input type="text" v-model="asset.url" class="is-caption">
+                    </div>
                     <div class="form-row-button">
                       <a
                         href="javascript:;"
@@ -103,7 +107,8 @@ export default {
     maxFilesize: Number,
     uploadUrl: String,
     hasStar: Boolean,
-    hasCroppedPreview: Boolean
+    hasCroppedPreview: Boolean,
+    hasUrl: Boolean,
   },
 
   data() {

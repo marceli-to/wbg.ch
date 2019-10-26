@@ -6,11 +6,12 @@
 
 require('./bootstrap');
 
-// Lazyload
+// Plugins
 require('./vendor/lazysizes.js');
+require('./vendor/scrollTo.js');
 
 // Menu
 require('./modules/menu.js');
 
-// Team
-// require('./modules/team.js');
+// Project
+require('./modules/project.js');

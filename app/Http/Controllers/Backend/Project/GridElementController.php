@@ -31,7 +31,8 @@ class GridElementController extends Controller
     public function get($gridId)
     {
         $gridElements = $this->gridElement
-                              ->with('image')
+                              ->with('image.project')
+                              ->with('news')
                               ->byGrid($gridId)
                               ->get();
 
@@ -39,12 +40,12 @@ class GridElementController extends Controller
     }
 
     /**
-     * Store a newly created resource.
+     * Store a newly created image.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeImage(Request $request)
     {
         $item = new GridElement([
             'grid_id'           => $request->get('grid_id'),
@@ -63,12 +64,12 @@ class GridElementController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a grid image
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroyImage($id)
     {
         $element = $this->gridElement->find($id);
         $imageId = $element->project_image_id;
@@ -80,6 +81,36 @@ class GridElementController extends Controller
             $image->save();
         }
 
+        return response()->json('successfully deleted');
+    }
+
+    /**
+     * Store a newly created article.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeArticle(Request $request)
+    {
+        $item = new GridElement([
+            'grid_id'  => $request->get('grid_id'),
+            'news_id'  => $request->get('news_id'),
+            'position' => $request->get('position')
+        ]);
+        $item->save();
+        return response()->json('success');
+    }
+
+    /**
+     * Delete a grid article
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyArticle($id)
+    {
+        $element = $this->gridElement->find($id);
+        $element->delete();
         return response()->json('successfully deleted');
     }
 }

@@ -72,32 +72,42 @@
                 rows="15"
               ></textarea>
             </div>
-            <div class="grid-form">
-              <div class="form-row" :class="errors.category_id ? 'has-error': ''">
-                <label>Kategorie</label>
-                <div class="select-wrapper is-wide">
-                  <select
-                    v-model="project.category_id"
-                    name="category_id"
-                    @focus="removeError('category_id')"
-                  >
-                    <option selected="selected">Bitte wählen...</option>
-                    <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option>
-                  </select>
-                </div>
+            <div class="form-row" :class="errors.client_id ? 'has-error': ''">
+              <label>Kunde</label>
+              <div class="select-wrapper is-wide">
+                <select
+                  v-model="project.client_id"
+                  name="category_id"
+                  @focus="removeError('client_id')"
+                >
+                  <option selected="selected">Bitte wählen...</option>
+                  <option v-for="c in clients" :key="c.id" :value="c.id">{{ c.name }}</option>
+                </select>
               </div>
-              <div class="form-row" :class="errors.client_id ? 'has-error': ''">
-                <label>Kunde</label>
-                <div class="select-wrapper is-wide">
-                  <select
-                    v-model="project.client_id"
-                    name="category_id"
-                    @focus="removeError('client_id')"
-                  >
-                    <option selected="selected">Bitte wählen...</option>
-                    <option v-for="c in clients" :key="c.id" :value="c.id">{{ c.name }}</option>
-                  </select>
-                </div>
+            </div>
+            <div class="form-row" :class="errors.category_id ? 'has-error': ''">
+              <label>Kategorie</label>
+              <div class="select-wrapper is-wide">
+                <select
+                  v-model="project.category_id"
+                  name="category_id"
+                  @focus="removeError('category_id')"
+                >
+                  <option selected="selected">Bitte wählen...</option>
+                  <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row" v-show="project.category_id == 3">
+              <label>Subkategorie (Panoptikum)</label>
+              <div class="select-wrapper is-wide">
+                <select
+                  v-model="project.subcategory_id"
+                  name="subcategory_id"
+                >
+                  <option value="NULL" selected="selected">Bitte wählen...</option>
+                  <option v-for="(item, key) in subcategories" :key="key" :value="key">{{ item }}</option>
+                </select>
               </div>
             </div>
           </div>
@@ -115,6 +125,7 @@
                 :uploadUrl="'/api/media/upload'"
                 :hasCroppedPreview='true'
                 :hasStar='true'
+                :hasUrl='true'
               ></multi-image-upload>
             </div>
           </div>
@@ -207,6 +218,7 @@ export default {
         description: null,
         meta_description: null,
         category_id: null,
+        subcategory_id: null,
         client_id: null,
         publish: null,
         images: [],
@@ -216,6 +228,7 @@ export default {
       categories: [],
       clients: [],
       projects: [],
+      subcategories: [],
 
       relation: null,
 
@@ -241,6 +254,12 @@ export default {
     let categoryUri = `/api/categories/get`;
     this.axios.get(categoryUri).then(response => {
       this.categories = response.data.data;
+    });
+
+    // Get subcategories for dropdown
+    let subCategoryUri = `/api/subcategories/get`;
+    this.axios.get(subCategoryUri).then(response => {
+      this.subcategories = response.data;
     });
 
     // Get clients for dropdown
@@ -316,7 +335,6 @@ export default {
     // Upload & asset methods
     afterUpload(file) {
       if (file.status == "error" && file.accepted == false) {
-        console.log(file);
         this.$notify({type: "error", text: "Dateiformat ungültig oder Datei zu gross"});
       }
       else {
@@ -325,6 +343,8 @@ export default {
         file_response.caption = null;
         file_response.order = -1;
         file_response.publish = 1;
+        file_response.is_preview = 0;
+        file_response.url = null;
         this.project.images.push(file_response);
       }
     },
@@ -344,8 +364,8 @@ export default {
 
     toggleAsset(asset,event) {
       if (asset.id === null) {
-          const index = this.project.images.findIndex(x => x.name === asset.name);
-          this.project.images[index].publish = asset.publish == 1 ? 0 : 1;
+        const index = this.project.images.findIndex(x => x.name === asset.name);
+        this.project.images[index].publish = asset.publish == 1 ? 0 : 1;
       }
       else {
         let uri = `/api/project/image/status/${asset.id}`;
@@ -359,9 +379,9 @@ export default {
     },
 
     togglePreview(asset,event) {
-      if (asset.id === null) {
-          const index = this.project.images.findIndex(x => x.name === asset.name);
-          this.project.images[index].is_preview = asset.is_preview == 1 ? 0 : 1;
+      if (asset.id == null) {
+        const index = this.project.images.findIndex(x => x.name === asset.name);
+        this.project.images[index].is_preview = asset.is_preview == 1 ? 0 : 1;
       }
       else {
         let uri = `/api/project/image/preview/${asset.id}`;

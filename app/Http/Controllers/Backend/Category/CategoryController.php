@@ -42,6 +42,12 @@ class CategoryController extends Controller
         return new CategoryCollection($categorys);
     }
 
+    public function getSubcategories()
+    {
+        $subcategories = $this->category->subcategories;
+        return response()->json($subcategories);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

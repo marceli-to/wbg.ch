@@ -13,4 +13,10 @@ section.site-content {
     left: calc(25% + #{$space-xs});
     width: calc(75% - #{$space-xs});
   }
+
+  &.site-content--narrow {
+    @include bp-sm() {
+      padding-top: 0;
+    }
+  }
 }

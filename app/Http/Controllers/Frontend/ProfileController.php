@@ -45,7 +45,7 @@ class ProfileController extends Controller
     $this->client           = $client;
     $this->competence       = $competence;
     $this->competenceMedia  = $competenceMedia;
-    $this->menuService = $menuService;
+    $this->menuService      = $menuService;
   }
 
   public function index()
@@ -60,41 +60,46 @@ class ProfileController extends Controller
 
   public function attitude()
   {
-    return view(
-      $this->view_path . '.attitude',
-      [
-        'menu' => $this->menuService->boot(),
-      ]
-    );
+    return
+      view($this->view_path . '.attitude')
+      ->withMenu($this->menuService->boot())
+      ->withPageTitle('Haltung');
   }
 
   public function competences()
   {
-    return view(
-      $this->view_path . '.competences',
-      [
-        'menu' => $this->menuService->boot(),
-      ]
-    );
+    return
+      view($this->view_path . '.competences')
+      ->withMenu($this->menuService->boot())
+      ->withPageTitle('Kompetenzen');
   }
 
   public function clients()
   {
-    return view(
-      $this->view_path . '.clients',
-      [
-        'menu' => $this->menuService->boot(),
-      ]
-    );
+    $clients = $this->client->published()->with('project')->orderBy('name')->get();
+    $client_list = [];
+
+    if ($clients)
+    {
+      foreach($clients as $c)
+      {
+        $key = (is_numeric(substr($c->name, 0,1))) ? '0-9' : substr($c->name, 0,1);
+        $client_list[$key][] = $c;
+      }
+    }
+    
+    return
+      view($this->view_path . '.clients')
+      ->withMenu($this->menuService->boot())
+      ->withClients($client_list)
+      ->withPageTitle('Kunden');
   }
 
   public function imprint()
   {
-    return view(
-      $this->view_path . '.imprint',
-      [
-        'menu' => $this->menuService->boot(),
-      ]
-    );
+    return
+      view($this->view_path . '.imprint')
+      ->withMenu($this->menuService->boot())
+      ->withPageTitle('Impressum');
   }
 }

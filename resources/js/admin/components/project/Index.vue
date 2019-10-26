@@ -29,8 +29,9 @@
                       >
                         <div class="list-item-body">
                           <h3>{{ project.name }}</h3>
-                          <span>Auftraggeber: {{project.principal}}</span>
+                          <span v-if="project.principal">Auftraggeber: {{project.principal}}</span>
                           <span>Kunde: {{project.client.name}}</span>
+                          <span class="bubble is-info" v-if="project.subcategory_id">{{ subcategories[project.subcategory_id]}}</span>
                         </div>
                         <div class="list-item-action" data-icons="6">
                           <a
@@ -87,7 +88,7 @@
                   type="text"
                   class="search"
                   v-model="search"
-                  placeholder="Filter nach Projektname, Auftraggeber, Kunde oder Kategorie"
+                  placeholder="Filter nach Projektname, Kunde oder Kategorie"
                 >
               </div>
             </div>
@@ -115,6 +116,7 @@ export default {
       projects: [],
       groupedProjects: [],
       filteredProjects: [],
+      subcategories: [],
       search: "",
       debounce: false
     };
@@ -129,6 +131,11 @@ export default {
       let uri = "/api/projects/get";
       this.axios.get(uri).then(response => {
         this.projects = response.data.data;
+      });
+
+      let subCategoryUri = `/api/subcategories/get`;
+      this.axios.get(subCategoryUri).then(response => {
+        this.subcategories = response.data;
       });
     },
 
@@ -197,7 +204,7 @@ export default {
       let filteredProjects = this.projects;
       let filter = c =>
         c.name.toLowerCase().includes(this.search.toLowerCase()) ||
-        c.principal.toLowerCase().includes(this.search.toLowerCase()) ||
+        // c.principal.toLowerCase().includes(this.search.toLowerCase()) ||
         c.client.name.toLowerCase().includes(this.search.toLowerCase()) ||
         c.category.name.toLowerCase().includes(this.search.toLowerCase());
 
@@ -205,8 +212,7 @@ export default {
         filteredProjects = this.projects.filter(filter);
       }
 
-      this.groupedProjects = _.groupBy(filteredProjects, "category_id");
-
+      this.groupedProjects = _.groupBy(filteredProjects, "category.order");
       return this.groupedProjects;
     }
   }

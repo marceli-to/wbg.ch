@@ -20,6 +20,7 @@ header.site-header {
 
     .span {
         @include font-size($fs-sm);
+        border-bottom: 1px solid $color--grey;
         float: left;
         line-height: 1 !important;
         padding: $space-xl 0;

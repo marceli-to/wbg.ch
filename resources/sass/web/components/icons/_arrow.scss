@@ -1,0 +1,15 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/icons/arrow
+ * -----------------------------------------------------------------------------
+ */
+
+.icon-arrow {
+  @extend %icon;
+  @extend %icon-bg;
+  background-image: url($url-icons + 'arrow-sm.svg');
+  background-size: auto 12px;
+  background-position: center left;
+  color: $color--black;
+  padding-left: 24px;
+}

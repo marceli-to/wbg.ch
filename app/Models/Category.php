@@ -13,6 +13,14 @@ class Category extends Model
         'publish'
     ];
 
+    public $subcategories = [
+        1 => 'Archiv',
+        2 => 'Digital',
+        3 => 'Wettbewerb'
+    ];
+
+    public $panoptikumId = 3;
+
     /**
      * Relation 'competence'
      */

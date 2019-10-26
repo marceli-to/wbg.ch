@@ -53,36 +53,81 @@ class ProjectsController extends Controller
                               ->with('previewImages')
                               ->orderBy('order')
                               ->get();
-    return view(
-      $this->view_path . '.index',
-      [
-        'menu' => $this->menuService->boot(),
-        'projects' => $projects->sortBy('category.order')
-      ]
-    );
+
+    return
+      view($this->view_path . '.index')
+      ->withMenu($this->menuService->boot())
+      ->withSubCategories($this->category->subcategories)
+      ->withProjects($projects->shuffle()->all());
+
   }
 
   /**
    * List all projects by category
    * 
    */
-  public function category($id = NULL, $slug = NULL)
+  public function category($categoryId = NULL, $slug = NULL)
   {
-    $category = $this->category->findOrFail($id);
+    $category = $this->category->findOrFail($categoryId);
     $projects = $this->project->published()
                               ->with('previewImages')
-                              ->where('category_id', '=', $id)
+                              ->where('category_id', '=', $categoryId)
                               ->orderBy('order')
                               ->get();
 
-    return view(
-      $this->view_path . '.category',
-      [
-        'menu' => $this->menuService->boot(NULL, $id),
-        'projects' => $projects,
-        'page_title' => $category->name
-      ]
-    );
+    if ($categoryId == $this->category->panoptikumId)
+    {
+      $projects = $projects->sortBy('subcategory_id')->groupBy('subcategory_id');
+      return
+        view($this->view_path . '.category')
+        ->withMenu($this->menuService->boot(NULL, $categoryId))
+        ->withProjects($projects)
+        ->withPageTitle('Panoptikum')
+        ->withSubCategories($this->category->subcategories)
+        ->withIsPanoptikum(TRUE);
+    }
+
+    return 
+      view($this->view_path . '.category')
+      ->withMenu($this->menuService->boot(NULL, $categoryId))
+      ->withProjects($projects)
+      ->withPageTitle($category->name)
+      ->withIsPanoptikum(FALSE);
+  }
+
+  /**
+   * List all projects by subcategory
+   * 
+   */
+  public function subcategory(
+    $category = NULL,
+    $categorySlug = NULL,
+    $subcategory = NULL,
+    $subcategorySlug = NULL
+  )
+  {
+    $category = $this->category->findOrFail($category);
+    $projects = $this->project->published()
+                              ->with('previewImages')
+                              ->where('category_id', '=', $category->id)
+                              ->where('subcategory_id', '=', $subcategory)
+                              ->orderBy('order')
+                              ->get();
+
+    $data = [];
+    foreach($projects as $project)
+    {
+      $data[] = [
+        'title' => $project->name, // $this->category->subcategories[$subcategory],
+        'grid'  => $this->getProjectGrid($project->id)
+      ];
+    }
+
+    return
+      view($this->view_path . '.subcategory')
+      ->withMenu($this->menuService->boot(NULL, $category->id, $subcategory))
+      ->withProjects($data)
+      ->withPageTitle($category->name);
   }
 
   /**
@@ -101,7 +146,7 @@ class ProjectsController extends Controller
         'project'     => $project,
         'browse'      => $this->getProjectNav($project->id),
         'grids'       => $this->getProjectGrid($id),
-        'page_title'  => $project->category->name
+        'pageTitle'  => $project->category->name
       ]
     );
   }
@@ -115,6 +160,7 @@ class ProjectsController extends Controller
   {
     $grids = $this->grid->byProject($projectId)
                         ->with('layout')
+                        ->with('elements.news')
                         ->with('elements.image')
                         ->orderBy('order')
                         ->get();
@@ -139,18 +185,26 @@ class ProjectsController extends Controller
 
   protected function getProjectNav($projectId = NULL)
   {
-    // Build project nav
-    $projects = $this->project->published()
-                              ->with('category')
-                              ->orderBy('order')
-                              ->get();
+    $categories = $this->category->published()
+                                 ->where('id', '!=', $this->category->panoptikumId)
+                                 ->orderBy('order')
+                                 ->get();
 
-    $sorted = $projects->sortBy('category.order');
+    foreach($categories as $category)
+    {
+      $projects[] = $this->project->published()
+                                  ->where('category_id', '=', $category->id)
+                                  ->orderBy('order')
+                                  ->get();
+    }
 
     $project_keys = [];
-    foreach($sorted as $project)
+    foreach($projects as $project)
     {
-      $project_keys[] = (int) $project->id;
+      foreach($project as $p)
+      {
+        $project_keys[] = (int) $p->id;
+      }
     }
 
     // Get current key

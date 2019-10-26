@@ -17,6 +17,7 @@ Route::get('/', 'Frontend\HomeController@index')->name('home');
 // Projects
 Route::get('projekte', 'Frontend\ProjectsController@projects')->name('project.index');
 Route::get('projekte/{category}/{slug?}', 'Frontend\ProjectsController@category')->name('project.category');
+Route::get('projekte/{category}/{slugCategory?}/{subcategory}/{slugSubcategory?}/{slugProject?}', 'Frontend\ProjectsController@subcategory')->name('project.subcategory');
 Route::get('projekt/{id}/{slug?}', 'Frontend\ProjectsController@project')->name('project.detail');
 
 // Profil

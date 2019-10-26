@@ -6,12 +6,16 @@
 
 nav.project-browse {
   display: none;
-  height: 21px;
-  margin-bottom: $space-lg;
-  position: relative;
-  width: 100%;
 
   @include bp-sm() {
+    background-color: $color--white;
     display: block;
+    height: 72px;
+    padding-bottom: $space-lg;
+    padding-top: $space-lg;
+    position: sticky;
+    top: 75px;
+    width: 100%;
+    z-index: 1001;
   }
 }

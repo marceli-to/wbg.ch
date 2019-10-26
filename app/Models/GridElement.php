@@ -8,6 +8,7 @@ class GridElement extends Model
     protected $fillable = [
         'position',
         'grid_id',
+        'news_id',
         'project_id',
         'project_image_id'
     ];
@@ -20,6 +21,15 @@ class GridElement extends Model
         return $this->hasOne('App\Models\ProjectImage', 'id', 'project_image_id');
     }
 
+    /**
+     * News relationship
+     */
+
+    public function news()
+    {
+        return $this->hasOne('App\Models\News', 'id', 'news_id');
+    }
+    
     /**
      * Scope a query to show elements by grid.
      *

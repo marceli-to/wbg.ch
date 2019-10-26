@@ -34,16 +34,15 @@
                 v-model="client.location"
               >
             </div>
-            <div class="form-row" :class="errors.project_id ? 'has-error': ''">
+            <div class="form-row">
               <label>Verlinktes Projekt</label>
               <div class="select-wrapper">
                 <select
-                  class="is-lg"
+                  class="is-wide"
                   v-model="client.project_id"
                   name="project_id"
-                  @focus="removeError('project_id')"
                 >
-                  <option value="1">Projekt 1</option>
+                <option v-for="p in projects" :key="p.id" :value="p.id">{{ p.name }}</option>
                 </select>
               </div>
             </div>
@@ -95,6 +94,8 @@ export default {
         location: null,
         project_id: null,
       },
+
+      projects: null,
     };
   },
 
@@ -105,6 +106,10 @@ export default {
         this.client = response.data;
       });
     }
+    
+    this.axios.get("/api/projects/fetch/1/asc").then(response => {
+      this.projects = response.data.data;
+    });
   },
 
   methods: {

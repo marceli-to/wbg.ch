@@ -50,6 +50,7 @@ Route::middleware('auth:api')->group(function() {
      */
 
     Route::get('categories/get', 'Backend\Category\CategoryController@get');
+    Route::get('subcategories/get', 'Backend\Category\CategoryController@getSubcategories');
     Route::post('category/create', 'Backend\Category\CategoryController@store');
     Route::get('category/edit/{id}', 'Backend\Category\CategoryController@edit');
     Route::post('category/update/{id}', 'Backend\Category\CategoryController@update');
@@ -86,7 +87,7 @@ Route::middleware('auth:api')->group(function() {
     Route::get('project/status/{id}', 'Backend\Project\ProjectController@status');
     Route::post('project/order', 'Backend\Project\ProjectController@order');
     Route::delete('project/destroy/{id}', 'Backend\Project\ProjectController@destroy');
-    
+
     Route::get('project/relations/get/{projectId}', 'Backend\Project\ProjectRelationController@get');
     Route::post('project/relation/create', 'Backend\Project\ProjectRelationController@store');
     Route::delete('project/relation/destroy/{id}', 'Backend\Project\ProjectRelationController@delete');
@@ -106,8 +107,12 @@ Route::middleware('auth:api')->group(function() {
     Route::delete('project/grid/delete/{id}', 'Backend\Project\GridController@destroy');
     Route::get('project/grid/layouts', 'Backend\Project\GridLayoutController@get');
     Route::get('project/grid/images/{gridId}', 'Backend\Project\GridElementController@get');
-    Route::post('project/grid/image/store', 'Backend\Project\GridElementController@store');
-    Route::delete('project/grid/image/delete/{id}', 'Backend\Project\GridElementController@destroy');
+    Route::post('project/grid/image/store', 'Backend\Project\GridElementController@storeImage');
+    Route::delete('project/grid/image/delete/{id}', 'Backend\Project\GridElementController@destroyImage');
+
+    Route::post('project/grid/article/store', 'Backend\Project\GridElementController@storeArticle');
+    Route::delete('project/grid/article/delete/{id}', 'Backend\Project\GridElementController@destroyArticle');
+
 
     /**
      * Home Grid routes
@@ -118,9 +123,7 @@ Route::middleware('auth:api')->group(function() {
     Route::post('home/grids/order', 'Backend\Home\HomeGridController@order');
     Route::get('home/grid/store/{layoutId}', 'Backend\Home\HomeGridController@store');
     Route::delete('home/grid/delete/{id}', 'Backend\Home\HomeGridController@destroy');
-    
     Route::get('home/grid/layout/fetch', 'Backend\Home\HomeGridLayoutController@fetch');
-    
     Route::post('home/grid/element/store', 'Backend\Home\HomeGridElementController@store');
     Route::delete('home/grid/element/delete/{id}', 'Backend\Home\HomeGridElementController@destroy');
     Route::get('home/grid/element/get/{id}', 'Backend\Home\HomeGridElementController@get');

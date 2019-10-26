@@ -7,9 +7,17 @@
 // Project listing
 .project-list {
 
+  h2 {
+    @include font-size($fs-sm);
+    margin-bottom: $space-xl;
+    @include bp-sm() {
+      display: none;
+    }
+  }
+
   .project-teaser {
     display: block;
-    margin-top: $space-xl;
+    margin-top: $space-xxl;
 
     @include bp-sm() {
       margin-top: 0;
@@ -17,15 +25,6 @@
 
     &:first-child {
       margin-top: 0;
-    }
-
-    h2 {
-      //@include font-bold();
-      @include font-size($fs-sm);
-      margin-bottom: $space-xl;
-      @include bp-sm() {
-        display: none;
-      }
     }
 
     a {
@@ -45,6 +44,22 @@
   }
 }
 
+.project-list--panoptikum {
+  .project-teaser {
+    margin-top: $space-md;
+    @include bp-sm() {
+      margin-top: 0;
+    }
+  }
+
+  h2 {
+    margin-bottom: $space-md;
+    &:not(:first-of-type) {
+      margin-top: $space-xxl;
+    }
+  }
+}
+
 // Project detail
 .project-detail {
 
@@ -59,10 +74,79 @@
   }
 
   .project-info {
+    background-color: $color--white;
     margin-top: $space-md;
-    @include bp-sm() {
-      left: 0;
+
+    h3 {
+      @include font-bold();
     }
+
+    p {
+      margin-bottom: $space-sm;
+    }
+
+    .icon-toggle {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .08s ease-out;
+    }
+    
+    @include bp-sm() {
+      border-top: 1px solid $color--grey;
+      margin-top: $space-xxl;
+      padding-top: $space-sm;
+      position: fixed;
+      left: $space-md;
+      max-width: calc(25% - #{$space-md});
+      top: calc(50% - #{$header-height-lg});
+      width: 100%;
+      z-index: 1000;
+    }
+
+    @include bp-lg {
+      max-width: 275px;
+      left: calc((100% - #{$page-max-width})/2);
+    }
+
+    .project-description {
+      position: relative;
+    }
+
+    &.is-tiny {
+
+      .icon-toggle {
+        opacity: 1;
+        pointer-events: all;
+        transition: opacity .08s ease-out;
+      }
+
+      .project-description {
+        > div {
+          display: none;
+        }
+      }
+    }
+
+    &.is-visible {
+
+      .icon-toggle {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .08s ease-out;
+      }
+      
+      .project-description {
+        > div {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+.project-detail--panoptikum {
+  .project-header:not(:first-child) {
+    margin-top: $space-xl;
   }
 }
 
@@ -75,7 +159,7 @@
     grid-gap: 0;
 
     @include bp-sm() {
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(6, 1fr);
       grid-gap: $space-md;
     }
   }
@@ -90,6 +174,28 @@
         &:last-child {
           text-align: right;
         }
+    }
+  }
+}
+
+.no-cssgrid {
+  .project-list {
+    @extend %clearfix;
+
+    .project-teaser {
+      margin-bottom: $space-md;
+    }
+
+    @include bp-sm() {
+      .project-teaser {
+        float: left;
+        margin-right: $space-md;
+        width: calc(16.6666667% - (5*16px/6));
+
+        &:nth-child(6n+6) {
+          margin-right: 0;
+        }
+      }
     }
   }
 }
