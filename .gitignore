@@ -31,5 +31,5 @@ node_modules/
 # Install
 INSTALL.TXT
 
-/_old
+_old/
 .styleci.yml
