@@ -10,7 +10,7 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@2.0.0
       env:
         FTP_SERVER: silverfish02.nine.ch
-        FTP_USERNAME: wbgstagingAnzahl
+        FTP_USERNAME: wbgstaging
         FTP_PASSWORD: qPt!-3?96!HO*!GOv]wC
         ARGS: --delete
         # --delete arg will delete files on the server if you've deleted them in git
