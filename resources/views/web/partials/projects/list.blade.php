@@ -1,4 +1,4 @@
-<section class="site-content">
+<section class="site-content site-content--list">
   <div class="project-list">
     @foreach($projects as $project)
       @foreach($project->previewImages as $image)

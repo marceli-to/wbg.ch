@@ -13,6 +13,10 @@
   height: 12px;
   right: 0;
   position: absolute;
-  top: 4px;
+  top: 16px;
   width: 20px;
+
+  &.is-open {
+    background-image: url($url-icons + 'toggle-minus-sm.svg');
+  }
 }

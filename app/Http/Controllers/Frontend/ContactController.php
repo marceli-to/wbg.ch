@@ -19,11 +19,9 @@ class ContactController extends Controller
 
   public function index()
   {
-    return view(
-      $this->view_path . '.index',
-      [
-        'menu' => $this->menuService->boot(),
-      ]
-    );
+    return 
+      view($this->view_path . '.index')
+      ->withMenu($this->menuService->boot())
+      ->withPageTitle('Kontakt');
   }
 }

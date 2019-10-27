@@ -8,13 +8,20 @@ section.site-content {
   padding-top: $space-xl;
   
   @include bp-sm() {
-    padding-top: $space-lg;
+    padding-top: $space-huge;
     position: relative;
     left: calc(25% + #{$space-xs});
     width: calc(75% - #{$space-xs});
   }
 
-  &.site-content--narrow {
+  &.site-content--list {
+    @include bp-sm() {
+      padding-top: $space-lg;
+    }
+  }
+
+  &.site-content--slim,
+  &.site-content--project {
     @include bp-sm() {
       padding-top: 0;
     }

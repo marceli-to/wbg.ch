@@ -4,14 +4,24 @@
  * -----------------------------------------------------------------------------
  */
 
-.intro {
-  @include font-light();
-  @include font-size($fs-lg);
-  padding: 28px 0 60px 0;
+article {
 
-  @include bp-sm() {
-    padding: 92px 0 120px 0;
+  &.content-md {
+    line-height: 1.7 !important;
+  }
+
+  &.content-lg {
+    @include font-size($fs-lg);
+    @include font-light();
+    strong {
+      @include font-regular();
+    }
+  }
+
+  &.content-intro {
+    padding: 28px 0 60px 0;
+    @include bp-sm() {
+      padding: 92px 0 120px 0;
+    }
   }
 }
-
-

@@ -67,6 +67,7 @@
               :assetType="'image'"
               :acceptedFiles="'.png,.jpg'"
               :uploadUrl="'/api/media/upload'"
+              :sortable="false"
             ></multi-image-upload>
           </div>
           <form-buttons :route="'competences'"></form-buttons>

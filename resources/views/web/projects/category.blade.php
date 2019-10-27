@@ -1,7 +1,9 @@
 @extends('web.layout.app')
+@section('seo_title', $pageTitle)
+@section('seo_description', '')
 @section('content')
 @if ($isPanoptikum)
-<section class="site-content">
+<section class="site-content site-content--list">
   <div class="project-list project-list--panoptikum">
     @foreach($projects as $key => $projectSub)
       <h2>{{$subCategories[$key]}}</h2>

@@ -48,14 +48,12 @@ class HomeController extends Controller
 
   public function index()
   {
-    return view(
-      $this->view_path . '.index', 
-      [
-        'menu'   => $this->menuService->boot(),
-        'grids'  => $this->getGrids(),
-        'intro'  => $this->content->where('key', '=', $this->content_key)->get()->first()
-      ]
-    );
+    return
+      view($this->view_path . '.index')
+      ->withMenu($this->menuService->boot())
+      ->withGrids($this->getGrids())
+      ->withIntro($this->content->where('key', '=', $this->content_key)->get()->first())
+      ->withPageTitle('Home');
   }
 
   /**

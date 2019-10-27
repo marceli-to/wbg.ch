@@ -1,0 +1,32 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: component/buttons/social
+ * -----------------------------------------------------------------------------
+ *
+ */
+
+.btn-social {
+  @extend %btn;
+  @extend %btn-bg;
+  background-position: top 16px right;
+  background-size: 20px;
+  border-top: 1px solid $color--grey;
+  color: $color--black;
+  padding-bottom: $space-xl;
+  padding-top: $space-md;
+  @include font-regular();
+
+
+  &.is-maps {
+    background-image: url($url-icons + 'marker.svg');
+    background-size: 12px 20px;
+  }
+
+  &.is-linkedin {
+    background-image: url($url-icons + 'linkedin.svg');
+  }
+
+  &.is-instagram {
+    background-image: url($url-icons + 'instagram.svg');
+  }
+}

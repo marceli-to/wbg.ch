@@ -8,6 +8,7 @@ use App\Services\MediaService;
 use App\Models\Competence;
 use App\Models\CompetenceMedia;
 use App\Models\Client;
+use App\Models\Content;
 
 use Illuminate\Http\Request;
 
@@ -20,6 +21,7 @@ class ProfileController extends Controller
   protected $client;
   protected $competence;
   protected $competenceMedia;
+  protected $content;
 
   // View path
   protected $view_path = 'web.profile';
@@ -31,6 +33,7 @@ class ProfileController extends Controller
    * @param Client $client
    * @param Competence $competence
    * @param CompetenceMedia $competenceMedia
+   * @param Content $content
    */
 
   public function __construct(
@@ -38,12 +41,14 @@ class ProfileController extends Controller
     Client $client,
     Competence $competence,
     CompetenceMedia $competenceMedia,
-    MenuService $menuService
+    MenuService $menuService,
+    Content $content
   )
   {
     $this->mediaService     = $mediaService;
     $this->client           = $client;
     $this->competence       = $competence;
+    $this->content          = $content;
     $this->competenceMedia  = $competenceMedia;
     $this->menuService      = $menuService;
   }
@@ -63,14 +68,23 @@ class ProfileController extends Controller
     return
       view($this->view_path . '.attitude')
       ->withMenu($this->menuService->boot())
+      ->withContent($this->content->where('key', '=', 'haltung')->get()->first())
       ->withPageTitle('Haltung');
   }
 
   public function competences()
   {
+    $competences = $this->competence->published()
+                                    ->with('category')
+                                    ->with('media')
+                                    ->orderBy('order', 'ASC')
+                                    ->get();
+
     return
       view($this->view_path . '.competences')
       ->withMenu($this->menuService->boot())
+      ->withCompetences($competences)
+      ->withContent($this->content->where('key', '=', 'kompetenzen')->get()->first())
       ->withPageTitle('Kompetenzen');
   }
 

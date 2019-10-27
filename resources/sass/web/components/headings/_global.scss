@@ -15,3 +15,18 @@ h2 {
 h3 {
 
 }
+
+.page-title {
+  display: block;
+  @include font-size($fs-sm);
+  line-height: 1 !important;
+}
+
+.has-menu {
+  .page-title {
+    color: $color--light-grey;
+    @include bp-sm() {
+      color: $color--black;
+    }
+  }
+}

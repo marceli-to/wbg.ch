@@ -26,6 +26,8 @@ var Projects = (function() {
 
     var classes = {
         tiny: 'is-tiny',
+        open: 'is-open',
+        visible: 'is-visible'
     };
 
     var winHeight = $(window).height();
@@ -53,20 +55,20 @@ var Projects = (function() {
         // Resize height on load
         if (mq.sm.matches) {
             if ($(selectors.project).length) {
-                _resize();
+                _resize(true);
             }
         }
 
         // Observe height to adjust project info box
         $(window).resize(function(event){
             if (mq.sm.matches && $(selectors.project).length) {
-                _resize();
+                _resize(false);
             }
         });
 
         // Toggle project info box
         $(selectors.body).on('click', selectors.btnToggle, function(){
-            _toggleInfo();
+            _toggleInfo($(this));
         });
     };
 
@@ -92,7 +94,7 @@ var Projects = (function() {
      * Handle position of project info box on resize
      */
 
-    var _resize = debounce(function(){
+    var _resize = debounce(function(init){
 
         // get all heights
         var heights = {
@@ -113,9 +115,9 @@ var Projects = (function() {
         }
 
         // going smaller
-        if (heights.window < winHeight) {
-            var offset = $(selectors.project).position().top, maxOffset = heights.header + heights.menu;
-            if (offset <= maxOffset) {
+        if (heights.window < winHeight || init) {
+            var offset = $(selectors.project).position().top, minOffset = heights.header + heights.menu;
+            if (offset <= minOffset) {
                 $(selectors.project).addClass(classes.tiny);
                 $(selectors.project).css('top', (heights.header + heights.menu));
             }
@@ -125,8 +127,9 @@ var Projects = (function() {
 
     }, 10);
 
-    var _toggleInfo = function(){
-        $(selectors.project).removeClass(classes.tiny);
+    var _toggleInfo = function(btn){
+        $(selectors.project).toggleClass(classes.visible);
+        $(btn).toggleClass(classes.open);
     };
 
     /* --------------------------------------------------------------

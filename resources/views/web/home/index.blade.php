@@ -1,8 +1,10 @@
 @extends('web.layout.app')
+@section('seo_title', $pageTitle)
+@section('seo_description', '')
 @section('content')
-<section class="site-content">
+<section class="site-content site-content--slim">
   @if ($intro)
-    <div class="intro">{!! $intro->text !!}</div>
+    <article class="content-lg content-intro">{!! $intro->text !!}</article>
   @endif
   <div class="ratio-boxes">
     @foreach($grids as $g)

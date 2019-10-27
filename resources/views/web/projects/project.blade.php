@@ -1,6 +1,9 @@
 @extends('web.layout.app')
+@section('seo_title', $project->name . ' - '. $project->category->name)
+@section('seo_description', substr(strip_tags($project->meta_description),0,255))
+@section('og_image', url('/') . ImageHelper::get($ogImage, 'lg'))
 @section('content')
-<section class="site-content site-content--narrow">
+<section class="site-content site-content--project">
   <div class="project-detail">
     <nav class="project-browse">
       <a href="/projekt/{!! AppHelper::slug($browse['prev']) !!}" rel="canonical" class="icon-browse is-prev">
@@ -57,13 +60,29 @@
             @include('web.partials.boxes.project.1fr-portrait', array('elements' => $g['elements']))
           @endif
         @endif
+        @if ($g['key'] == '2x1fr-logo')
+          @if (isset($g['elements']))
+            <div class="logo-boxes">
+              @include('web.partials.boxes.project.2x1fr-logo', array('elements' => $g['elements']))
+            </div>
+          @endif
+        @endif
       @endforeach
     </div>
     <div class="project-info js-project-info">
-      <div class="project-description">
+      <article class="project-description">
         <a href="javascript:;" class="icon-toggle js-toggle-info"></a>
-        <h3>{{ $project->name }}</h3>
+        <h1>{{ $project->name }}</h1>
         <div>{!! $project->description !!}</div>
+      </article>
+      <div class="project-relations">
+        @if ($project->relations)
+          @foreach($project->relations as $relation)
+            <article class="project-relation">
+              <h3>{{ $relation->related->name }}</h3>
+            </article>
+          @endforeach
+        @endif
       </div>
     </div>
   </div>

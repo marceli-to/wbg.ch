@@ -35,8 +35,7 @@ var MapsUi = (function() {
 		// Center around a single marker
 		var center = new google.maps.LatLng(47.361777, 8.512298);
         map.setOptions({center: center});
-        
-        var marker = new google.maps.Marker({position: position, map: map});
+    var marker = new google.maps.Marker({position: position, map: map});
 
 	};
 	

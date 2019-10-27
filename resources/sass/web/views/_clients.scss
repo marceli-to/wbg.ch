@@ -11,6 +11,7 @@
   }
 
   .client-index {
+    @include font-bold();
     margin-bottom: $space-sm;
   }
 

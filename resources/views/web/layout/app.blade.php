@@ -3,7 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>wbg.ch</title>
+<title>@if(trim($__env->yieldContent('seo_title')))@yield('seo_title') - {{config('seo.title')}}@else{{config('seo.title')}}@endif</title>
+<meta name="description" content="@if(trim($__env->yieldContent('seo_description')))@yield('seo_description')@else{{config('seo.description')}}@endif">
+<meta property="og:title" content="@if(trim($__env->yieldContent('seo_title')))@yield('seo_title') - {{config('seo.title')}}@else{{config('seo.title')}}@endif">
+<meta property="og:description" content="@if(trim($__env->yieldContent('seo_description')))@yield('seo_description')@else{{config('seo.description')}}@endif">
+<meta property="og:url" content="{{url()->current()}}">
+<meta property="og:image" content="@if(trim($__env->yieldContent('og_image')))@yield('og_image')@else{{ asset('assets/img/wbg.ch-og.png') }}@endif">
+<meta property="og:site_name" content="{{config('seo.title')}}">
 <meta name="csrf-token" value="{{ csrf_token() }}" />
 <meta name="format-detection" content="telephone=no">
 <link href="{{ asset('assets/css/app.css') }}" type="text/css" rel="stylesheet" />
@@ -18,7 +24,7 @@
       {{-- <hr> --}}
     </div>
     <div class="span header-title">
-      <h1 class="page-title">@if (isset($pageTitle)) {{ $pageTitle }} @else &nbsp; @endif</h1>
+      <span class="page-title">@if (isset($pageTitle)) {{ $pageTitle }} @else &nbsp; @endif</span>
       {{-- <hr> --}}
     </div>
     <div class="span header-navigation">
@@ -137,6 +143,10 @@
   WBG AG – VISUELLE KOMMUNIKATION<br>BINZSTRASSE 39, CH-8045 ZÜRICH, +41 44 269 43 43, MAIL@WBG.CH
 </footer>
 <script src="{{ asset('assets/js/app.js') }}" type="text/javascript"></script>
+@if (request()->routeIs('contact'))
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhSYFH8MYZDgX7ZDNT7uiRQAu0tU-gpAY"></script>
+<script src="{{ asset('assets/js/maps.js') }}" type="text/javascript"></script>
+@endif
 </body>
 <!-- made with ❤ by marceli.to -->
 </html>

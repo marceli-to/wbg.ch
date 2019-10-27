@@ -40,7 +40,11 @@
       left: 0;
       width:calc(100% - #{$space-md});
       height: calc(100% - #{$space-md});
-
+      
+      &.is-logo {
+        border-top: 1px solid $color--grey;
+      }
+      
       img {
         display: block;
         height: 100%;
@@ -88,5 +92,24 @@
 
   .box__e {
     padding-top: 130.232558139535%;
+  }
+
+  .logo-boxes {
+    
+    div.is-logo {
+      border-top: 1px solid $color--grey;
+      padding-top: 16px;
+      @include bp-sm() {
+        padding-bottom: 16px;
+      }
+    }
+
+    @include bp-sm() {
+      &:last-child {
+        div.is-logo {
+          border-bottom: 1px solid $color--grey;
+        }
+      }
+    }
   }
 }

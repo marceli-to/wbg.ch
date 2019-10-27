@@ -1,0 +1,64 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: views/team
+ * -----------------------------------------------------------------------------
+ */
+
+.team {
+  @include font-light();
+
+  article {
+    border-top: 1px solid $color--grey;
+    margin-bottom: $space-lg;
+    padding-top: $space-md;
+    @include bp-sm() {
+      margin-bottom: 0;
+    }
+
+    &:first-of-type {
+      border-top: 0;
+      padding-top: 0;
+      @include bp-sm() {
+        border-top: 1px solid $color--grey;
+        padding-top: $space-md;
+      }
+    }
+  }
+
+  h2 {
+    @include font-regular();
+  }
+
+  a {
+    color: $color--black;
+    text-decoration: none;
+  }
+}
+
+.cssgrid {
+  .team {
+    @include bp-sm() {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-column-gap: $space-md;
+      grid-row-gap: $space-lg;
+    }
+  }
+}
+
+.no-cssgrid {
+  .team {
+    @extend %clearfix;
+    @include bp-sm() {
+      article {
+        float: left;
+        margin-right: $space-md;
+        margin-bottom: $space-lg;
+        width: calc(33.33333% - (2*16px/3));
+        &:nth-child(3n+3) {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}

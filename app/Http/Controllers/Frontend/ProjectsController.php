@@ -58,7 +58,8 @@ class ProjectsController extends Controller
       view($this->view_path . '.index')
       ->withMenu($this->menuService->boot())
       ->withSubCategories($this->category->subcategories)
-      ->withProjects($projects->shuffle()->all());
+      ->withProjects($projects->shuffle()->all())
+      ->withPageTitle('Projekte');
 
   }
 
@@ -127,7 +128,7 @@ class ProjectsController extends Controller
       view($this->view_path . '.subcategory')
       ->withMenu($this->menuService->boot(NULL, $category->id, $subcategory))
       ->withProjects($data)
-      ->withPageTitle($category->name);
+      ->withPageTitle($this->category->subcategories[$subcategory] . ' - ' . $category->name);
   }
 
   /**
@@ -138,17 +139,25 @@ class ProjectsController extends Controller
    */
   public function project($id = NULL, $slug = NULL)
   {
-    $project = $this->project->with('client')->with('category')->findOrFail($id);
-    return view(
-      $this->view_path . '.project',
-      [
-        'menu'        => $this->menuService->boot($id, $project->category_id),
-        'project'     => $project,
-        'browse'      => $this->getProjectNav($project->id),
-        'grids'       => $this->getProjectGrid($id),
-        'pageTitle'  => $project->category->name
-      ]
-    );
+    $project = $this->project->with('client')
+                             ->with('category')
+                             ->with('relations.related.images')
+                             ->findOrFail($id);
+
+    // Open graph image (first active image)
+    $og_image = $this->projectImage->where('project_id', '=', $id)
+                                    ->where('publish', '=', 1)
+                                    ->get()
+                                    ->first();
+
+    return
+      view($this->view_path . '.project')
+      ->withMenu($this->menuService->boot($id, $project->category_id))
+      ->withProject($project)
+      ->withGrids($this->getProjectGrid($id))
+      ->withBrowse($this->getProjectNav($project->id))
+      ->withPageTitle($project->category->name)
+      ->withOgImage($og_image ? $og_image->name : null);
   }
 
   /**

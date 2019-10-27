@@ -1,6 +1,6 @@
 /**
  * -----------------------------------------------------------------------------
- * File: views/Project
+ * File: views/project
  * -----------------------------------------------------------------------------
  */
 
@@ -74,10 +74,9 @@
   }
 
   .project-info {
-    background-color: $color--white;
     margin-top: $space-md;
 
-    h3 {
+    h1, h2, h3 {
       @include font-bold();
     }
 
@@ -85,16 +84,19 @@
       margin-bottom: $space-sm;
     }
 
+    article {
+      border-top: 1px solid $color--grey;
+      padding-top: $space-sm;
+      position: relative;
+    }
+
     .icon-toggle {
       opacity: 0;
       pointer-events: none;
-      transition: opacity .08s ease-out;
     }
     
     @include bp-sm() {
-      border-top: 1px solid $color--grey;
-      margin-top: $space-xxl;
-      padding-top: $space-sm;
+      margin-top: 48px;
       position: fixed;
       left: $space-md;
       max-width: calc(25% - #{$space-md});
@@ -108,16 +110,11 @@
       left: calc((100% - #{$page-max-width})/2);
     }
 
-    .project-description {
-      position: relative;
-    }
-
     &.is-tiny {
 
       .icon-toggle {
         opacity: 1;
         pointer-events: all;
-        transition: opacity .08s ease-out;
       }
 
       .project-description {
@@ -130,8 +127,8 @@
     &.is-visible {
 
       .icon-toggle {
-        opacity: 0;
-        pointer-events: none;
+        opacity: 1;
+        pointer-events: all;
         transition: opacity .08s ease-out;
       }
       
@@ -139,6 +136,14 @@
         > div {
           display: block;
         }
+      }
+    }
+
+    .project-relations {
+      margin-top: $space-xxl;
+
+      .project-relation {
+        margin-bottom: $space-xl;
       }
     }
   }

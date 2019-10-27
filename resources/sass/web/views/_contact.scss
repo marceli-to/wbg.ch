@@ -1,0 +1,75 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: views/contact
+ * -----------------------------------------------------------------------------
+ */
+
+.contact {
+  @include font-light();
+  
+  h2, h3 {
+    @include font-regular();
+  }
+  
+  p {
+  }
+
+  a {
+    color: $color--black;
+  }
+
+  address {
+    display: block;
+    margin-bottom: $space-xxl;
+
+    @include bp-sm() {
+      border-top: 1px solid $color--grey;
+      margin-bottom: 0;
+      padding-top: $space-md;
+    }
+  }
+
+  .maps-container {
+    background-color: silver;
+    margin-top: $space-xl;
+    min-height: 240px;
+
+    @include bp-sm() {
+      min-height: 360px;
+    }
+
+    @include bp-md() {
+      min-height: 480px;
+    }
+  }
+}
+
+.cssgrid {
+  .contact-grid {
+    @include bp-sm() {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      grid-column-gap: $space-md;
+    }
+  }
+}
+
+.no-cssgrid {
+  .contact-grid {
+    @extend %clearfix;
+      @include bp-sm() {
+      .span {
+        float: left;
+        &:first-child {
+          margin-right: $space-md;
+          width: calc(66.66667% - #{$space-md}/2);
+        }
+  
+        &:last-child {
+          width: calc(33.33333% - #{$space-md}/2);
+        }
+      }
+    }
+  }
+}
+

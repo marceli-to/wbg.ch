@@ -34,7 +34,9 @@
 @import 'components/blocks';
 @import 'components/boxes/global';
 @import 'components/boxes/ratio';
+@import 'components/buttons/global';
 @import 'components/buttons/menu';
+@import 'components/buttons/social';
 @import 'components/icons/global';
 @import 'components/icons/arrow';
 @import 'components/icons/browse';
@@ -49,6 +51,7 @@
 
 // Layout
 @import 'layout/base';
+@import 'layout/article';
 @import 'layout/grid';
 @import 'layout/sections';
 @import 'layout/header';
@@ -67,5 +70,7 @@
 // Views
 @import 'views/global';
 @import 'views/clients';
+@import 'views/competences';
+@import 'views/contact';
 @import 'views/project';
-// @import 'views/print';
+@import 'views/team';
