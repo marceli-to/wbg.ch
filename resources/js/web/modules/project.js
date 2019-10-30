@@ -82,12 +82,14 @@ var Projects = (function() {
             header = $(selectors.header),
             target = $('[data-project="' + project + '"]');
 
-        var offsetTop = target.offset().top - header.height() - 80;
-        if (mq.sm.matches) {
-            offsetTop = target.offset().top - header.height() - 24;
+        if (target.length)
+        {
+            var offsetTop = target.offset().top - header.height() - 80;
+            if (mq.sm.matches) {
+                offsetTop = target.offset().top - header.height() - 24;
+            }
+            $.scrollTo(offsetTop, 400);
         }
-
-        $.scrollTo(offsetTop, 400);
     };
 
     /**
@@ -111,6 +113,7 @@ var Projects = (function() {
             if (heights.window > minHeight) {
                 $(selectors.project).removeClass(classes.tiny);
                 $(selectors.project).removeAttr('style');
+                $(selectors.btnToggle).hide();
             }
         }
 
@@ -120,6 +123,7 @@ var Projects = (function() {
             if (offset <= minOffset) {
                 $(selectors.project).addClass(classes.tiny);
                 $(selectors.project).css('top', (heights.header + heights.menu));
+                $(selectors.btnToggle).show();
             }
         }
 

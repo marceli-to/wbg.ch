@@ -9,9 +9,10 @@ require('./bootstrap');
 // Plugins
 require('./vendor/lazysizes.js');
 require('./vendor/scrollTo.js');
+require('./vendor/fancybox.js');
 
-// Menu
+// Modules
 require('./modules/menu.js');
-
-// Project
 require('./modules/project.js');
+require('./modules/competences.js');
+require('./modules/fancybox.js');

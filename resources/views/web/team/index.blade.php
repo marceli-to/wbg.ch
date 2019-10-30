@@ -2,7 +2,7 @@
 @section('seo_title', $pageTitle)
 @section('seo_description', '')
 @section('content')
-<section class="site-content">
+<section class="site-content site-content--team">
   <div class="team">
     @foreach($team as $t)
       <article>

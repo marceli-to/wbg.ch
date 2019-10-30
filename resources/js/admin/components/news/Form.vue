@@ -14,6 +14,16 @@
             <textarea v-model="news.text" rows="5"></textarea>
           </div>
           <div class="form-row">
+            <label>Link (Kompetenzen)</label>
+            <div class="select-wrapper">
+              <select
+                v-model="news.linkInternal"
+              >
+              <option v-for="c in competences" :key="c.id" :value="c.id">{{ c.title }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
             <label>
               Link
               <a
@@ -95,9 +105,10 @@ export default {
         title: null,
         text: null,
         link: null,
+        linkInternal: null,
         linkText: null,
       },
-
+      competences: null,
       previewLink: null,
 
     };
@@ -113,6 +124,10 @@ export default {
         }
       });
     }
+
+    this.axios.get('/api/competences/get').then(response => {
+      this.competences = response.data.data;
+    });
   },
 
   methods: {

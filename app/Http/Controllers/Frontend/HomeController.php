@@ -64,7 +64,7 @@ class HomeController extends Controller
   {
     $grids = $this->homeGrid->with('layout')
                             ->with('elements.projectimage.project')
-                            ->with('elements.news')
+                            ->with('elements.news.competence')
                             ->orderBy('order')
                             ->get();
     

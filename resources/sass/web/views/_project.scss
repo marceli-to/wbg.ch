@@ -65,23 +65,36 @@
 
   .project-header {
     margin-bottom: $space-xl;
+
     @include bp-sm() {
       display: none !important;
     }
+
     h2 {
       @include font-size($fs-sm);
     }
   }
 
+
+  // Sidebar
   .project-info {
+    color: $color--grey;
     margin-top: $space-md;
 
     h1, h2, h3 {
       @include font-bold();
     }
 
+    h1, h3 {
+      margin-bottom: 2px;
+    }
+
     p {
       margin-bottom: $space-sm;
+    }
+
+    a {
+      color: $color--grey;
     }
 
     article {
@@ -100,7 +113,8 @@
       position: fixed;
       left: $space-md;
       max-width: calc(25% - #{$space-md});
-      top: calc(50% - #{$header-height-lg});
+      top: 50%;
+      transform: translateY(-50%);
       width: 100%;
       z-index: 1000;
     }
@@ -110,7 +124,20 @@
       left: calc((100% - #{$page-max-width})/2);
     }
 
+    .project-description,
+    .project-relations {
+      @include bp-md() {
+        width: calc(100% - #{$space-xl});
+      }
+
+      @include bp-lg() {
+        width: calc(100% - #{$space-huge});
+      }
+    }
+
+    // Minimized sidebar
     &.is-tiny {
+      transform: translateY(0);
 
       .icon-toggle {
         opacity: 1;
@@ -118,10 +145,20 @@
       }
 
       .project-description {
-        > div {
+        
+        > div * {
           display: none;
         }
+
+        > div h1 {
+          display: block;
+        }
       }
+
+      .project-relations {
+        display: none;
+      }
+
     }
 
     &.is-visible {
@@ -133,17 +170,35 @@
       }
       
       .project-description {
-        > div {
+        > div * {
           display: block;
         }
       }
+
+      .project-relations {
+        display: block;
+      }
     }
 
+    // Related projects
     .project-relations {
       margin-top: $space-xxl;
 
       .project-relation {
         margin-bottom: $space-xl;
+
+        figure {
+          display: block;
+          margin-top: $space-md;
+
+          img {
+            @extend %is-responsive;
+            max-width: 150px;
+            @include bp-sm() {
+              max-width: 50%;
+            }
+          }
+        }
       }
     }
   }

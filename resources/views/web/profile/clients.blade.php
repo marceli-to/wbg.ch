@@ -2,7 +2,7 @@
 @section('seo_title', $pageTitle)
 @section('seo_description', '')
 @section('content')
-<section class="site-content">
+<section class="site-content site-content--narrow">
   <div class="clients">
     @foreach($clients as $key => $client_group)
       <div class="client-group">

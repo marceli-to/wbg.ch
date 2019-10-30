@@ -76,6 +76,7 @@ class ProjectController extends Controller
     {
         $projects = $this->project->where('publish', '=', $publish)
                                   ->orderBy('name', $order)
+                                  ->with('category')
                                   ->with('images')
                                   ->get();
         return new ProjectCollection($projects);
@@ -98,6 +99,7 @@ class ProjectController extends Controller
             'category_id'       => $request->input('category_id') ? $request->input('category_id') : NULL,
             'subcategory_id'    => $request->input('subcategory_id') != 'NULL' ? $request->input('subcategory_id') : NULL,
             'client_id'         => $request->input('client_id') ? $request->input('client_id') : NULL,
+            'is_brands'         => $request->input('is_brands'),
         ]);
         $project->save();
 
@@ -153,6 +155,7 @@ class ProjectController extends Controller
         $project->category_id       = $request->input('category_id') ? $request->input('category_id') : NULL;
         $project->subcategory_id    = $request->input('subcategory_id') != 'NULL' ? $request->input('subcategory_id') : NULL;
         $project->client_id         = $request->input('client_id') ? $request->input('client_id') : NULL;
+        $project->is_brands         = $request->input('is_brands');
         $project->save();
 
         if (!empty($request->images))
@@ -191,6 +194,7 @@ class ProjectController extends Controller
         $projectCopy->category_id   = $project->category_id;
         $projectCopy->client_id     = $project->client_id;
         $projectCopy->publish       = 0;
+        $projectCopy->is_brands     = 0;
         $projectCopy->save();
         return response()->json($projectCopy);
     }

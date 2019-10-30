@@ -16,7 +16,8 @@ class Project extends Model
         'client_id',
         'subcategory_id',
         'publish',
-        'order'
+        'order',
+        'is_brands'
     ];
 
     /**

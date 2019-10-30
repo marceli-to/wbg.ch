@@ -21,11 +21,12 @@ Route::get('projekte/{category}/{slugCategory?}/{subcategory}/{slugSubcategory?}
 Route::get('projekt/{id}/{slug?}', 'Frontend\ProjectsController@project')->name('project.detail');
 
 // Profil
-Route::get('/profil', 'Frontend\ProfileController@index')->name('profile.index');
-Route::get('/profil/haltung', 'Frontend\ProfileController@attitude')->name('profile.attitude');
-Route::get('/profil/kompetenzen', 'Frontend\ProfileController@competences')->name('profile.competences');
-Route::get('/profil/kunden', 'Frontend\ProfileController@clients')->name('profile.clients');
-Route::get('/profil/impressum', 'Frontend\ProfileController@imprint')->name('profile.imprint');
+Route::get('profil', 'Frontend\ProfileController@index')->name('profile.index');
+Route::get('profil/haltung', 'Frontend\ProfileController@attitude')->name('profile.attitude');
+Route::get('profil/kompetenzen', 'Frontend\ProfileController@competences')->name('profile.competences');
+Route::get('profil/kompetenzen/{slug?}', 'Frontend\ProfileController@competences')->name('profile.competences.detail');
+Route::get('profil/kunden', 'Frontend\ProfileController@clients')->name('profile.clients');
+Route::get('profil/impressum', 'Frontend\ProfileController@imprint')->name('profile.imprint');
 
 // Team
 Route::get('/team', 'Frontend\TeamController@index')->name('team');

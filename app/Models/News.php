@@ -8,7 +8,17 @@ class News extends Model
         'title',
         'text',
         'link',
+        'linkInternal',
         'linkText',
         'linkNewWindow',
     ];
+
+    /**
+     * Competence relationship
+     */
+
+    public function competence()
+    {
+        return $this->hasOne('App\Models\Competence', 'id', 'linkInternal');
+    }
 }

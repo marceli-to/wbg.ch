@@ -14,7 +14,8 @@ section.site-content {
     width: calc(75% - #{$space-xs});
   }
 
-  &.site-content--list {
+  &.site-content--list,
+  &.site-content--narrow {
     @include bp-sm() {
       padding-top: $space-lg;
     }
@@ -24,6 +25,14 @@ section.site-content {
   &.site-content--project {
     @include bp-sm() {
       padding-top: 0;
+    }
+  }
+
+  &.site-content--contact,
+  &.site-content--team {
+    padding-top: 19px;
+    @include bp-sm(){
+      padding-top: 75px;
     }
   }
 }

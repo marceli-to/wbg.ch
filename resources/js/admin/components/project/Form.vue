@@ -110,6 +110,29 @@
                 </select>
               </div>
             </div>
+            <div class="form-row">
+              <label class="is-sm">Logo Projekt?</label>
+              <div class="form-radio">
+                <input
+                  v-model="project.is_brands"
+                  type="radio"
+                  name="is_brands_1"
+                  id="is_brands_1"
+                  value="1"
+                  class="visually-hidden"
+                >
+                <label for="is_brands_1" class="form-control">Ja</label>
+                <input
+                  v-model="project.is_brands"
+                  type="radio"
+                  name="is_brands_0"
+                  id="is_brands_0"
+                  value="0"
+                  class="visually-hidden"
+                >
+                <label for="is_brands_0" class="form-control">Nein</label>
+              </div>
+            </div>
           </div>
           <div v-show="tabs.media.active">
             <div style="position:relative">
@@ -136,7 +159,7 @@
                 <div class="select-wrapper">
                   <select v-model="relation" name="related_project_id">
                     <option selected="selected">Bitte wählen...</option>
-                    <option v-for="p in projects" :key="p.id" :value="p.id">{{ p.name }}</option>
+                    <option v-for="p in projects" :key="p.id" :value="p.id">{{ p.name }} – {{ p.category.name }}</option>
                   </select>
                 </div>
                 <div>
@@ -221,6 +244,7 @@ export default {
         subcategory_id: null,
         client_id: null,
         publish: null,
+        is_brands: null,
         images: [],
         relations: []
       },

@@ -9,8 +9,8 @@
 
   article {
     border-top: 1px solid $color--grey;
-    margin-bottom: $space-lg;
-    padding-top: $space-md;
+    margin-bottom: 22px;
+    padding-top: 18px;
     @include bp-sm() {
       margin-bottom: 0;
     }
@@ -20,7 +20,7 @@
       padding-top: 0;
       @include bp-sm() {
         border-top: 1px solid $color--grey;
-        padding-top: $space-md;
+        padding-top: 16px;
       }
     }
   }
@@ -53,7 +53,7 @@
       article {
         float: left;
         margin-right: $space-md;
-        margin-bottom: $space-lg;
+        margin-bottom: 22px;
         width: calc(33.33333% - (2*16px/3));
         &:nth-child(3n+3) {
           margin-right: 0;

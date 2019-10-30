@@ -1,8 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
-# /storage/*.key
-/storage/app/public
+/storage/*.key
 /vendor
 /.idea
 /.vscode
@@ -27,9 +26,3 @@ node_modules/
 
 # Ignore .env
 .env
-
-# Install
-INSTALL.TXT
-
-_old/
-.styleci.yml

@@ -18,14 +18,12 @@
 <body>
 <header class="site-header js-header">
   <div>
-    <a href="javascript:;" class="btn-menu js-btn-menu"></a>
+    <a href="javascript:;" class="btn-menu js-btn-menu" title="Menü anzeigen"></a>
     <div class="span header-logo">
       <a href="/" class="logo" title="WBG - Home">WBG</a>
-      {{-- <hr> --}}
     </div>
     <div class="span header-title">
-      <span class="page-title">@if (isset($pageTitle)) {{ $pageTitle }} @else &nbsp; @endif</span>
-      {{-- <hr> --}}
+      <span class="page-title">@if (isset($pageTitle) && !request()->routeIs('home')) {{ $pageTitle }} @else &nbsp; @endif</span>
     </div>
     <div class="span header-navigation">
       <nav class="header" role="navigation">
@@ -60,7 +58,6 @@
           </li>
         </ul>
       </nav>
-      {{-- <hr> --}}
     </div>
   </div>
 </header>
@@ -101,25 +98,25 @@
         <ul style="{{ request()->routeIs('profile.*') ? 'display:block' : 'display:none' }}">
           <li>
             <a href="{{ route('profile.attitude') }}"
-                class="{{ request()->routeIs('profile.attitude') ? 'is-active' : '' }}">
+               class="{{ request()->routeIs('profile.attitude') ? 'is-active' : '' }}">
               Haltung
             </a>
           </li>
           <li>
             <a href="{{ route('profile.competences') }}"
-                class="{{ request()->routeIs('profile.competences') ? 'is-active' : '' }}">
+               class="{{ request()->routeIs('profile.competences') || request()->routeIs('profile.competences.*') ? 'is-active' : '' }}">
               Kompetenzen
             </a>
           </li>
           <li>
             <a href="{{ route('profile.clients') }}"
-                class="{{ request()->routeIs('profile.clients') ? 'is-active' : '' }}">
+               class="{{ request()->routeIs('profile.clients') ? 'is-active' : '' }}">
               Kunden
             </a>
           </li>
           <li>
             <a href="{{ route('profile.imprint') }}"
-                class="{{ request()->routeIs('profile.imprint') ? 'is-active' : '' }}">
+               class="{{ request()->routeIs('profile.imprint') ? 'is-active' : '' }}">
               Impressum
             </a>
           </li>

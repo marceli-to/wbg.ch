@@ -354,7 +354,7 @@ class MediaService
             if (!empty($data['coords']))
             {
                 $c = $data['coords'];
-                $image->crop(ceil($c['w']), ceil($c['h']), ceil($c['x']), ceil($c['y']));
+                $image->crop(floor($c['w']), floor($c['h']), floor($c['x']), floor($c['y']));
             }
 
             // Save the image

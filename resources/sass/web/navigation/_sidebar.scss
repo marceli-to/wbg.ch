@@ -22,6 +22,7 @@ nav.sidebar {
 
   a {
     color: $color--grey;
+    letter-spacing: 0.07em;
     line-height: 2.5;
     text-transform: uppercase;
     transition: color .12s ease-out;
@@ -41,6 +42,7 @@ nav.sidebar {
       padding-left: $space-xs;
     }
     a {
+      letter-spacing: 0;
       text-transform: none;
     }
   }
@@ -77,6 +79,7 @@ nav.sidebar {
       }
       a {
         display: block;
+        letter-spacing: 0.07em;
         text-transform: uppercase;
       }
     }
@@ -86,12 +89,14 @@ nav.sidebar {
         padding-left: $space-xs;
       }
       a {
+        letter-spacing: 0;
         text-transform: none;
       }
     }
 
     ul.is-profile ul {
       a {
+        letter-spacing: 0 !important;
         text-transform: none !important;
       }
     }

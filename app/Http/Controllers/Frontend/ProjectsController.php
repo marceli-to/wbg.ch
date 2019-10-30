@@ -128,7 +128,7 @@ class ProjectsController extends Controller
       view($this->view_path . '.subcategory')
       ->withMenu($this->menuService->boot(NULL, $category->id, $subcategory))
       ->withProjects($data)
-      ->withPageTitle($this->category->subcategories[$subcategory] . ' - ' . $category->name);
+      ->withPageTitle($category->name);
   }
 
   /**
@@ -154,7 +154,7 @@ class ProjectsController extends Controller
       view($this->view_path . '.project')
       ->withMenu($this->menuService->boot($id, $project->category_id))
       ->withProject($project)
-      ->withGrids($this->getProjectGrid($id))
+      ->withGrids($this->getProjectGrid($id, $project->is_brands))
       ->withBrowse($this->getProjectNav($project->id))
       ->withPageTitle($project->category->name)
       ->withOgImage($og_image ? $og_image->name : null);
@@ -165,24 +165,56 @@ class ProjectsController extends Controller
    * 
    * @param int $projectId
    */
-  protected function getProjectGrid($projectId)
+  protected function getProjectGrid($projectId, $isBrands = FALSE)
   {
     $grids = $this->grid->byProject($projectId)
                         ->with('layout')
-                        ->with('elements.news')
+                        ->with('elements.news.competence')
                         ->with('elements.image')
                         ->orderBy('order')
                         ->get();
 
-    $project_grids = [];
-    foreach($grids as $g)
+    // Projects containing logos will be display completely random
+    if ($isBrands)
     {
-      $project_grids[$g->id]['key'] = $g->layout->key;
-
-      // Sort elements by position
-      $sorted = $g->elements->sortBy('position');
-      $project_grids[$g->id]['elements'] = $sorted->values()->all();
+      $elements = [];
+      foreach($grids as $g)
+      {
+        foreach($g->elements as $element)
+        {
+          $elements[] = $element;
+        }
+      }
+     
+      $elements = collect($elements)->shuffle()->chunk(2);
+      $project_grids = [];
+      foreach($elements as $key => $element)
+      {
+        $project_grids[$key]['key'] = '2x1fr-logo';
+        if ($element->count() == 1)
+        {
+          $project_grids[$key]['elements'][0] = $element->first();
+        }
+        else
+        {
+          $project_grids[$key]['elements'][0] = $element->first();
+          $project_grids[$key]['elements'][1] = $element->last();
+        }
+      }
     }
+    else
+    {
+      $project_grids = [];
+      foreach($grids as $g)
+      {
+        $project_grids[$g->id]['key'] = $g->layout->key;
+  
+        // Sort elements by position or shuffle them
+        $sorted = $g->elements->sortBy('position');
+        $project_grids[$g->id]['elements'] = $sorted->values()->all();
+      }
+    }
+
     return $project_grids;
   }
 

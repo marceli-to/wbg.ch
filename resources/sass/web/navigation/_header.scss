@@ -25,8 +25,9 @@ nav.header {
     a {
         color: $color--grey;
         display: block;
-        @include font-light();
+        @include font-regular();
         @include font-size($fs-nav);
+        letter-spacing: 0.07em;
         text-decoration: none;
         text-transform: uppercase;
         transition: color .12s ease-out;

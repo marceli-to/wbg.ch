@@ -8,11 +8,11 @@
     @endif
     @if ($news->link)
       <a href="{{ $news->link }}" {{ $news->linkNewWindow ? 'target="_blank"' : '' }} class="icon-arrow">
-        @if ($news->linkText)
-          {{ $news->linkText }}
-        @else
-          Mehr
-        @endif
+        @if ($news->linkText) {{ $news->linkText }} @else Mehr @endif
+      </a>
+    @elseif ($news->linkInternal)
+      <a href="{{ route('profile.competences') }}/!#{{ str_slug($news->competence->title)}}" class="icon-arrow">
+        @if ($news->linkText){{ $news->linkText }} @else Mehr @endif
       </a>
     @endif
   </div>

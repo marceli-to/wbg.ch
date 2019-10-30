@@ -19,9 +19,9 @@ article {
   }
 
   &.content-intro {
-    padding: 28px 0 60px 0;
+    padding: 2px 0 $space-xl 0;
     @include bp-sm() {
-      padding: 92px 0 120px 0;
+      padding: $space-huge 0 $space-huge 0;
     }
   }
 }

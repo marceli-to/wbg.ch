@@ -97,7 +97,7 @@ class ProfileController extends Controller
     {
       foreach($clients as $c)
       {
-        $key = (is_numeric(substr($c->name, 0,1))) ? '0-9' : substr($c->name, 0,1);
+        $key = (is_numeric(substr($c->name, 0,1))) ? '0–9' : substr($c->name, 0,1);
         $client_list[$key][] = $c;
       }
     }

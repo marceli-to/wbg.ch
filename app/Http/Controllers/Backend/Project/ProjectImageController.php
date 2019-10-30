@@ -237,6 +237,7 @@ class ProjectImageController extends Controller
             $projectImageCopy = $projectImage->replicate();
             $projectImageCopy->name = $image['name'];
             $projectImageCopy->is_crop = 1;
+            $projectImageCopy->is_preview = 0;
             $projectImageCopy->is_grid = 1;
             $projectImageCopy->save();
 

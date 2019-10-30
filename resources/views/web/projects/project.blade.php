@@ -69,22 +69,36 @@
         @endif
       @endforeach
     </div>
-    <div class="project-info js-project-info">
-      <article class="project-description">
-        <a href="javascript:;" class="icon-toggle js-toggle-info"></a>
-        <h1>{{ $project->name }}</h1>
-        <div>{!! $project->description !!}</div>
-      </article>
-      <div class="project-relations">
-        @if ($project->relations)
-          @foreach($project->relations as $relation)
-            <article class="project-relation">
-              <h3>{{ $relation->related->name }}</h3>
-            </article>
-          @endforeach
-        @endif
+
+    @if ($project->principal || $project->description)
+      <div class="project-info js-project-info">
+        <article class="project-description">
+          <a href="javascript:;" class="icon-toggle js-toggle-info"></a>
+          @if ($project->principal)
+            <h1>{{ $project->principal }}</h1>
+          @endif
+          <div>{!! $project->description !!}</div>
+        </article>
+        <div class="project-relations">
+          @if ($project->relations)
+            @foreach($project->relations as $relation)
+              <article class="project-relation">
+                <h3>{{ $relation->related->name }}</h3>
+                <a href="/projekt/{!! AppHelper::slug($relation->related) !!}" class="icon-arrow-light">{{$relation->related->name}}</a>
+                @foreach($relation->related->images as $img)
+                  @if ($loop->first)
+                    <figure>
+                      <img src="{!! ImageHelper::get($img->name, 'sm') !!}" height="280" width="430" alt="{{$img->caption}}">
+                    </figure>
+                  @endif
+                @endforeach
+
+              </article>
+            @endforeach
+          @endif
+        </div>
       </div>
-    </div>
+    @endif
   </div>
 </section>
 @endsection

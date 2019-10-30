@@ -9,24 +9,29 @@
     </article>
     @if ($competences)
       @foreach($competences as $competence)
-        <article class="competence">
-          <h2>{{ $competence->title }}</h2>
+        <article class="competence" data-competence="{{ str_slug($competence->title) }}">
           <div>
             <div class="competence__text">
+              <h2>{{ $competence->title }}</h2>
+
               <div>
-                {{-- <p>{!! nl2br(e($competence->description)) !!}</p> --}}
                 {!! AppHelper::nl2p($competence->description) !!}
+                @if ($competence->category)
+                  <a href="/projekte/{{ $competence->category->id }}/{{ $competence->category->name }}" class="icon-arrow-lg">
+                    {{ $competence->category->name }}
+                  </a>
+                @endif
               </div>
             </div>
             <div class="competence__media">
               @foreach($competence->media as $media)
                 @if ($loop->count > 1)
                   @if($loop->first)
-                    <a href="{!! ImageHelper::get($media->name, 'lg') !!}" title="{{ $media->caption }}">
+                    <a href="{!! ImageHelper::get($media->name, 'lg') !!}" title="{{ $media->caption }}" data-fancybox="gallery">
                       <img src="{!! ImageHelper::get($media->name, 'lg') !!}" height="560" width="430" alt="{{ $media->caption }}">
                     </a>
                   @else
-                    <a href="{!! ImageHelper::get($media->name, 'lg') !!}"></a>
+                    <a href="{!! ImageHelper::get($media->name, 'lg') !!}" data-fancybox="gallery"></a>
                   @endif
                 @else
                   <img src="{!! ImageHelper::get($media->name, 'lg') !!}" height="560" width="430" alt="{{ $media->caption }}">

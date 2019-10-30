@@ -12,7 +12,7 @@
 }
 
 .btn-fancybox-close {
-    background-image: url($url-icons + 'cross.svg');
+    background-image: url($url-icons + 'lightbox-close.svg');
     height: 20px;
     right: $space-lg;
     top: $space-md;
@@ -29,24 +29,26 @@
     width: 36px;
 
     &.is-prev {
-        background-image: url($url-icons + 'arrow-left.svg');
+        background-image: url($url-icons + 'lightbox-prev-dark.svg');
         left: $space-lg;
     }
 
     &.is-next {
-        background-image: url($url-icons + 'arrow-right.svg');
+        background-image: url($url-icons + 'lightbox-next-dark.svg');
         right: $space-lg;
     }    
 }
 
 .fancybox-infobar {
-    color: $color--black;
+    color: $color--medium-grey;
     @include font-regular();
+    font-size: 32px;
+    line-height: 1;
     font-weight: normal;
     height: auto;
     left: auto;
     mix-blend-mode: normal;
-    right: 60px;
+    right: 70px;
     opacity: 1;
     padding: 0;
     top: calc(50% - 18px);

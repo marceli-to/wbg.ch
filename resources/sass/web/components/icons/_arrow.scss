@@ -13,3 +13,26 @@
   color: $color--black;
   padding-left: 24px;
 }
+
+.icon-arrow-lg {
+  @extend %icon;
+  @extend %icon-bg;
+  background-image: url($url-icons + 'arrow-lg.svg');
+  background-size: auto 11px;
+  background-position: center left;
+  color: $color--black;
+  margin-top: $space-lg;
+  letter-spacing: 0.07em;
+  padding-left: 22px;
+  text-transform: uppercase;
+}
+
+.icon-arrow-light {
+  @extend %icon;
+  @extend %icon-bg;
+  background-image: url($url-icons + 'arrow-light.svg');
+  background-size: auto 11px;
+  background-position: center left;
+  color: $color--black;
+  padding-left: 22px;
+}
