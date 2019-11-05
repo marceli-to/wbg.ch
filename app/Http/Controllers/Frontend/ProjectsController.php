@@ -77,17 +77,14 @@ class ProjectsController extends Controller
 
     if ($categoryId == $this->category->panoptikumId)
     {
-      //$projects = $projects->shuffle();
-
       $data = [];
       foreach($projects as $project)
       {
         $data[] = [
-          'title' => $project->name, // $this->category->subcategories[$subcategory],
+          'title' => $project->name,
           'grid'  => $this->getProjectGrid($project->id)
         ];
       }
-
       return
         view($this->view_path . '.category')
         ->withMenu($this->menuService->boot(NULL, $categoryId))
@@ -95,6 +92,7 @@ class ProjectsController extends Controller
         ->withMobileProjects($data)
         ->withPageTitle('Panoptikum')
         ->withSubCategories($this->category->subcategories)
+        ->withMetaDescription(config('seo.descriptions.' . strtolower($category->name)))
         ->withIsPanoptikum(TRUE);
     }
 
@@ -103,6 +101,7 @@ class ProjectsController extends Controller
       ->withMenu($this->menuService->boot(NULL, $categoryId))
       ->withProjects($projects)
       ->withPageTitle($category->name)
+      ->withMetaDescription(config('seo.descriptions.' . strtolower($category->name)))
       ->withIsPanoptikum(FALSE);
   }
 
@@ -138,6 +137,7 @@ class ProjectsController extends Controller
       view($this->view_path . '.subcategory')
       ->withMenu($this->menuService->boot(NULL, $category->id, $subcategory))
       ->withProjects($data)
+      ->withMetaDescription(config('seo.descriptions.' . strtolower($category->name) . '_' . strtolower($this->category->subcategories[$subcategory])))
       ->withPageTitle($category->name);
   }
 
