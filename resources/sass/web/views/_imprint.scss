@@ -11,7 +11,7 @@
     grid-row-gap: $space-xl;
 
     @include bp-sm() {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 2fr 1fr;
       grid-column-gap: $space-xl;
       grid-row-gap: 0;
     }

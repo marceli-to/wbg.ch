@@ -1,6 +1,6 @@
 @extends('web.layout.app')
 @section('seo_title', $pageTitle)
-@section('seo_description', '')
+@section('seo_description', 'Signaletik/Orientierungs- und Leitsysteme, Logo- und Markenentwicklung, Editorial-Design und Buchgestaltung, Kommunikationsmittel, Website-Design, Archiv')
 @section('content')
 <section class="site-content site-content--list">
   <div class="project-detail project-detail--panoptikum">
@@ -8,7 +8,7 @@
       <header class="project-header">
         <h2>{{ $project['title'] }}</h2>
       </header>
-      <div class="ratio-boxes" data-project="{{ str_slug($project['title']) }}">
+      <div class="ratio-boxes" data-scroll="{{ str_slug($project['title']) }}">
         @foreach($project['grid'] as $g)
           @if ($g['key'] == '1fr')
             @if (isset($g['elements']))

@@ -1,6 +1,6 @@
 @extends('web.layout.app')
 @section('seo_title', $pageTitle)
-@section('seo_description', '')
+@section('seo_description', 'WBG AG – Visuelle Kommunikation, Binzstrasse 39, CH-8045 Zürich')
 @section('content')
 <section class="site-content site-content--contact">
   <div class="contact">
@@ -13,12 +13,16 @@
         </address>
       </div>
       <div class="span">
-        <a href="https://goo.gl/maps/5orzRm8TP9fX5GQ16" class="btn-social is-maps" rel="noopener" title="Google Maps">Google Maps</a>
-        <a href="" class="btn-social is-linkedin" rel="noopener" title="Linkedin">Linkedin</a>
-        <a href="" class="btn-social is-instagram" rel="noopener" title="Instagram">Instagram</a>
+        <a href="https://goo.gl/maps/9dCKFMFqaiaYUudK7" class="btn-social is-maps" target="_blank" rel="noopener" title="Google Maps">Google Maps</a>
+        <a href="https://www.linkedin.com/company/wbgag/about/?viewAsMember=true" target="_blank" class="btn-social is-linkedin" rel="noopener" title="Linkedin">Linkedin</a>
+        <a href="https://www.instagram.com/wbg_ag/" class="btn-social is-instagram" target="_blank" rel="noopener" title="Instagram">Instagram</a>
       </div>
     </div>
-    <div class="maps-container" id="js-maps"></div>
+    <figure class="map">
+      <a href="https://goo.gl/maps/9dCKFMFqaiaYUudK7" target="_blank" rel="noopener" title="Google Maps">
+        <img class="is-responsive" src="/assets/media/WBG_Binzstrasse_39.png" width="1000" height="652" alt="WBG AG - Binzstrasse 39, CH-8045 Zürich">
+      </a>
+    </figure>
   </div>
 </section>
 @endsection

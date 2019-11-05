@@ -42,7 +42,8 @@
                   v-model="client.project_id"
                   name="project_id"
                 >
-                <option v-for="p in projects" :key="p.id" :value="p.id">{{ p.name }}</option>
+                <option value="NULL">Bitte wählen...</option>
+                <option v-for="p in projects" :key="p.id" :value="p.id">{{ p.name }} – {{ p.category.name }}</option>
                 </select>
               </div>
             </div>

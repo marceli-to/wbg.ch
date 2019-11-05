@@ -17,3 +17,31 @@
 		display: none;
 	}
 }
+
+.hide-above-sm {
+	display: block !important;
+	&.is-inline {
+		display: inline !important;
+	}
+
+	@include bp-sm {
+		display: none !important;
+		&.is-inline {
+			display: none !important;
+		}
+	}
+}
+
+.hide-below-sm {
+	display: none !important;
+	&.is-inline {
+		display: none !important;
+	}
+	@include bp-sm {
+		display: block !important;
+		&.is-inline {
+			display: inline !important;
+		}
+	}
+}
+

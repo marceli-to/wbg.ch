@@ -14,10 +14,15 @@ section.site-content {
     width: calc(75% - #{$space-xs});
   }
 
-  &.site-content--list,
-  &.site-content--narrow {
+  &.site-content--list {
     @include bp-sm() {
       padding-top: $space-lg;
+    }
+  }
+
+  &.site-content--narrow {
+    @include bp-sm() {
+      padding-top: 18px;
     }
   }
 

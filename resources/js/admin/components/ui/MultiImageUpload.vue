@@ -75,6 +75,18 @@
                         <label>Link:</label>
                         <input type="text" v-model="asset.url" class="is-caption">
                       </div>
+                      <div class="form-row" v-if="hasClients">
+                        <label>Kunde</label>
+                        <div class="select-wrapper is-wide">
+                          <select
+                            v-model="asset.client_id"
+                            name="client_id"
+                          >
+                            <option value="NULL" selected="selected">Bitte wählen...</option>
+                            <option v-for="c in clients" :key="c.id" :value="c.id">{{ c.name }}</option>
+                          </select>
+                        </div>
+                      </div>
                       <div class="form-row-button">
                         <a
                           href="javascript:;"
@@ -117,8 +129,10 @@ export default {
     uploadUrl: String,
     hasStar: Boolean,
     hasCroppedPreview: Boolean,
+    hasClients: Boolean,
     hasUrl: Boolean,
     sortable: Boolean,
+    clients: Array
   },
 
   data() {

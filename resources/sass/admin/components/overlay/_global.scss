@@ -71,10 +71,19 @@ html.has-overlay {
         margin-top: 5px;
     }
 
-    input[type=text] {
+    input[type=text],
+    select {
         border: 1px solid $color--white;
         color: $color--white;
         max-width: 360px;
+    }
+
+    .select-wrapper {
+        max-width: 360px;
+        select {
+            padding-bottom: 5px;
+            padding-top: 7px;
+        }
     }
 
     label {

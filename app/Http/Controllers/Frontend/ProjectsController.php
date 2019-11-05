@@ -60,7 +60,6 @@ class ProjectsController extends Controller
       ->withSubCategories($this->category->subcategories)
       ->withProjects($projects->shuffle()->all())
       ->withPageTitle('Projekte');
-
   }
 
   /**
@@ -78,11 +77,22 @@ class ProjectsController extends Controller
 
     if ($categoryId == $this->category->panoptikumId)
     {
-      $projects = $projects->sortBy('subcategory_id')->groupBy('subcategory_id');
+      //$projects = $projects->shuffle();
+
+      $data = [];
+      foreach($projects as $project)
+      {
+        $data[] = [
+          'title' => $project->name, // $this->category->subcategories[$subcategory],
+          'grid'  => $this->getProjectGrid($project->id)
+        ];
+      }
+
       return
         view($this->view_path . '.category')
         ->withMenu($this->menuService->boot(NULL, $categoryId))
-        ->withProjects($projects)
+        ->withProjects($projects->shuffle())
+        ->withMobileProjects($data)
         ->withPageTitle('Panoptikum')
         ->withSubCategories($this->category->subcategories)
         ->withIsPanoptikum(TRUE);
@@ -146,9 +156,10 @@ class ProjectsController extends Controller
 
     // Open graph image (first active image)
     $og_image = $this->projectImage->where('project_id', '=', $id)
-                                    ->where('publish', '=', 1)
-                                    ->get()
-                                    ->first();
+                                   ->where('publish', '=', 1)
+                                   ->where('is_preview', '=', 1)
+                                   ->get()
+                                   ->first();
 
     return
       view($this->view_path . '.project')
@@ -170,7 +181,7 @@ class ProjectsController extends Controller
     $grids = $this->grid->byProject($projectId)
                         ->with('layout')
                         ->with('elements.news.competence')
-                        ->with('elements.image')
+                        ->with('elements.image.client')
                         ->orderBy('order')
                         ->get();
 

@@ -18,7 +18,7 @@
         <h2>{{ $project->name }}</h2>
       </div>
       <div class="span">
-        <a href="javascript:;" onclick="window.history.back();" class="icon-back">
+        <a href="javascript:;" onclick="window.history.back();" class="icon-back" title="Zurück">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><g style="isolation:isolate"><polygon points="9.4 0 5 4.4 0.6 0 0 0.6 4.4 5 0 9.4 0.6 10 5 5.6 9.4 10 10 9.4 5.6 5 10 0.6 9.4 0"/></g></svg>
         </a>
       </div>
@@ -69,30 +69,63 @@
         @endif
       @endforeach
     </div>
-
-    @if ($project->principal || $project->description)
-      <div class="project-info js-project-info">
+    @if ($project->description)
+      <div class="project-info">
         <article class="project-description">
-          <a href="javascript:;" class="icon-toggle js-toggle-info"></a>
-          @if ($project->principal)
-            <h1>{{ $project->principal }}</h1>
-          @endif
-          <div>{!! $project->description !!}</div>
+          {!! $project->description !!}
         </article>
-        <div class="project-relations">
+        <div class="project-relations js-project-relations">
           @if ($project->relations)
             @foreach($project->relations as $relation)
               <article class="project-relation">
                 <h3>{{ $relation->related->name }}</h3>
-                <a href="/projekt/{!! AppHelper::slug($relation->related) !!}" class="icon-arrow-light">{{$relation->related->name}}</a>
+                @if ($relation->related->category_id == 3)
+                  <a href="/projekte/{{ $relation->related->category_id }}/panoptikum/{{ $relation->related->subcategory_id }}/-/!#{{str_slug($relation->related->name)}}" 
+                    rel="canonical"
+                    class="icon-arrow-light hide-below-sm"
+                    title="{{$relation->related->category->name}}">
+                    {{$relation->related->category->name}}
+                  </a>
+                  <a href="/projekte/{{ $relation->related->category_id }}/panoptikum!#{{str_slug($relation->related->name)}}" 
+                    rel="canonical"
+                    class="icon-arrow-light hide-above-sm"
+                    title="{{$relation->related->category->name}}">
+                    {{$relation->related->category->name}}
+                  </a>
+                @else
+                  <a href="/projekt/{!! AppHelper::slug($relation->related) !!}" 
+                    rel="canonical"
+                    class="icon-arrow-light" 
+                    title="{{$relation->related->category->name}}">
+                    {{$relation->related->category->name}}
+                  </a>
+                @endif                
                 @foreach($relation->related->images as $img)
                   @if ($loop->first)
                     <figure>
-                      <img src="{!! ImageHelper::get($img->name, 'sm') !!}" height="280" width="430" alt="{{$img->caption}}">
+                      @if ($relation->related->category_id == 3)
+                        <a href="/projekte/{{ $relation->related->category_id }}/panoptikum/{{ $relation->related->subcategory_id }}/-/!#{{str_slug($relation->related->name)}}" 
+                          rel="canonical"
+                          class="hide-below-sm"
+                          title="{{$relation->related->category->name}}">
+                          <img src="{!! ImageHelper::related($img->name) !!}" height="430" width="280" alt="{{$img->caption}}">
+                        </a>
+                        <a href="/projekte/{{ $relation->related->category_id }}/panoptikum!#{{str_slug($relation->related->name)}}" 
+                          rel="canonical"
+                          class="hide-above-sm"
+                          title="{{$relation->related->category->name}}">
+                          <img src="{!! ImageHelper::related($img->name) !!}" height="430" width="280" alt="{{$img->caption}}">
+                        </a>
+                      @else
+                        <a href="/projekt/{!! AppHelper::slug($relation->related) !!}" 
+                          rel="canonical"
+                          title="{{$relation->related->category->name}}">
+                          <img src="{!! ImageHelper::related($img->name) !!}" height="430" width="280" alt="{{$img->caption}}">
+                        </a>
+                      @endif  
                     </figure>
                   @endif
                 @endforeach
-
               </article>
             @endforeach
           @endif

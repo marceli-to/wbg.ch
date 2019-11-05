@@ -76,10 +76,11 @@
   }
 
 
-  // Sidebar
+
+
+  // Sidebar new
   .project-info {
     color: $color--grey;
-    margin-top: $space-md;
 
     h1, h2, h3 {
       @include font-bold();
@@ -96,96 +97,52 @@
     a {
       color: $color--grey;
     }
-
-    article {
+    
+    .project-description {
       border-top: 1px solid $color--grey;
       padding-top: $space-sm;
-      position: relative;
-    }
+      margin-top: 1px;
 
-    .icon-toggle {
-      opacity: 0;
-      pointer-events: none;
-    }
-    
-    @include bp-sm() {
-      margin-top: 48px;
-      position: fixed;
-      left: $space-md;
-      max-width: calc(25% - #{$space-md});
-      top: 50%;
-      transform: translateY(-50%);
-      width: 100%;
-      z-index: 1000;
-    }
-
-    @include bp-lg {
-      max-width: 275px;
-      left: calc((100% - #{$page-max-width})/2);
-    }
-
-    .project-description,
-    .project-relations {
-      @include bp-md() {
-        width: calc(100% - #{$space-xl});
-      }
-
-      @include bp-lg() {
-        width: calc(100% - #{$space-huge});
-      }
-    }
-
-    // Minimized sidebar
-    &.is-tiny {
-      transform: translateY(0);
-
-      .icon-toggle {
-        opacity: 1;
-        pointer-events: all;
-      }
-
-      .project-description {
-        
-        > div * {
-          display: none;
-        }
-
-        > div h1 {
-          display: block;
-        }
-      }
-
-      .project-relations {
-        display: none;
-      }
-
-    }
-
-    &.is-visible {
-
-      .icon-toggle {
-        opacity: 1;
-        pointer-events: all;
-        transition: opacity .08s ease-out;
-      }
-      
-      .project-description {
-        > div * {
-          display: block;
-        }
-      }
-
-      .project-relations {
-        display: block;
+      @include bp-sm() {
+        border-top: 1px solid $color--grey;
+        max-width: calc(50% - 8px);
       }
     }
 
     // Related projects
     .project-relations {
-      margin-top: $space-xxl;
+      @include bp-sm() {
+        display: none;
+        position: fixed;
+        left: $space-md;
+        max-width: calc(25% - #{$space-md});
+        top: 280px;
+        width: 100%;
+        z-index: 1000;
+      }
+
+      @include bp-lg {
+        max-width: 275px;
+        left: calc((100% - #{$page-max-width})/2);
+      }
+
+      @include bp-md() {
+        width: calc(100% - #{$space-xl});
+      }
+
+      @include bp-lg() {
+        max-width: 275px;
+        width: calc(100% - #{$space-huge});
+      }
 
       .project-relation {
-        margin-bottom: $space-xl;
+        border-top: 1px solid $color--grey;
+        padding-top: $space-sm;
+        margin-bottom: $space-lg;
+
+        @include bp-sm() {
+          max-width: 240px;
+        }
 
         figure {
           display: block;
@@ -195,13 +152,149 @@
             @extend %is-responsive;
             max-width: 150px;
             @include bp-sm() {
-              max-width: 50%;
+              max-width: 30%;
             }
           }
         }
       }
     }
   }
+
+  // .project-info {
+  //   color: $color--grey;
+  //   margin-top: $space-md;
+
+  //   h1, h2, h3 {
+  //     @include font-bold();
+  //   }
+
+  //   h1, h3 {
+  //     margin-bottom: 2px;
+  //   }
+
+  //   p {
+  //     margin-bottom: $space-sm;
+  //   }
+
+  //   a {
+  //     color: $color--grey;
+  //   }
+
+  //   article {
+  //     border-top: 1px solid $color--grey;
+  //     padding-top: $space-sm;
+  //     position: relative;
+  //   }
+
+  //   .icon-toggle {
+  //     opacity: 0;
+  //     pointer-events: none;
+  //   }
+    
+  //   @include bp-sm() {
+  //     margin-top: 48px;
+  //     position: fixed;
+  //     left: $space-md;
+  //     max-width: calc(25% - #{$space-md});
+  //     top: 50%;
+  //     transform: translateY(-50%);
+  //     width: 100%;
+  //     z-index: 1000;
+  //   }
+
+  //   @include bp-lg {
+  //     max-width: 275px;
+  //     left: calc((100% - #{$page-max-width})/2);
+  //   }
+
+  //   .project-description,
+  //   .project-relations {
+  //     @include bp-md() {
+  //       width: calc(100% - #{$space-xl});
+  //     }
+
+  //     @include bp-lg() {
+  //       width: calc(100% - #{$space-huge});
+  //     }
+  //   }
+
+  //   // Minimized sidebar
+  //   &.is-tiny {
+  //     transform: translateY(0);
+
+  //     .icon-toggle {
+  //       opacity: 1;
+  //       pointer-events: all;
+  //     }
+
+  //     .project-description {
+        
+  //       > div * {
+  //         height: 0;
+  //         line-height: 0;
+  //         opacity: 0;
+  //         margin: 0;
+  //         visibility: hidden;
+  //       }
+
+  //       > div h1 {
+  //         @include font-size($fs-sm);
+  //         margin-bottom: 2px;
+  //         height: auto;
+  //         opacity: 1;
+  //         visibility: visible;
+  //       }
+  //     }
+  //   }
+
+  //   &.is-visible {
+
+  //     .icon-toggle {
+  //       opacity: 1;
+  //       pointer-events: all;
+  //       transition: opacity .08s ease-out;
+  //     }
+      
+  //     .project-description {
+  //       > div * {
+  //         @include font-size($fs-sm);
+  //         visibility: visible;
+  //         opacity: 1;
+  //         height: auto;
+  //       }
+
+  //       > div p {
+  //         margin-bottom: $space-sm;
+  //       }
+  //     }
+  //   }
+
+  //   // Related projects
+  //   .project-relations {
+  //     margin-top: $space-xl;
+
+  //     .project-relation {
+  //       margin-bottom: $space-xl;
+
+  //       figure {
+  //         display: block;
+  //         margin-top: $space-md;
+
+  //         @include bp-narrow() {
+  //           display: none;
+  //         }
+
+  //         img {
+  //           @extend %is-responsive;
+  //           max-width: 150px;
+  //           @include bp-sm() {
+  //             max-width: 50%;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 .project-detail--panoptikum {

@@ -62,9 +62,10 @@ class CompetenceController extends Controller
     public function store(Request $request)
     {   
         $competence = new Competence([
-            'title'         => $request->input('title'),
-            'description'   => $request->input('description'),
-            'category_id'   => $request->input('category_id') ? $request->input('category_id') : null,
+            'title'           => $request->input('title'),
+            'description'     => $request->input('description'),
+            'category_id'     => $request->input('category_id') != 'NULL' ? $request->input('category_id') : NULL,
+            'subcategory_id'  => $request->input('subcategory_id') != 'NULL' ? $request->input('subcategory_id') : NULL
         ]);
         $competence->save();
 
@@ -109,9 +110,10 @@ class CompetenceController extends Controller
     public function update($id, Request $request)
     {
         $competence = $this->competence->findOrFail($id);
-        $competence->title       = $request->input('title');
+        $competence->title = $request->input('title');
         $competence->description = $request->input('description');
-        $competence->category_id = $request->input('category_id') != 'NULL' ? $request->input('category_id') : null;
+        $competence->category_id = $request->input('category_id') != 'NULL' ? $request->input('category_id') : NULL;
+        $competence->subcategory_id = ($request->input('subcategory_id') != 'NULL' && $request->input('category_id') != 'NULL') ? $request->input('subcategory_id') : NULL;
         $competence->save();
 
         if (!empty($request->media))

@@ -15,6 +15,8 @@ class ProjectImage extends Model
         'publish',
         'url',
         'project_id',
+        'parent_id',
+        'client_id',
         'is_grid',
         'is_preview',
         'is_crop'
@@ -26,6 +28,15 @@ class ProjectImage extends Model
     public function project()
     {
         return $this->belongsTo('App\Models\Project');
+    }
+
+    /**
+     * Client relationship
+     */
+
+    public function client()
+    {
+        return $this->hasOne('App\Models\Client', 'id', 'client_id');
     }
 
 

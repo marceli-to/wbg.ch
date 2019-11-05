@@ -7,7 +7,7 @@
 article {
 
   &.content-md {
-    line-height: 1.7 !important;
+    line-height: 1.45 !important;
   }
 
   &.content-lg {
@@ -19,9 +19,10 @@ article {
   }
 
   &.content-intro {
-    padding: 2px 0 $space-xl 0;
+    padding: 34px 0 $space-huge 0;
     @include bp-sm() {
-      padding: $space-huge 0 $space-huge 0;
+      padding: $space-giant $space-huge $space-giant 0;
     }
   }
+
 }

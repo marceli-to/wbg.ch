@@ -12,7 +12,8 @@ class Competence extends Model
         'description',
         'publish',
         'order',
-        'category_id'
+        'category_id',
+        'subcategory_id'
     ];
 
     /**

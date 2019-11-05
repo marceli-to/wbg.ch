@@ -98,7 +98,7 @@ class ProjectController extends Controller
             'meta_description'  => $request->input('meta_description'),
             'category_id'       => $request->input('category_id') ? $request->input('category_id') : NULL,
             'subcategory_id'    => $request->input('subcategory_id') != 'NULL' ? $request->input('subcategory_id') : NULL,
-            'client_id'         => $request->input('client_id') ? $request->input('client_id') : NULL,
+            'client_id'         => $request->input('client_id') != 'NULL' ? $request->input('client_id') : NULL,
             'is_brands'         => $request->input('is_brands'),
         ]);
         $project->save();
@@ -114,6 +114,7 @@ class ProjectController extends Controller
                     'publish'       => $i['publish'],
                     'url'           => $i['url'],
                     'is_preview'    => $i['is_preview'],
+                    'client_id'     => $i['client_id'] != 'NULL' ? $i['client_id'] : NULL
                 ]);
                 $image->save();
             }
@@ -154,7 +155,7 @@ class ProjectController extends Controller
         $project->meta_description  = $request->input('meta_description');
         $project->category_id       = $request->input('category_id') ? $request->input('category_id') : NULL;
         $project->subcategory_id    = $request->input('subcategory_id') != 'NULL' ? $request->input('subcategory_id') : NULL;
-        $project->client_id         = $request->input('client_id') ? $request->input('client_id') : NULL;
+        $project->client_id         = $request->input('client_id') != 'NULL' ? $request->input('client_id') : NULL;
         $project->is_brands         = $request->input('is_brands');
         $project->save();
 
@@ -171,6 +172,7 @@ class ProjectController extends Controller
                         'publish'       => $i['publish'],
                         'url'           => $i['url'],
                         'is_preview'    => $i['is_preview'],
+                        'client_id'     => $i['client_id'] != 'NULL' ? $i['client_id'] : NULL
                     ]
                 );
             }

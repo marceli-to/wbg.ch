@@ -1,0 +1,132 @@
+/* Base */
+body,
+body *:not(html):not(style):not(br):not(tr):not(code) {
+    font-family: Helvetica, Arial, sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #ffffff;
+    color: #000000;
+    height: 100%;
+    hyphens: auto;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
+    width: 100% !important;
+
+}
+
+.nobr { white-space: nowrap; }
+
+p,
+ul,
+ol,
+blockquote {
+    line-height: 1.4;
+    text-align: left;
+}
+
+a {
+    color: #646464;
+}
+
+a img {
+    border: none;
+}
+
+/* Typography */
+
+h1 {
+    color: #000000;
+    font-size: 28px;
+    font-weight: normal;
+    line-height: 1.28;
+    margin: 0;
+    text-align: left;
+}
+
+a.highlight {
+    color: #dc0000;
+    text-decoration: none;
+}
+
+
+img {
+    max-width: 100%;
+}
+
+/* Layout */
+
+.wrapper {
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+}
+
+.content {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+}
+
+
+/* Body */
+
+.body {
+    background-color: #ffffff;
+    border: none;
+    margin: 0;
+    padding: 0 0 24px 0;
+    width: 100%;
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+}
+
+.inner-body {
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0 32px;
+    max-width: 600px;
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 600px;
+}
+
+
+.date {
+    display: block;
+    font-size: 14px;
+    line-height: 1;
+    color: #646464;
+    padding-bottom: 48px;
+}
+
+.image {
+    padding-bottom: 80px;
+    padding-top: 64px;
+    width: 95px;
+}
+
+@media only screen and (max-width: 400px) {
+	.image {
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+
+
+.footer {
+	color: #646464;
+	font-size: 14px;
+    line-height: 1.4;
+}

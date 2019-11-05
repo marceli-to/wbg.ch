@@ -29,6 +29,10 @@ main {
 	padding: $header-height-sm $space-md $space-md $space-md;
 	position: relative;
 
+	@include bp-sm() {
+		padding-bottom: $space-huge;
+	}
+
 	@include bp-lg() {
 		padding-top: $header-height-lg;
 		padding-left: 0;

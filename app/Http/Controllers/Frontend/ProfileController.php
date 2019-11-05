@@ -9,6 +9,7 @@ use App\Models\Competence;
 use App\Models\CompetenceMedia;
 use App\Models\Client;
 use App\Models\Content;
+use App\Models\Category;
 
 use Illuminate\Http\Request;
 
@@ -22,6 +23,7 @@ class ProfileController extends Controller
   protected $competence;
   protected $competenceMedia;
   protected $content;
+  protected $category;
 
   // View path
   protected $view_path = 'web.profile';
@@ -34,6 +36,7 @@ class ProfileController extends Controller
    * @param Competence $competence
    * @param CompetenceMedia $competenceMedia
    * @param Content $content
+   * @param Category $category
    */
 
   public function __construct(
@@ -42,7 +45,8 @@ class ProfileController extends Controller
     Competence $competence,
     CompetenceMedia $competenceMedia,
     MenuService $menuService,
-    Content $content
+    Content $content,
+    Category $category
   )
   {
     $this->mediaService     = $mediaService;
@@ -51,6 +55,7 @@ class ProfileController extends Controller
     $this->content          = $content;
     $this->competenceMedia  = $competenceMedia;
     $this->menuService      = $menuService;
+    $this->category         = $category;
   }
 
   public function index()
@@ -85,6 +90,7 @@ class ProfileController extends Controller
       ->withMenu($this->menuService->boot())
       ->withCompetences($competences)
       ->withContent($this->content->where('key', '=', 'kompetenzen')->get()->first())
+      ->withCategory($this->category)
       ->withPageTitle('Kompetenzen');
   }
 

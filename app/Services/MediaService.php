@@ -26,6 +26,11 @@ class MediaService
     protected $path_preview;
 
     /**
+     * Path for related images
+     */
+    protected $path_related;
+
+    /**
      * Path for small images
      */
     protected $path_xsmall;
@@ -116,6 +121,7 @@ class MediaService
         $this->path_xs          = $this->path_processed . 'xs/';
         $this->path_thumbs      = $this->path_processed . 'thumbs/';
         $this->path_preview     = $this->path_processed . 'preview/';
+        $this->path_related     = $this->path_processed . 'related/';
         $this->_mkdir();
     }
 
@@ -376,14 +382,38 @@ class MediaService
             $height = $image->getHeight();
             
             // Resize landscape image
-            if ($height >= 600)
+            if ($height >= 694)
             {
-                $image->resize(null, 600, function ($constraint) {
+                $image->resize(null, 694, function ($constraint) {
                     $constraint->aspectRatio();
-                })->crop('380', '512');
+                })->crop('456', '614');
             }
 
             $image->save($this->path_preview . $image->basename);
+            return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
+        }
+    }
+
+    public function related($image)
+    {
+        if ($image != NULL)
+        {
+            // Create image instance
+            $image = \Image::make($this->path_source . $image);
+
+            // Get width and height
+            $width  = $image->getWidth();
+            $height = $image->getHeight();
+
+            // Resize & Crop
+            if ($width > 430 && $height > 280)
+            {
+                $image->resize(430, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->crop('430', '280');
+            }
+
+            $image->save($this->path_related . $image->basename);
             return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
         }
     }
@@ -475,6 +505,11 @@ class MediaService
         if (!File::isDirectory($this->path_preview))
         {
             File::makeDirectory($this->path_preview, 0775, true, true);
+        }
+
+        if (!File::isDirectory($this->path_related))
+        {
+            File::makeDirectory($this->path_related, 0775, true, true);
         }
 
         if (!File::isDirectory($this->path_xs))

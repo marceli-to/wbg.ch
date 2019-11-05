@@ -42,17 +42,32 @@
                 rows="15"
               ></textarea>
             </div>
-            <div class="form-row" :class="errors.category_id ? 'has-error': ''">
-              <label>Kategorie (Verweis)</label>
-              <div class="select-wrapper">
-                <select
-                  v-model="competence.category_id"
-                  name="category_id"
-                  @focus="removeError('category_id')"
-                >
-                  <option value="NULL" selected="selected">Bitte wählen...</option>
-                  <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option>
-                </select>
+            <div class="form-row">
+              <div class="grid-form">
+                <div class="form-row">
+                  <label>Kategorie (Verweis)</label>
+                  <div class="select-wrapper is-wide">
+                    <select
+                      v-model="competence.category_id"
+                      name="category_id"
+                    >
+                      <option value="NULL" selected="selected">Bitte wählen...</option>
+                      <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row" v-show="competence.category_id == 3">
+                  <label>Subkategorie (Panoptikum)</label>
+                  <div class="select-wrapper is-wide">
+                    <select
+                      v-model="competence.subcategory_id"
+                      name="subcategory_id"
+                    >
+                      <option value="NULL" selected="selected">Bitte wählen...</option>
+                      <option v-for="(item, key) in subcategories" :key="key" :value="key">{{ item }}</option>
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -121,7 +136,8 @@ export default {
         media: []
       },
 
-      categories: []
+      categories: [],
+      subcategories: [],
     };
   },
 
@@ -139,6 +155,12 @@ export default {
     let uri = `/api/categories/get`;
     this.axios.get(uri).then(response => {
       this.categories = response.data.data;
+    });
+
+    // Get subcategories for dropdown
+    let subCategoryUri = `/api/subcategories/get`;
+    this.axios.get(subCategoryUri).then(response => {
+      this.subcategories = response.data;
     });
   },
 

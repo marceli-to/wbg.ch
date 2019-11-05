@@ -29,18 +29,9 @@
     }
   }
 
-  .maps-container {
-    background-color: silver;
+  .map {
+    margin-bottom: $space-xl;
     margin-top: $space-xl;
-    min-height: 240px;
-
-    @include bp-sm() {
-      min-height: 360px;
-    }
-
-    @include bp-md() {
-      min-height: 480px;
-    }
   }
 }
 

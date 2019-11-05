@@ -45,7 +45,7 @@ class ClearImages extends Command
             'public/media/images/processed/sm',
             'public/media/images/processed/xs',
             'public/media/images/processed/preview',
-            //'public/media/images/processed/thumbs',
+            'public/media/images/processed/related',
         ];
 
         foreach($directories as $directory)

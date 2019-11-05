@@ -15,6 +15,23 @@ class AppHelper
         }
         return parse_url($url, PHP_URL_SCHEME) === null ? $scheme . $url : $url;
     }
+
+    /**
+     * Function: setLinkTarget
+     * Checks whether or not a link is internal (i.e. https://wbg.ch) or external
+     * and sets the target accordingly
+     */
+    public static function linkTarget($url)
+    {
+        if (strpos($url, 'wbg.ch') !== false)
+        {
+            return 'rel="canonical"';
+        }
+        else
+        {
+            return 'target="_blank"';
+        }
+    }
     
     /**
      * Function: sanitize

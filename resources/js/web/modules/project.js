@@ -13,8 +13,7 @@ var Projects = (function() {
         header:    '.js-header',
         footer:    '.js-footer',
         menu:      '.js-menu',
-        project:   '.js-project-info',
-        btnToggle: '.js-toggle-info'
+        relations: '.js-project-relations',
 	};
 
     // media queries
@@ -24,15 +23,8 @@ var Projects = (function() {
         lg: window.matchMedia("(min-width: 1168px)")
     };
 
-    var classes = {
-        tiny: 'is-tiny',
-        open: 'is-open',
-        visible: 'is-visible'
-    };
-
     var winHeight = $(window).height();
-    var boxHeight = $(selectors.project).outerHeight();
-    
+   
 
     /* --------------------------------------------------------------
      * METHODS
@@ -54,21 +46,16 @@ var Projects = (function() {
 
         // Resize height on load
         if (mq.sm.matches) {
-            if ($(selectors.project).length) {
+            if ($(selectors.relations).length) {
                 _resize(true);
             }
         }
 
         // Observe height to adjust project info box
         $(window).resize(function(event){
-            if (mq.sm.matches && $(selectors.project).length) {
+            if (mq.sm.matches && $(selectors.relations).length) {
                 _resize(false);
             }
-        });
-
-        // Toggle project info box
-        $(selectors.body).on('click', selectors.btnToggle, function(){
-            _toggleInfo($(this));
         });
     };
 
@@ -80,7 +67,7 @@ var Projects = (function() {
     var _scrollTo = function(hash){
         var project = hash.substr(1, hash.length), 
             header = $(selectors.header),
-            target = $('[data-project="' + project + '"]');
+            target = $('[data-scroll="' + project + '"]');
 
         if (target.length)
         {
@@ -104,37 +91,38 @@ var Projects = (function() {
             header: $(selectors.header).height(),
             footer: $(selectors.footer).outerHeight(),
             menu:   $(selectors.menu).outerHeight(),
-            box:    $(selectors.project).outerHeight(),
+            box:    $(selectors.relations).outerHeight(),
         };
 
-        // going bigger
-        if (heights.window > winHeight) {
-            var minHeight = boxHeight + heights.header + heights.footer + heights.menu + 100;
-            if (heights.window > minHeight) {
-                $(selectors.project).removeClass(classes.tiny);
-                $(selectors.project).removeAttr('style');
-                $(selectors.btnToggle).hide();
+        var margin = 48,
+            minHeight = heights.window - (heights.menu + margin),
+            offset = heights.menu + heights.header + margin,
+            treshold = heights.menu + heights.header + 120;
+
+        if (init) {
+            $(selectors.relations).css('top', offset);
+            $(selectors.relations).show();
+
+            if (treshold >= minHeight) {
+                $(selectors.relations).find('figure').hide();
             }
         }
-
-        // going smaller
-        if (heights.window < winHeight || init) {
-            var offset = $(selectors.project).position().top, minOffset = heights.header + heights.menu;
-            if (offset <= minOffset) {
-                $(selectors.project).addClass(classes.tiny);
-                $(selectors.project).css('top', (heights.header + heights.menu));
-                $(selectors.btnToggle).show();
+        else {
+            if (heights.window > winHeight) {
+                if (treshold < minHeight) {
+                    $(selectors.relations).find('figure').show();
+                }
+            }
+            else {
+                if (treshold >= minHeight) {
+                    $(selectors.relations).find('figure').hide();
+                }
             }
         }
-
         winHeight = heights.window;
 
     }, 10);
 
-    var _toggleInfo = function(btn){
-        $(selectors.project).toggleClass(classes.visible);
-        $(btn).toggleClass(classes.open);
-    };
 
     /* --------------------------------------------------------------
      * RETURN PUBLIC METHODS

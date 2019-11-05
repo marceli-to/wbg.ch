@@ -149,6 +149,8 @@
                 :hasCroppedPreview='true'
                 :hasStar='true'
                 :hasUrl='true'
+                :hasClients='true'
+                :clients="clients"
               ></multi-image-upload>
             </div>
           </div>
@@ -368,6 +370,7 @@ export default {
         file_response.order = -1;
         file_response.publish = 1;
         file_response.is_preview = 0;
+        file_response.client_id = null;
         file_response.url = null;
         this.project.images.push(file_response);
       }

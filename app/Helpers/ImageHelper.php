@@ -10,10 +10,10 @@ class ImageHelper
   static function get($image = NULL, $size = 'sm')
   {
    
-    // Default src
+    // Set default image uri
     $src = '/media/' . $image . '/' . $size;
 
-    // Overwrite with real image path
+    // Overwrite image uri if file already exists
     if (File::exists(storage_path('app/public/media/images/processed/' . $size . '/') . $image))
     {
       $src = '/storage/media/images/processed/' . $size . '/' . $image;
@@ -24,13 +24,27 @@ class ImageHelper
 
   static function preview($image = NULL)
   {
-  
+    // Set default image uri
     $src = '/media/preview/' . $image;
 
-    // Overwrite with real image path
+    // Overwrite image uri if file already exists
     if (File::exists(storage_path('app/public/media/images/processed/preview/') . $image))
     {
       $src = '/storage/media/images/processed/preview/' . $image;
+    }
+
+    return $src;
+  }
+
+  static function related($image = NULL)
+  {
+    // Set default image uri
+    $src = '/media/related/' . $image;
+
+    // Overwrite image uri if file already exists
+    if (File::exists(storage_path('app/public/media/images/processed/related/') . $image))
+    {
+      $src = '/storage/media/images/processed/related/' . $image;
     }
 
     return $src;

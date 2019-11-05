@@ -1,6 +1,6 @@
 @extends('web.layout.app')
 @section('seo_title', $pageTitle)
-@section('seo_description', '')
+@section('seo_description', 'WBG AG – Gestalterische und technische Wertbeständigkeit in sämtlichen Bereichen der visuellen Kommunikation.')
 @section('content')
 <section class="site-content site-content--slim">
   @if ($intro)

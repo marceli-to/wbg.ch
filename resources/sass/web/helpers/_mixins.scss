@@ -283,6 +283,12 @@
 	}
 }
 
+@mixin bp-narrow {
+	@media only screen and (min-width: $bp-sm) and (max-height: 650px) {
+		@content;
+	}
+}
+
 @mixin bp-md {
 	@media only screen and (min-width: $bp-md) {
 		@content;
