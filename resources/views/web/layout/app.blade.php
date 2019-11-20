@@ -116,6 +116,12 @@
             </a>
           </li>
           <li>
+            <a href="{{ route('profile.history') }}"
+               class="{{ request()->routeIs('profile.history') ? 'is-active' : '' }}">
+              Geschichte
+            </a>
+          </li>
+          <li>
             <a href="{{ route('profile.imprint') }}"
                class="{{ request()->routeIs('profile.imprint') ? 'is-active' : '' }}">
               Impressum

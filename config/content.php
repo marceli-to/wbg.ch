@@ -23,6 +23,10 @@ return [
       'key' => 'impressum',
       'page' => 'Profil > Impressum'
     ],
+    [
+      'key' => 'geschichte',
+      'page' => 'Profil > Geschichte'
+    ],
   ]
 
 ];

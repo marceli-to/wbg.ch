@@ -9,23 +9,6 @@
   top: 1px;
   width: calc(100% + #{$space-md});
 
-  // grids
-  [class^='box-'] {
-    @include bp-sm() {
-      display: grid;
-    }
-  }
-
-  .box-2x1fr {
-    @include bp-sm() {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  .box-1fr {
-    grid-template-columns: 1fr
-  }
-
   // box types
   [class^='box__'] {
     height: 0;
@@ -108,6 +91,65 @@
       &:last-child {
         div.is-logo {
           border-bottom: 1px solid $color--grey;
+        }
+      }
+    }
+  }
+}
+
+.cssgrid {
+  
+  [class^='box-'] {
+    @include bp-sm() {
+      display: grid;
+    }
+  }
+
+  .box-2x1fr {
+    @include bp-sm() {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .box-1fr {
+    grid-template-columns: 1fr
+  }
+}
+
+.no-cssgrid {
+  .ratio-boxes {
+  
+    // grids
+    [class^='box-'] {
+      @extend %clearfix;
+      > div {
+        float: left;
+        width: 100%;
+      }
+    }
+
+    [class^='box__'] {
+      margin-bottom: $space-md;
+      @include bp-sm() {
+        margin-bottom: 0;
+      }
+    }
+  
+    .box-1fr {
+      > div {
+        width: 100%;
+      }
+    }
+
+    .box-2x1fr {
+      @include bp-sm() {
+        > div {
+          width: 50%;
+        }
+
+        .box__b,
+        .box__e {
+          padding-top: 65.1162790697674%;
         }
       }
     }

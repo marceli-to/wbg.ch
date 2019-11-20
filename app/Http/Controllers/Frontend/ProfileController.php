@@ -122,4 +122,13 @@ class ProfileController extends Controller
       ->withMenu($this->menuService->boot())
       ->withPageTitle('Impressum');
   }
+
+  public function history()
+  {
+    return
+      view($this->view_path . '.history')
+      ->withMenu($this->menuService->boot())
+      ->withContent($this->content->where('key', '=', 'geschichte')->get()->first())
+      ->withPageTitle('Geschichte');
+  }
 }
