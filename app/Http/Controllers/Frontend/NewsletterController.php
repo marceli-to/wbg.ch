@@ -21,7 +21,8 @@ class NewsletterController extends Controller
         $subscribers = $this->subscriber->get();
         foreach($subscribers as $subscriber)
         {
-            Mail::to($subscriber->email)->send(new Newsletter());
+	        $email = trim($subscriber->email);
+            Mail::to($email)->send(new Newsletter());
         }
     }
 }

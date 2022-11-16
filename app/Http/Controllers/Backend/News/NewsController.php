@@ -46,7 +46,7 @@ class NewsController extends Controller
             'title'         => $request->input('title'),
             'text'          => $request->input('text'),
             'link'          => $request->input('link'), 
-            'linkInternal'  => $request->input('linkInternal'), 
+            'linkInternal'  => $request->input('linkInternal') != '0' ? $request->input('linkInternal') : NULL, 
             'linkText'      => $request->input('linkText'),
             'linkNewWindow' => $request->input('linkNewWindow'),
         ]);
@@ -80,7 +80,7 @@ class NewsController extends Controller
         $news->title            = $request->input('title');
         $news->text             = $request->input('text');
         $news->link             = $request->input('link') ? \AppHelper::addScheme($request->input('link')) : NULL;
-        $news->linkInternal     = $request->input('linkInternal') ? $request->input('linkInternal') : NULL;
+        $news->linkInternal     = $request->input('linkInternal') != '0' ? $request->input('linkInternal') : NULL;
         $news->linkText         = $request->input('linkText');
         $news->linkNewWindow    = $request->input('linkNewWindow');
         $news->save();

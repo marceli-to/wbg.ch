@@ -9,6 +9,11 @@ class AppHelper
      */
     public static function addScheme($url, $scheme = 'http://')
     {
+	    if (!empty($url) && strpos($url, '@') !== false)
+        {
+            return $url;
+        }
+        
         if (empty($url))
         {
             return $url;

@@ -30,8 +30,8 @@ class Newsletter extends Mailable
     {
         return $this->from(
                         [
-                            'address' => 'newsletter@wbg.ch',
-                            'name' => 'WBG'
+                            'address' => 'rakete@wbg.ch',
+                            'name' => 'WBG AG - Visuelle Kommunikation'
                         ]
                     )
                     ->replyTo('bf@wbg.ch')

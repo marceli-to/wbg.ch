@@ -139,6 +139,19 @@ Route::middleware('auth:api')->group(function() {
     Route::get('news/status/{id}', 'Backend\News\NewsController@status');
     Route::delete('news/destroy/{id}', 'Backend\News\NewsController@destroy');
 
+
+    /**
+     * Job routes
+     */
+    Route::get('jobs/get', 'Backend\Job\JobController@get');
+    Route::post('job/create', 'Backend\Job\JobController@store');
+    Route::get('job/edit/{id}', 'Backend\Job\JobController@edit');
+    Route::post('job/update/{id}', 'Backend\Job\JobController@update');
+    Route::get('job/clone/{id}', 'Backend\Job\JobController@clone');
+    Route::get('job/status/{id}', 'Backend\Job\JobController@status');
+    Route::post('job/order', 'Backend\Job\JobController@order');
+    Route::delete('job/destroy/{id}', 'Backend\Job\JobController@destroy');
+
     /**
      * Content routes
      */

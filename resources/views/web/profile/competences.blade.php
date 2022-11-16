@@ -32,7 +32,7 @@
             <div class="competence__media">
               @if ($competence->id == 4)
                 <figure class="media-digital-online">
-                  <div><img src="/assets/media/WBG_Digital-und-Online.svg" height="200" width="200" alt="Digital und Online"></div>
+                  <div><img src="/assets/media/WBG_Digital-und-Online.svg" height="200" width="200" title="Digital und Online"></div>
                 </figure>
               @else
                 @foreach($competence->media as $media)

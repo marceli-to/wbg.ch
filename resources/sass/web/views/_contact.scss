@@ -5,10 +5,9 @@
  */
 
 .contact {
-  @include font-light();
   
   h2, h3 {
-    @include font-regular();
+    @include font-bold();
   }
   
   p {

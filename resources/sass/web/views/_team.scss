@@ -5,7 +5,6 @@
  */
 
 .team {
-  @include font-light();
 
   article {
     border-top: 1px solid $color--grey;
@@ -26,7 +25,7 @@
   }
 
   h2 {
-    @include font-regular();
+    @include font-bold();
   }
 
   a {

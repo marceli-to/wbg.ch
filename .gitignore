@@ -26,3 +26,16 @@ node_modules/
 
 # Ignore .env
 .env
+
+# Backup
+_backup-05092020/
+
+# Storage
+storage/app/public/
+storage/logs/
+storage/framework/
+
+public/ftp
+public/vischer
+
+INSTALL.txt

@@ -11,6 +11,8 @@
  * Page routes
  */
 
+Route::get('test', 'TestController@index');
+
 // Home
 Route::get('/', 'Frontend\HomeController@index')->name('home');
 
@@ -35,8 +37,12 @@ Route::get('/team', 'Frontend\TeamController@index')->name('team');
 // Kontakt
 Route::get('/kontakt', 'Frontend\ContactController@index')->name('contact');
 
+// Kontakt
+Route::get('/jobs', 'Frontend\JobController@index')->name('jobs');
+
+
 // Newsletter
-// Route::get('/newsletter/send', 'Frontend\NewsletterController@send')->name('newsletter');
+Route::get('/newsletter/send', 'Frontend\NewsletterController@send')->name('newsletter');
 
 /**
  * Image routes

@@ -57,6 +57,13 @@
                Kontakt
             </a>
           </li>
+          <li>
+            <a href="{{ route('jobs') }}"
+                title="Jobs"
+                class="{{ request()->routeIs('jobs') ? 'is-active' : ''}}">
+                Jobs
+            </a>
+          </li>
         </ul>
       </nav>
     </div>
@@ -137,6 +144,11 @@
     </ul>
     <ul class="hide-md">
       <li>
+        <a href="{{ route('jobs') }}" class="{{ request()->routeIs('jobs') ? 'is-active' : '' }}">Jobs</a>
+      </li>
+    </ul>
+    <ul class="hide-md">
+      <li>
         <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'is-active' : '' }}">Kontakt</a>
       </li>
     </ul>
@@ -146,8 +158,7 @@
 <footer class="site-footer js-footer">
   WBG AG – VISUELLE KOMMUNIKATION<br>BINZSTRASSE 39, CH-8045 ZÜRICH, +41 44 269 43 43, MAIL@WBG.CH
 </footer>
-<script src="{{ asset('assets/js/app.js') }}" type="text/javascript"></script>
-<!-- 
+<script src="{{ asset('assets/js/app.min.05112019.js') }}" type="text/javascript"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-58715040-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -155,7 +166,6 @@
   gtag('js', new Date());
   gtag('config', 'UA-58715040-1', { 'anonymize_ip': true });
 </script>
--->
 </body>
 <!-- made with ❤ by marceli.to -->
 </html>

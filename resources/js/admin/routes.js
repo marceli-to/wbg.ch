@@ -31,6 +31,11 @@ import NewsIndex from '@/components/news/Index.vue';
 import NewsCreate from '@/components/news/Create.vue';
 import NewsEdit from '@/components/news/Edit.vue';
 
+// Jobs
+import JobIndex from '@/components/job/Index.vue';
+import JobCreate from '@/components/job/Create.vue';
+import JobEdit from '@/components/job/Edit.vue';
+
 // Home Grids
 import HomeGridIndex from '@/components/home/Index.vue';
 
@@ -205,6 +210,27 @@ const routes = [
         name: 'article-edit',
         path: '/admin/article/edit/:id',
         component: NewsEdit,
+        meta: { requiresAuth: true },
+    },
+
+
+    // Job
+    {
+        name: 'jobs',
+        path: '/admin/jobs',
+        component: JobIndex,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'job-create',
+        path: '/admin/job/create',
+        component: JobCreate,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'job-edit',
+        path: '/admin/job/edit/:id',
+        component: JobEdit,
         meta: { requiresAuth: true },
     },
 

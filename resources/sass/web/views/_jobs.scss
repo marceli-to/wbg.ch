@@ -1,0 +1,67 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: views/jobs
+ * -----------------------------------------------------------------------------
+ */
+
+.jobs {
+  article {
+    border-top: 1px solid $color--grey;
+    padding-top: $space-md;
+    padding-bottom: $space-xl;
+
+    &:first-of-type {
+      border-top: none;
+      padding-top: 0;
+      @include bp-sm() {
+        border-top: 1px solid $color--grey;
+        padding-top: $space-md;
+      }
+    }
+
+    h2 {
+      @include font-bold();
+      margin-bottom: $space-md;
+      @include bp-sm() {
+        margin-bottom: $space-sm;
+      }
+    }
+
+    a {
+      color: $color--black;
+      text-decoration: none;
+    }
+    
+    p {
+      margin-bottom: 0 !important;
+    }
+
+    ul, li {
+      margin: 0;
+      padding: 0;
+    }
+  
+    li {
+      display: list-item;
+      list-style-type: none;
+    }
+  
+    ul {
+      list-style: none;
+      margin-left: 0;
+      margin-bottom: $space-md;
+      padding-left: 1.2em;
+    }
+  
+    li {
+      list-style-type: none;
+    }
+  
+    ul > li:before {
+      display: inline-block;
+      content: "\2013";
+      width: 1.2em;
+      margin-left: -1.2em;
+    }
+  }
+}

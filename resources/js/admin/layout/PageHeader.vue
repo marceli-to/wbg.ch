@@ -35,6 +35,9 @@
                 <li>
                     <router-link :to="{ name: 'competences' }">Kompetenzen</router-link>
                 </li>
+                <li>
+                    <router-link :to="{ name: 'jobs' }">Jobs</router-link>
+                </li>
             </ul>
             <router-link :to="{ name: 'logout' }" class="icon-logout">Logout</router-link>
         </nav>
