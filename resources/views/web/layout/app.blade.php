@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="{{config('seo.title')}}">
 <meta name="csrf-token" value="{{ csrf_token() }}" />
 <meta name="format-detection" content="telephone=no">
-<link href="{{ asset('assets/css/app.css') }}" type="text/css" rel="stylesheet" />
+<link href="{{ mix('assets/css/app.css') }}" type="text/css" rel="stylesheet" />
 <script src="{{ asset('assets/js/modernizr.min.js') }}"></script>
 </head>
 <body>
