@@ -96,6 +96,7 @@ class ProjectController extends Controller
             'principal'         => $request->input('principal'),
             'description'       => $request->input('description'),
             'meta_description'  => $request->input('meta_description'),
+            'video'             => $request->input('video') ? $request->input('video') : NULL,
             'category_id'       => $request->input('category_id') ? $request->input('category_id') : NULL,
             'subcategory_id'    => $request->input('subcategory_id') != 'NULL' ? $request->input('subcategory_id') : NULL,
             'client_id'         => $request->input('client_id') != 'NULL' ? $request->input('client_id') : NULL,
@@ -153,6 +154,7 @@ class ProjectController extends Controller
         $project->principal         = $request->input('principal');
         $project->description       = $request->input('description');
         $project->meta_description  = $request->input('meta_description');
+        $project->video             = $request->input('video') ? $request->input('video') : NULL;
         $project->category_id       = $request->input('category_id') ? $request->input('category_id') : NULL;
         $project->subcategory_id    = $request->input('subcategory_id') != 'NULL' ? $request->input('subcategory_id') : NULL;
         $project->client_id         = $request->input('client_id') != 'NULL' ? $request->input('client_id') : NULL;

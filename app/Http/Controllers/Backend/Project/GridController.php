@@ -72,13 +72,20 @@ class GridController extends Controller
     {
         // Mark images as unused
         $images = $this->gridElement->where('grid_id', '=', $id)->get();
-        foreach($images as $i)
+
+        if ($images)
         {
+          foreach($images as $i)
+          {
             $img = $this->projectImage->find($i->project_image_id);
-            $img->is_grid = 0;
-            $img->save();
+            if ($img)
+            {
+              $img->is_grid = 0;
+              $img->save();
+            }
+          }
         }
-        
+       
         $this->grid->find($id)->delete();
         $this->gridElement->where('grid_id', '=', $id)->delete();
         return response()->json('successfully deleted');

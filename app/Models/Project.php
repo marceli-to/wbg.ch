@@ -15,6 +15,7 @@ class Project extends Model
         'category_id',
         'client_id',
         'subcategory_id',
+        'video',
         'publish',
         'order',
         'is_brands'

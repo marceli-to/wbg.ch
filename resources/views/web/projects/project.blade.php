@@ -24,6 +24,15 @@
       </div>
     </header>
     <div class="ratio-boxes">
+      @if ($project->video)
+        <div class="box-1fr">
+          <div>
+            <div class="video-container">
+              <video class="video" src="/assets/video/{{ $project->video }}" controls autoplay muted></video>
+            </div>
+          </div>
+        </div>
+      @endif
       @foreach($grids as $g)
         @if ($g['key'] == '1fr')
           @if (isset($g['elements']))

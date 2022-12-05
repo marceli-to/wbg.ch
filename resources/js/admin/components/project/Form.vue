@@ -133,6 +133,14 @@
                 <label for="is_brands_0" class="form-control">Nein</label>
               </div>
             </div>
+            <div class="form-row">
+              <label>Video</label>
+              <input
+                type="text"
+                name="name"
+                v-model="project.video"
+              >
+            </div>
           </div>
           <div v-show="tabs.media.active">
             <div style="position:relative">
@@ -247,6 +255,7 @@ export default {
         client_id: null,
         publish: null,
         is_brands: null,
+        video: null,
         images: [],
         relations: []
       },
