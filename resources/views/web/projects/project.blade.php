@@ -28,7 +28,7 @@
         <div class="box-1fr">
           <div>
             <div class="video-container">
-              <video class="video" src="/assets/video/{{ $project->video }}" controls autoplay muted></video>
+              <video class="video" src="/assets/video/{{ $project->video }}" autoplay loop muted playsinline></video>
             </div>
           </div>
         </div>
