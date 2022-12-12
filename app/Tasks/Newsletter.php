@@ -12,7 +12,7 @@ class Newsletter
 
     foreach($subscribers->all() as $subscriber)
     {
-      $recipient = ($env == 'production') && $subscriber->email ? $subscriber->email : env('MAIL_TO');
+      $recipient = ($env == 'production' || $env == 'staging') && $subscriber->email ? $subscriber->email : env('MAIL_TO');
       try
       {
         \Mail::to($recipient)->send(

@@ -42,8 +42,7 @@ class Newsletter extends Command
 
     foreach($subscribers->all() as $subscriber)
     {
-      // $recipient = ($env == 'production') && $subscriber->email ? $subscriber->email : env('MAIL_TO');
-      $recipient = $subscriber->email;
+      $recipient = env('MAIL_TO');
       try
       {
         \Mail::to($recipient)->send(
