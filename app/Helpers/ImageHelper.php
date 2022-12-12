@@ -25,7 +25,7 @@ class ImageHelper
   static function preview($image = NULL)
   {
     // Set default image uri
-    $src = '/media/related/' . $image;
+    $src = '/media/preview/' . $image;
 
     // Overwrite image uri if file already exists
     if (File::exists(storage_path('app/public/media/images/processed/preview/') . $image))
