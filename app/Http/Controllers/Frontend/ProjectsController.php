@@ -152,8 +152,8 @@ class ProjectsController extends Controller
     $project = $this->project->with('client')
                              ->with('category')
                              ->with('relations.related.images')
+                             ->with('relations.related.previewRelatedImages')
                              ->findOrFail($id);
-
     // Open graph image (first active image)
     $og_image = $this->projectImage->where('project_id', '=', $id)
                                    ->where('publish', '=', 1)

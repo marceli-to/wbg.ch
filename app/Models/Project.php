@@ -46,6 +46,14 @@ class Project extends Model
     }
 
     /**
+     * Relation 'relatedImages'
+     */
+    public function previewRelatedImages()
+    {
+        return $this->hasMany('App\Models\ProjectImage')->where('is_preview_related', '=', 1);
+    }
+
+    /**
      * Relation 'client'
      */
     public function client()

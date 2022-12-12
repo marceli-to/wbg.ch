@@ -54,6 +54,11 @@
                   :class="[asset.is_preview == 1 ? 'icon-star' : 'icon-star-off', 'icon-mini']"
                   @click.prevent="togglePreview(asset,$event)">
                 </a>
+                <a v-if="hasStarRelated"
+                  href="javascript:;"
+                  :class="[asset.is_preview_related == 1 ? 'icon-star-related' : 'icon-star-off', 'icon-mini']"
+                  @click.prevent="togglePreviewRelated(asset,$event)">
+                </a>
               </div>
               <div class="overlay-asset">
                 <div>
@@ -128,6 +133,7 @@ export default {
     maxFilesize: Number,
     uploadUrl: String,
     hasStar: Boolean,
+    hasStarRelated: Boolean,
     hasCroppedPreview: Boolean,
     hasClients: Boolean,
     hasUrl: Boolean,
@@ -168,6 +174,10 @@ export default {
 
     togglePreview(asset,event) {
       this.$parent.togglePreview(asset,event);
+    },
+
+    togglePreviewRelated(asset,event) {
+      this.$parent.togglePreviewRelated(asset,event);
     },
 
     showAssetEdit(e) {

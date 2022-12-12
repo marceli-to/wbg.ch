@@ -156,6 +156,7 @@
                 :uploadUrl="'/api/media/upload'"
                 :hasCroppedPreview='true'
                 :hasStar='true'
+                :hasStarRelated='true'
                 :hasUrl='true'
                 :hasClients='true'
                 :clients="clients"
@@ -379,6 +380,7 @@ export default {
         file_response.order = -1;
         file_response.publish = 1;
         file_response.is_preview = 0;
+        file_response.is_preview_related = 0;
         file_response.client_id = null;
         file_response.url = null;
         this.project.images.push(file_response);
@@ -425,6 +427,22 @@ export default {
         this.axios.get(uri).then(response => {
           const index = this.project.images.findIndex(x => x.id === asset.id);
           this.project.images[index].is_preview = response.data;
+          this.progress(el);
+        });
+      }
+    },
+
+    togglePreviewRelated(asset,event) {
+      if (asset.id == null) {
+        const index = this.project.images.findIndex(x => x.name === asset.name);
+        this.project.images[index].is_preview_related = asset.is_preview_related == 1 ? 0 : 1;
+      }
+      else {
+        let uri = `/api/project/image/related/${asset.id}`;
+        let el = this.progress(event.target);
+        this.axios.get(uri).then(response => {
+          const index = this.project.images.findIndex(x => x.id === asset.id);
+          this.project.images[index].is_preview_related = response.data;
           this.progress(el);
         });
       }

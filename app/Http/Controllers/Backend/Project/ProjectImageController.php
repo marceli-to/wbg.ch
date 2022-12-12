@@ -194,6 +194,20 @@ class ProjectImageController extends Controller
     }
 
     /**
+     * Update the preview status of the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function related($id)
+    {
+        $image = $this->projectImage->findOrFail($id);
+        $image->is_preview_related = $image->is_preview_related == 0 ? 1 : 0;
+        $image->save();
+        return response()->json($image->is_preview_related);
+    }
+
+    /**
      * Update the order of the resources.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -238,6 +252,7 @@ class ProjectImageController extends Controller
             $projectImageCopy->name = $image['name'];
             $projectImageCopy->is_crop = 1;
             $projectImageCopy->is_preview = 0;
+            $projectImageCopy->is_preview_related = 0;
             $projectImageCopy->is_grid = 1;
             $projectImageCopy->save();
 

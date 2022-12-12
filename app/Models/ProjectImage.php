@@ -19,6 +19,7 @@ class ProjectImage extends Model
         'client_id',
         'is_grid',
         'is_preview',
+        'is_preview_related',
         'is_crop'
     ];
 

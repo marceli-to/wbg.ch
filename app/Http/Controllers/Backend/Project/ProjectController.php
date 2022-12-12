@@ -109,13 +109,14 @@ class ProjectController extends Controller
             foreach($request->images as $i)
             {
                 $image = new ProjectImage([
-                    'project_id'    => $project->id,
-                    'name'          => $i['name'],
-                    'caption'       => $i['caption'],
-                    'publish'       => $i['publish'],
-                    'url'           => $i['url'],
-                    'is_preview'    => $i['is_preview'],
-                    'client_id'     => $i['client_id'] != 'NULL' ? $i['client_id'] : NULL
+                    'project_id'          => $project->id,
+                    'name'                => $i['name'],
+                    'caption'             => $i['caption'],
+                    'publish'             => $i['publish'],
+                    'url'                 => $i['url'],
+                    'is_preview'          => $i['is_preview'],
+                    'is_preview_related'  => $i['is_preview_related'],
+                    'client_id'           => $i['client_id'] != 'NULL' ? $i['client_id'] : NULL
                 ]);
                 $image->save();
             }
@@ -168,13 +169,14 @@ class ProjectController extends Controller
                 $image = $this->projectImage->updateOrCreate(
                     ['id' => $i['id']], 
                     [
-                        'project_id'    => $project->id,
-                        'name'          => $i['name'],
-                        'caption'       => $i['caption'],
-                        'publish'       => $i['publish'],
-                        'url'           => $i['url'],
-                        'is_preview'    => $i['is_preview'],
-                        'client_id'     => $i['client_id'] != 'NULL' ? $i['client_id'] : NULL
+                        'project_id'         => $project->id,
+                        'name'               => $i['name'],
+                        'caption'            => $i['caption'],
+                        'publish'            => $i['publish'],
+                        'url'                => $i['url'],
+                        'is_preview'         => $i['is_preview'],
+                        'is_preview_related' => $i['is_preview_related'],
+                        'client_id'          => $i['client_id'] != 'NULL' ? $i['client_id'] : NULL
                     ]
                 );
             }

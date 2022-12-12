@@ -108,33 +108,65 @@
                     title="{{$relation->related->category->name}}">
                     {{$relation->related->category->name}}
                   </a>
-                @endif                
-                @foreach($relation->related->images as $img)
-                  @if ($loop->first)
-                    <figure>
-                      @if ($relation->related->category_id == 3)
-                        <a href="/projekte/{{ $relation->related->category_id }}/panoptikum/{{ $relation->related->subcategory_id }}/-/!#{{str_slug($relation->related->name)}}" 
-                          rel="canonical"
-                          class="hide-below-sm"
-                          title="{{$relation->related->category->name}}">
-                          <img src="{!! ImageHelper::related($img->name) !!}" height="430" width="280" alt="{{$img->caption}}">
-                        </a>
-                        <a href="/projekte/{{ $relation->related->category_id }}/panoptikum!#{{str_slug($relation->related->name)}}" 
-                          rel="canonical"
-                          class="hide-above-sm"
-                          title="{{$relation->related->category->name}}">
-                          <img src="{!! ImageHelper::related($img->name) !!}" height="430" width="280" alt="{{$img->caption}}">
-                        </a>
-                      @else
-                        <a href="/projekt/{!! AppHelper::slug($relation->related) !!}" 
-                          rel="canonical"
-                          title="{{$relation->related->category->name}}">
-                          <img src="{!! ImageHelper::related($img->name) !!}" height="430" width="280" alt="{{$img->caption}}">
-                        </a>
-                      @endif  
-                    </figure>
-                  @endif
-                @endforeach
+                @endif          
+                
+                
+                @if ($relation->related->previewRelatedImages->count() > 0)
+                  @foreach($relation->related->previewRelatedImages as $img)
+                    @if ($loop->first)
+                      <figure>
+                        @if ($relation->related->category_id == 3)
+                          <a href="/projekte/{{ $relation->related->category_id }}/panoptikum/{{ $relation->related->subcategory_id }}/-/!#{{str_slug($relation->related->name)}}" 
+                            rel="canonical"
+                            class="hide-below-sm"
+                            title="{{$relation->related->category->name}}">
+                            <img src="{!! ImageHelper::related($img->name) !!}" height="430" width="280" alt="{{$img->caption}}">
+                          </a>
+                          <a href="/projekte/{{ $relation->related->category_id }}/panoptikum!#{{str_slug($relation->related->name)}}" 
+                            rel="canonical"
+                            class="hide-above-sm"
+                            title="{{$relation->related->category->name}}">
+                            <img src="{!! ImageHelper::related($img->name) !!}" height="430" width="280" alt="{{$img->caption}}">
+                          </a>
+                        @else
+                          <a href="/projekt/{!! AppHelper::slug($relation->related) !!}" 
+                            rel="canonical"
+                            title="{{$relation->related->category->name}}">
+                            <img src="{!! ImageHelper::related($img->name) !!}" height="430" width="280" alt="{{$img->caption}}">
+                          </a>
+                        @endif  
+                      </figure>
+                    @endif
+                  @endforeach                
+                @else
+                  @foreach($relation->related->images as $img)
+                    @if ($loop->first)
+                      <figure>
+                        @if ($relation->related->category_id == 3)
+                          <a href="/projekte/{{ $relation->related->category_id }}/panoptikum/{{ $relation->related->subcategory_id }}/-/!#{{str_slug($relation->related->name)}}" 
+                            rel="canonical"
+                            class="hide-below-sm"
+                            title="{{$relation->related->category->name}}">
+                            <img src="{!! ImageHelper::related($img->name) !!}" height="430" width="280" alt="{{$img->caption}}">
+                          </a>
+                          <a href="/projekte/{{ $relation->related->category_id }}/panoptikum!#{{str_slug($relation->related->name)}}" 
+                            rel="canonical"
+                            class="hide-above-sm"
+                            title="{{$relation->related->category->name}}">
+                            <img src="{!! ImageHelper::related($img->name) !!}" height="430" width="280" alt="{{$img->caption}}">
+                          </a>
+                        @else
+                          <a href="/projekt/{!! AppHelper::slug($relation->related) !!}" 
+                            rel="canonical"
+                            title="{{$relation->related->category->name}}">
+                            <img src="{!! ImageHelper::related($img->name) !!}" height="430" width="280" alt="{{$img->caption}}">
+                          </a>
+                        @endif  
+                      </figure>
+                    @endif
+                  @endforeach
+                @endif
+   
               </article>
             @endforeach
           @endif

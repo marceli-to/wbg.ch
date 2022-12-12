@@ -5,6 +5,7 @@
  */
 
 .icon-star,
+.icon-star-related,
 .icon-star-off {
   @extend %icon-dashboard;
   display: block;
@@ -12,6 +13,10 @@
  
 .icon-star {
   background-image: url($url-icons + 'star.svg');
+}
+
+.icon-star-related {
+  background-image: url($url-icons + 'star-related.svg');
 }
 
 .icon-star-off {

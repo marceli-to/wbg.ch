@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
-
 use App\Mail\Newsletter;
 use App\Models\Subscriber;
 use Illuminate\Support\Facades\Mail;
