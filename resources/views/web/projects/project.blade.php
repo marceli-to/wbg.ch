@@ -28,7 +28,13 @@
         <div class="box-1fr">
           <div>
             <div class="video-container">
-              <video class="video" src="/assets/video/{{ $project->video }}" autoplay loop muted playsinline></video>
+              @if ($project->video_link)
+                <a href="{{ $project->video_link }}" target="_blank">
+                  <video class="video" src="/assets/video/{{ $project->video }}" autoplay loop muted playsinline></video>
+                </a>
+              @else
+                <video class="video" src="/assets/video/{{ $project->video }}" autoplay loop muted playsinline></video>
+              @endif
             </div>
           </div>
         </div>

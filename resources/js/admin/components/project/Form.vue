@@ -141,6 +141,14 @@
                 v-model="project.video"
               >
             </div>
+            <div class="form-row">
+              <label>Video Verweis</label>
+              <input
+                type="text"
+                name="name"
+                v-model="project.video_link"
+              >
+            </div>
           </div>
           <div v-show="tabs.media.active">
             <div style="position:relative">
@@ -257,6 +265,7 @@ export default {
         publish: null,
         is_brands: null,
         video: null,
+        video_link: null,
         images: [],
         relations: []
       },
