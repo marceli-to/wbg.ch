@@ -385,7 +385,7 @@ class MediaService
             if ($height >= 694)
             {
                 $image->resize(null, 694, function ($constraint) {
-                    $constraint->aspectRatio();
+                  $constraint->aspectRatio();
                 })->crop('456', '614');
             }
 
