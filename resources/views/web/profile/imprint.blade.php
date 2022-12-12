@@ -10,7 +10,7 @@
     <article class="content-md">
       <p>Inhalt, Konzept, Design <br>WBG AG, Zürich</p>
       <p>Programmierung<br>marceli.to, Winterthur</p>
-      <p>Fotografie<br>Daniel Sutter, Zürich<br>Marcel Renggli, Baden<br>WBG AG</p>
+      <p>Fotografie<br>Daniel Sutter, Zürich<br>Marcel Renggli, Zürich<br>WBG AG</p>
     </article>
   </div>
 </section>
