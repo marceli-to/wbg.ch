@@ -88,12 +88,12 @@ class MediaService
     /**
      * Maximum width for large landscape images
      */    
-    protected $max_width_lg = 2000;    
+    protected $max_width_lg = 1000;    
 
     /**
      * Maximum height for large portrait images
      */    
-    protected $max_height_lg = 1200;
+    protected $max_height_lg = 600;
 
     /**
      * Maximum width for source images
