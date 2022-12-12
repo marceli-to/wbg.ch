@@ -7,21 +7,15 @@
 .team {
 
   article {
-    border-top: 1px solid $color--grey;
     margin-bottom: 22px;
-    padding-top: 18px;
     @include bp-sm() {
       margin-bottom: 0;
     }
+  }
 
-    &:first-of-type {
-      border-top: 0;
-      padding-top: 0;
-      @include bp-sm() {
-        border-top: 1px solid $color--grey;
-        padding-top: 16px;
-      }
-    }
+  figure {
+    display: block;
+    margin-bottom: 16px;
   }
 
   h2 {

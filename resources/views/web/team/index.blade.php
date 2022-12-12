@@ -6,7 +6,10 @@
   <div class="team">
     @foreach($team as $t)
       <article>
-        <h2>{{$t->firstname }} {{ $t->name }}@if ($t->role), {{ $t->role }}@endif</h2>
+        <figure>
+          <img src="{!! ImageHelper::get($t->media, 'lg') !!}" height="560" width="430" class="is-responsive" alt="{{$t->firstname }} {{ $t->name }}">
+        </figure>
+        <h2>{{$t->firstname }} {{ $t->name }}@if ($t->role)<br>{{ $t->role }}@endif</h2>
         <a href="tel:{{ $t->phone }}">{{ $t->phone }}</a>@if ($t->email) / <a href="mailto:{{ $t->email }}" title="E-Mail {{$t->firstname }} {{ $t->name }}">{{ $t->email }}</a>@endif
       </article>
     @endforeach
