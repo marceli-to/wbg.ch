@@ -7,7 +7,7 @@
             @include('web.partials.boxes.article', array('news' => $elements[0]->news))
           @endif
           @if ($elements[0]->image)
-            @include('web.partials.boxes.teaser-project', array('teaser' => $elements[0]->image, 'image_attribute' => 'height="430" width="280"'))
+            @include('web.partials.boxes.teaser-project', array('teaser' => $elements[0]->image, 'image_attribute' => 'height="430" width="280"', 'image_size' => 'md'))
           @endif
         @endif
       </div>
@@ -19,7 +19,7 @@
             @include('web.partials.boxes.article', array('news' => $elements[1]->news))
           @endif
           @if ($elements[1]->image)
-            @include('web.partials.boxes.teaser-project', array('teaser' => $elements[1]->image, 'image_attribute' => 'height="430" width="280"'))
+            @include('web.partials.boxes.teaser-project', array('teaser' => $elements[1]->image, 'image_attribute' => 'height="430" width="280"', 'image_size' => 'md'))
           @endif
         @endif
       </div>
@@ -32,7 +32,7 @@
           @include('web.partials.boxes.article', array('news' => $elements[2]->news))
         @endif
         @if ($elements[2]->image)
-          @include('web.partials.boxes.teaser-project', array('teaser' => $elements[2]->image, 'image_attribute' => 'height="560" width="430"'))
+          @include('web.partials.boxes.teaser-project', array('teaser' => $elements[2]->image, 'image_attribute' => 'height="560" width="430"', 'image_size' => 'md'))
         @endif
       @endif
     </div>

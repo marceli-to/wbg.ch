@@ -7,7 +7,7 @@
             @include('web.partials.boxes.article', array('news' => $elements[0]->news))
           @endif
           @if ($elements[0]->projectimage)
-            @include('web.partials.boxes.teaser-home', array('teaser' => $elements[0]->projectimage, 'image_attribute' => 'height="560" width="860"'))
+            @include('web.partials.boxes.teaser-home', array('teaser' => $elements[0]->projectimage, 'image_attribute' => 'height="560" width="860"', 'image_size' => 'lg'))
           @endif
         @endif
       </div>
