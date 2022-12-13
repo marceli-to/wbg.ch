@@ -14,7 +14,8 @@
               <img src="/assets/img/preview.png" data-src="{!! ImageHelper::get($elements[0]->image->name, 'sm') !!}" alt="{{$elements[0]->image->caption}}" title="{{$elements[0]->image->caption}}"  height="430" width="280" class="is-responsive lazyload">
             </picture>
 
-            @include('web.partials.boxes.teaser-project', array('teaser' => $elements[0]->image, 'image_attribute' => 'height="560" width="860"', 'image_size' => 'lg'))
+
+            {{-- @include('web.partials.boxes.teaser-project', array('teaser' => $elements[0]->image, 'image_attribute' => 'height="560" width="860"', 'image_size' => 'lg')) --}}
           @endif
         @endif
       </div>
