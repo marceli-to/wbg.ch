@@ -111,10 +111,9 @@ img {
 }
 
 .image {
-    padding-bottom: 80px;
-    padding-top: 64px;
-    height: 512px;
-    width: 380px;
+  padding-bottom: 80px;
+  padding-top: 64px;
+  width: 95px;
 }
 
 .image img {
@@ -122,6 +121,7 @@ img {
   height: 128px;
   width: 95px;
 }
+
 
 @media only screen and (max-width: 400px) {
 	.image {
@@ -135,5 +135,5 @@ img {
 .footer {
 	color: #646464;
 	font-size: 14px;
-  line-height: 1.4;
+    line-height: 1.4;
 }
