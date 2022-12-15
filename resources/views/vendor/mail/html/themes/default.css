@@ -117,6 +117,12 @@ img {
     width: 380px;
 }
 
+.image img {
+  display: block;
+  height: 512px;
+  width: 380px;
+}
+
 @media only screen and (max-width: 400px) {
 	.image {
 		margin-left: auto;
@@ -129,5 +135,5 @@ img {
 .footer {
 	color: #646464;
 	font-size: 14px;
-    line-height: 1.4;
+  line-height: 1.4;
 }
