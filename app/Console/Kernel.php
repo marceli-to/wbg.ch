@@ -23,7 +23,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-      $schedule->call(new Newsletter)->everyMinute();
+      // $schedule->call(new Newsletter)->everyMinute();
     }
 
     /**
