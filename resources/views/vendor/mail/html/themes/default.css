@@ -119,8 +119,8 @@ img {
 
 .image img {
   display: block;
-  height: 512px;
-  width: 380px;
+  height: 128px;
+  width: 95px;
 }
 
 @media only screen and (max-width: 400px) {

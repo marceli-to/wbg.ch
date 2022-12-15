@@ -3,7 +3,7 @@
 <h1>Aufgefrischt: <a href="https://www.wbg.ch" target="_blank" class="highlight">wbg.ch</a></h1>
 <div class="image">
 	<a href="https://www.wbg.ch" target="_blank">
-	  <img src="https://www.wbg.ch/assets/media/WBGWEB_GIF_2022.gif" width="380" height="512">
+	  <img src="https://www.wbg.ch/assets/media/WBGWEB_GIF_2022.gif" width="95" height="128">
 	</a>
 </div>
 <br>
