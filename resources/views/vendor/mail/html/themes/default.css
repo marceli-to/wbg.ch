@@ -113,7 +113,8 @@ img {
 .image {
     padding-bottom: 80px;
     padding-top: 64px;
-    width: 95px;
+    height: 512px;
+    width: 380px;
 }
 
 @media only screen and (max-width: 400px) {
