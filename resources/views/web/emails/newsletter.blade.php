@@ -6,6 +6,5 @@
 	  <img src="https://www.wbg.ch/assets/media/WBGWEB_GIF_2022.gif" width="95" height="128">
 	</a>
 </div>
-<br>
 <div class="footer">WBG AG<br>Visuelle&nbsp;Kommunikation<br>Binzstrasse&nbsp;39<br>CH-8045&nbsp;Zürich<br>+41&nbsp;44&nbsp;269&nbsp;43&nbsp;43<br><a href="mailto:mail@wbg.ch" style="color: #646464;text-decoration:none">mail@wbg.ch</a></div>
 @endcomponent
