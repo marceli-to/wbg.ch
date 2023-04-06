@@ -1,8 +1,8 @@
 <div class="box-2x1fr">
   <div>
     <div class="box__a">
-      <div class="is-logo" @if ($elements[0]->image->client) data-scroll="{{ str_slug($elements[0]->image->client->name) }}"@endif>
-        @if (isset($elements[0]))
+      @if (isset($elements[0]))
+        <div class="is-logo" @if ($elements[0]->image->client) data-scroll="{{ str_slug($elements[0]->image->client->name) }}"@endif>
           @if ($elements[0]->news)
             @include('web.partials.boxes.article', array('news' => $elements[0]->news))
           @endif
@@ -15,13 +15,13 @@
               <img class="lazyload" data-src="{!! ImageHelper::get($elements[0]->image->name, 'md') !!}" height="280" width="430" alt="{{$elements[0]->image->caption}}">
             @endif
           @endif
-        @endif
-      </div>
+        </div>
+      @endif
     </div>
   </div>
   <div>
-    @if (isset($elements[1]))
-      <div class="box__a">
+    <div class="box__a">
+      @if (isset($elements[1]))
         <div class="is-logo" @if ($elements[1]->image->client) data-scroll="{{ str_slug($elements[1]->image->client->name) }}"@endif>
           @if ($elements[1]->news)
             @include('web.partials.boxes.article', array('news' => $elements[1]->news))
@@ -36,7 +36,7 @@
             @endif
           @endif
         </div>
-      </div>
-    @endif
+      @endif
+    </div>
   </div>
 </div>
