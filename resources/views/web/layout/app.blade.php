@@ -160,12 +160,12 @@
   WBG AG – VISUELLE KOMMUNIKATION<br>BINZSTRASSE 39, CH-8045 ZÜRICH, +41 44 269 43 43, MAIL@WBG.CH
 </footer>
 <script src="{{ asset('assets/js/app.min.05112019.js') }}" type="text/javascript"></script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-58715040-1"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QKCSHMCHVT"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-58715040-1', { 'anonymize_ip': true });
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
+ gtag('config', 'G-QKCSHMCHVT');
 </script>
 </body>
 <!-- made with ❤ by marceli.to -->
