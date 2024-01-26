@@ -23,7 +23,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-      $schedule->call(new Newsletter)->everyMinute();
+      if (env('APP_ENV') === 'production')
+      {
+        $schedule->call(new Newsletter)->everyMinute();
+      }
     }
 
     /**
