@@ -5,7 +5,7 @@
 <section class="site-content site-content--list">
   <div class="project-detail project-detail--panoptikum">
     @foreach($projects as $project)
-      <header class="project-header">
+      <header class="project-header hide-below-sm">
         <h2>{{ $project['title'] }}</h2>
       </header>
       <div class="ratio-boxes" data-scroll="{{ str_slug($project['title']) }}">

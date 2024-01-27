@@ -1,10 +1,11 @@
 <?php
-
 namespace App\Http\Controllers\Backend\Project;
 
 use App\Services\MediaService;
 use App\Models\Project;
 use App\Models\ProjectImage;
+use App\Models\Grid;
+
 use App\Http\Resources\ProjectCollection;
 
 use App\Http\Controllers\Controller;
@@ -195,16 +196,58 @@ class ProjectController extends Controller
      */
     public function clone($id)
     {
-        $project = $this->project->findOrFail($id);
-        $projectCopy = $project->replicate();
-        $projectCopy->name          = $project->name . ' (Kopie)';
-        $projectCopy->principal     = $project->principal;
-        $projectCopy->category_id   = $project->category_id;
-        $projectCopy->client_id     = $project->client_id;
-        $projectCopy->publish       = 0;
-        $projectCopy->is_brands     = 0;
-        $projectCopy->save();
-        return response()->json($projectCopy);
+      $project = $this->project->findOrFail($id);
+      $projectCopy = $project->replicate();
+      $projectCopy->name          = $project->name . ' (Kopie)';
+      $projectCopy->principal     = $project->principal;
+      $projectCopy->category_id   = $project->category_id;
+      $projectCopy->client_id     = $project->client_id;
+      $projectCopy->publish       = 0;
+      $projectCopy->is_brands     = 0;
+      $projectCopy->save();
+
+      // Copy relations
+      $relations = $project->relations;
+      foreach($relations as $r)
+      {
+        $relation = $r->replicate();
+        $relation->project_id = $projectCopy->id;
+        $relation->save();
+      }
+
+      // Copy images
+      if (isset($project->images))
+      {
+        foreach($project->images as $i)
+        {
+          // Clone the image
+          $image = $i->replicate();
+          $name = $this->mediaService->clone($image->name);
+          $image->name = $name;
+          $image->project_id = $projectCopy->id;
+          $image->save();
+        }
+      }
+
+      // Copy grids with layout and elements
+      $grids = Grid::where('project_id', '=', $project->id)->get();
+      foreach($grids as $g)
+      {
+        $grid = $g->replicate();
+        $grid->project_id = $projectCopy->id;
+        $grid->save();
+
+        // Copy elements
+        $elements = $g->elements;
+        foreach($elements as $e)
+        {
+          $element = $e->replicate();
+          $element->grid_id = $grid->id;
+          $element->save();
+        }
+      }
+
+      return response()->json($projectCopy);
     }
 
     /**
@@ -221,47 +264,46 @@ class ProjectController extends Controller
         return response()->json($project->publish);
     }
 
-    /**
-     * Update the order of the resources.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-
-    public function order(Request $request)
+  /**
+   * Update the order of the resources.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function order(Request $request)
+  {
+    $projects = $request->get('projects');
+    foreach($projects as $project)
     {
-        $projects = $request->get('projects');
-        foreach($projects as $project)
-        {
-            $c = $this->project->find($project['id']);
-            $c->order = $project['order'];
-            $c->save();
-        }
-        return response()->json('successfully updated');
+      $c = $this->project->find($project['id']);
+      $c->order = $project['order'];
+      $c->save();
     }
+    return response()->json('successfully updated');
+  }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+  /**
+   * Remove the specified resource from storage.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function destroy($id)
+  {
+    $project = $this->project->with('images')->find($id);
+    if ($project)
     {
-        $project = $this->project->with('images')->find($id);
-        if ($project)
+      // Delete media
+      if (isset($project->images))
+      {
+        foreach($project->images as $i)
         {
-            // Delete media
-            if (isset($project->images))
-            {
-                foreach($project->images as $i)
-                {
-                    $this->mediaService->delete($i->name);
-                    $i->delete();
-                }
-            }
-            $project->delete();
+          $this->mediaService->delete($i->name);
+          $i->delete();
         }
-        return response()->json('successfully deleted');
+      }
+      $project->delete();
     }
+    return response()->json('successfully deleted');
+  }
 }

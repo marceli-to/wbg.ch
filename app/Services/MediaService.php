@@ -527,6 +527,20 @@ class MediaService
     }
 
     /**
+     * Clone an image in the source folder
+     */
+
+    public function clone($image)
+    {
+      if ($image != NULL)
+      {
+        $name = substr($image, 14, strlen($image));
+        File::copy($this->path_source . $image, $this->path_source . $name);
+        return $name;
+      }
+    }
+
+    /**
      * Create directories
      * 
      */

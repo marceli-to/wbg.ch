@@ -7,9 +7,9 @@
   <div class="hide-above-sm">
     <div class="project-detail project-detail--panoptikum">
       @foreach($mobileProjects as $project)
-        <header class="project-header">
+        {{-- <header class="project-header">
           <h2>{{ $project['title'] }}</h2>
-        </header>
+        </header> --}}
         <div class="ratio-boxes" data-scroll="{{ str_slug($project['title']) }}">
           @foreach($project['grid'] as $g)
             @if ($g['key'] == '1fr')
