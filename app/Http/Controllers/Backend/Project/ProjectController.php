@@ -1,13 +1,10 @@
 <?php
 namespace App\Http\Controllers\Backend\Project;
-
 use App\Services\MediaService;
 use App\Models\Project;
 use App\Models\ProjectImage;
 use App\Models\Grid;
-
 use App\Http\Resources\ProjectCollection;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -307,7 +304,7 @@ class ProjectController extends Controller
       {
         $r->delete();
       }
-      
+
       // Delete media
       if (isset($project->images))
       {
