@@ -534,7 +534,7 @@ class MediaService
     {
       if ($image != NULL)
       {
-        $name = substr($image, 14, strlen($image));
+        $name = uniqid() . '_' . $image;
         File::copy($this->path_source . $image, $this->path_source . $name);
         return $name;
       }
