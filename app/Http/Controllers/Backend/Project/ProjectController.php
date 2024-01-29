@@ -291,8 +291,23 @@ class ProjectController extends Controller
   public function destroy($id)
   {
     $project = $this->project->with('images')->find($id);
+
     if ($project)
     {
+      // Delete grids
+      $grids = Grid::where('project_id', '=', $project->id)->get();
+      foreach($grids as $g)
+      {
+        $g->delete();
+      }
+
+      // Delete relations
+      $relations = $project->relations;
+      foreach($relations as $r)
+      {
+        $r->delete();
+      }
+      
       // Delete media
       if (isset($project->images))
       {
