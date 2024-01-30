@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Backend\Project;
 use App\Services\MediaService;
 use App\Models\Project;
 use App\Models\ProjectImage;
+use App\Models\ProjectRelation;
 use App\Models\Grid;
 use App\Http\Resources\ProjectCollection;
 use App\Http\Controllers\Controller;
@@ -15,6 +16,8 @@ class ProjectController extends Controller
     protected $project;
 
     protected $projectImage;
+
+    protected $projectRelation;
     
     /**
      * Constructor
@@ -22,17 +25,20 @@ class ProjectController extends Controller
      * @param MediaService $mediaService
      * @param Project $project
      * @param ProjectImage $projectImage
+     * @param ProjectRelation $projectRelation
      */
 
     public function __construct(
         MediaService $mediaService, 
         Project $project,
-        ProjectImage $projectImage
+        ProjectImage $projectImage,
+        ProjectRelation $projectRelation
     )
     {
         $this->mediaService  = $mediaService;
         $this->project       = $project;
         $this->projectImage  = $projectImage;
+        $this->projectRelation = $projectRelation;
     }
 
     /**
@@ -307,13 +313,29 @@ class ProjectController extends Controller
         }
       }
 
+      // Get all relations from and to this project
+      $relations = $this->projectRelation->with('project.category', 'related.category')
+                    ->where('project_id', '=', $project->id)
+                    ->orWhere('related_project_id', '=', $project->id)
+                    ->get();
+
+      $relationships = [];
+      foreach($relations as $r)
+      {
+        $relationships[] = [
+          'from' => $r->project->name . ' (' . $r->project->category->name . ')',
+          'to' => $r->related->name . ' (' . $r->related->category->name . ')',
+        ];
+      }
+      \Mail::to(auth()->user()->email)->send(
+        new \App\Mail\Project($relationships)
+      );
+
       // Delete relations
-      $relations = $project->relations;
       foreach($relations as $r)
       {
         $r->delete();
       }
-
       $project->delete();
     }
     return response()->json('successfully deleted');

@@ -401,20 +401,21 @@ export default {
                 articleId: e.news.id,
                 title: e.news.title,
                 text: e.news.text,
-                link: e.news.link || null,
-                linkText: e.news.linkText || null
+                link: e.news.link || null,
+                linkText: e.news.linkText || null
               };
               els[e.position] = el;
             }
 
             if (e.project_image_id) {
               let img = e.image;
+              console.log(img);
               let el = {
                 id: e.id,
                 position: e.position,
                 isMedia: true,
-                projectId: img.project.id || null,
-                image: img.name || null,
+                projectId: img.project.id || null,
+                image: img.name || null,
                 imageId: img.id,
                 caption: `${img.project.name}`,
               };
