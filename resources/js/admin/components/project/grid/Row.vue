@@ -409,7 +409,6 @@ export default {
 
             if (e.project_image_id) {
               let img = e.image;
-              console.log(e, img);
               let el = {
                 id: e.id,
                 position: e.position,
