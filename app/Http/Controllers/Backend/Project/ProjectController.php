@@ -288,7 +288,6 @@ class ProjectController extends Controller
   public function destroy($id)
   {
     $project = $this->project->with('images')->find($id);
-
     if ($project)
     {
       // Delete grids
@@ -296,13 +295,6 @@ class ProjectController extends Controller
       foreach($grids as $g)
       {
         $g->delete();
-      }
-
-      // Delete relations
-      $relations = $project->relations;
-      foreach($relations as $r)
-      {
-        $r->delete();
       }
 
       // Delete media
@@ -314,6 +306,14 @@ class ProjectController extends Controller
           $i->delete();
         }
       }
+
+      // Delete relations
+      $relations = $project->relations;
+      foreach($relations as $r)
+      {
+        $r->delete();
+      }
+
       $project->delete();
     }
     return response()->json('successfully deleted');
