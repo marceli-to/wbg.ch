@@ -32,7 +32,7 @@ class Project extends Mailable
     {
         return $this->from(
                         [
-                            'address' => 'rakete@wbg.ch',
+                            'address' => 'no-reply@wbg.ch',
                             'name' => 'WBG AG - Visuelle Kommunikation'
                         ]
                     )
