@@ -9,7 +9,7 @@
     </article>
     @if ($competences)
       @foreach($competences as $competence)
-        <article class="competence" data-competence="{{ str_slug($competence->title) }}">
+        <article class="competence" data-competence="{{ \Str::slug($competence->title) }}">
           <div>
             <div class="competence__text">
               <h2>{{ $competence->title }}</h2>
@@ -18,11 +18,11 @@
                 {!! AppHelper::nl2p($competence->description) !!}
                 @if ($competence->category)
                   @if ($competence->category->id == $category->panoptikumId && $competence->subcategory_id)
-                  <a href="/projekte/{{ $competence->category->id }}/{{str_slug($competence->category->name)}}/{{$competence->subcategory_id}}/{{str_slug($category->subcategories[$competence->subcategory_id])}}" class="icon-arrow-lg">
+                  <a href="/projekte/{{ $competence->category->id }}/{{\Str::slug($competence->category->name)}}/{{$competence->subcategory_id}}/{{\Str::slug($category->subcategories[$competence->subcategory_id])}}" class="icon-arrow-lg">
                     {{ $competence->category->name }}
                   </a>
                   @else
-                    <a href="/projekte/{{ $competence->category->id }}/{{str_slug($competence->category->name)}}" class="icon-arrow-lg">
+                    <a href="/projekte/{{ $competence->category->id }}/{{\Str::slug($competence->category->name)}}" class="icon-arrow-lg">
                       {{ $competence->category->name }}
                     </a>
                   @endif

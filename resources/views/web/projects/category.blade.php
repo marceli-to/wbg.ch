@@ -10,7 +10,7 @@
         {{-- <header class="project-header">
           <h2>{{ $project['title'] }}</h2>
         </header> --}}
-        <div class="ratio-boxes" data-scroll="{{ str_slug($project['title']) }}">
+        <div class="ratio-boxes" data-scroll="{{ \Str::slug($project['title']) }}">
           @foreach($project['grid'] as $g)
             @if ($g['key'] == '1fr')
               @if (isset($g['elements']))
@@ -57,7 +57,7 @@
       @foreach($projects as $key => $project)
           @foreach($project->previewImages as $image)
             <figure class="project-teaser">
-              <a href="/projekte/{{ $project->category_id }}/panoptikum/{{ $project->subcategory_id }}/{{ mb_strtolower($subCategories[$project->subcategory_id], 'UTF-8') }}/!#{{str_slug($project->name)}}" title="{{$project->name}}">
+              <a href="/projekte/{{ $project->category_id }}/panoptikum/{{ $project->subcategory_id }}/{{ mb_strtolower($subCategories[$project->subcategory_id], 'UTF-8') }}/!#{{\Str::slug($project->name)}}" title="{{$project->name}}">
                 <img src="/assets/img/preview.png" data-src="{!! ImageHelper::preview($image->name) !!}" class="lazyload" height="512" width="380" alt="{{$project->name}}">
               </a>
             </figure>

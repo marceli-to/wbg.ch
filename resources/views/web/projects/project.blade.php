@@ -95,13 +95,13 @@
               <article class="project-relation">
                 <h3>{{ $relation->related->name }}</h3>
                 @if ($relation->related->category_id == 3)
-                  <a href="/projekte/{{ $relation->related->category_id }}/panoptikum/{{ $relation->related->subcategory_id }}/-/!#{{str_slug($relation->related->name)}}" 
+                  <a href="/projekte/{{ $relation->related->category_id }}/panoptikum/{{ $relation->related->subcategory_id }}/-/!#{{\Str::slug($relation->related->name)}}" 
                     rel="canonical"
                     class="icon-arrow-light hide-below-sm"
                     title="{{$relation->related->category->name}}">
                     {{$relation->related->category->name}}
                   </a>
-                  <a href="/projekte/{{ $relation->related->category_id }}/panoptikum!#{{str_slug($relation->related->name)}}" 
+                  <a href="/projekte/{{ $relation->related->category_id }}/panoptikum!#{{\Str::slug($relation->related->name)}}" 
                     rel="canonical"
                     class="icon-arrow-light hide-above-sm"
                     title="{{$relation->related->category->name}}">
@@ -122,13 +122,13 @@
                     @if ($loop->first)
                       <figure>
                         @if ($relation->related->category_id == 3)
-                          <a href="/projekte/{{ $relation->related->category_id }}/panoptikum/{{ $relation->related->subcategory_id }}/-/!#{{str_slug($relation->related->name)}}" 
+                          <a href="/projekte/{{ $relation->related->category_id }}/panoptikum/{{ $relation->related->subcategory_id }}/-/!#{{\Str::slug($relation->related->name)}}" 
                             rel="canonical"
                             class="hide-below-sm"
                             title="{{$relation->related->category->name}}">
                             <img src="{!! ImageHelper::related($img->name) !!}" height="430" width="280" alt="{{$img->caption}}">
                           </a>
-                          <a href="/projekte/{{ $relation->related->category_id }}/panoptikum!#{{str_slug($relation->related->name)}}" 
+                          <a href="/projekte/{{ $relation->related->category_id }}/panoptikum!#{{\Str::slug($relation->related->name)}}" 
                             rel="canonical"
                             class="hide-above-sm"
                             title="{{$relation->related->category->name}}">
@@ -149,13 +149,13 @@
                     @if ($loop->first)
                       <figure>
                         @if ($relation->related->category_id == 3)
-                          <a href="/projekte/{{ $relation->related->category_id }}/panoptikum/{{ $relation->related->subcategory_id }}/-/!#{{str_slug($relation->related->name)}}" 
+                          <a href="/projekte/{{ $relation->related->category_id }}/panoptikum/{{ $relation->related->subcategory_id }}/-/!#{{\Str::slug($relation->related->name)}}" 
                             rel="canonical"
                             class="hide-below-sm"
                             title="{{$relation->related->category->name}}">
                             <img src="{!! ImageHelper::related($img->name) !!}" height="430" width="280" alt="{{$img->caption}}">
                           </a>
-                          <a href="/projekte/{{ $relation->related->category_id }}/panoptikum!#{{str_slug($relation->related->name)}}" 
+                          <a href="/projekte/{{ $relation->related->category_id }}/panoptikum!#{{\Str::slug($relation->related->name)}}" 
                             rel="canonical"
                             class="hide-above-sm"
                             title="{{$relation->related->category->name}}">

@@ -17,7 +17,7 @@
         </a>
       @endif
     @elseif ($news->linkInternal)
-      <a href="{{ route('profile.competences') }}/!#{{ str_slug($news->competence->title)}}" class="icon-arrow">
+      <a href="{{ route('profile.competences') }}/!#{{ \Str::slug($news->competence->title)}}" class="icon-arrow">
         @if ($news->linkText){{ $news->linkText }} @else Mehr @endif
       </a>
     @endif

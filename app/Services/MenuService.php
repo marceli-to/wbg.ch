@@ -76,7 +76,7 @@ class MenuService
               $menu_items[$p->subcategory_id] = [
                 'id'        => array_search($p->subcategory_id, $this->category->subcategories),
                 'name'      => $this->category->subcategories[$p->subcategory_id],
-                'slug'      => '/projekte/3/panoptikum/' . $p->subcategory_id . '/' . str_slug($this->category->subcategories[$p->subcategory_id]),
+                'slug'      => '/projekte/3/panoptikum/' . $p->subcategory_id . '/' . \Str::slug($this->category->subcategories[$p->subcategory_id]),
                 'is-active' => $subcategoryId == $p->subcategory_id ? TRUE : FALSE,
               ];
             }
@@ -91,7 +91,7 @@ class MenuService
             $menu_items[] = [
               'id'        => $p->id,
               'name'      => $p->name,
-              'slug'      => '/projekt/' . $p->id . '/' . str_slug($p->name),
+              'slug'      => '/projekt/' . $p->id . '/' . \Str::slug($p->name),
               'is-active' => $projectId == $p->id ? TRUE : FALSE,
             ];
           }
@@ -100,7 +100,7 @@ class MenuService
         $menu[] = [
           'category'  => $c->name,
           'id'        => $c->id,
-          'slug'      => '/projekte/' . $c->id . '/' . str_slug($c->name),
+          'slug'      => '/projekte/' . $c->id . '/' . \Str::slug($c->name),
           'is-active' => ($categoryId == $c->id || ($project && $project->category_id == $c->id)) ? TRUE : FALSE,
           'items'     => $menu_items
         ];

@@ -5,12 +5,12 @@
         <figure class="project-teaser">
           <h2>{{ $project->name }}</h2>
           @if ($project->category_id == 3)
-            <a href="/projekte/{{ $project->category_id }}/panoptikum/{{ $project->subcategory_id }}/{{ mb_strtolower($subCategories[$project->subcategory_id], 'UTF-8') }}/!#{{str_slug($project->name)}}" 
+            <a href="/projekte/{{ $project->category_id }}/panoptikum/{{ $project->subcategory_id }}/{{ mb_strtolower($subCategories[$project->subcategory_id], 'UTF-8') }}/!#{{\Str::slug($project->name)}}" 
                title="{{$project->name}}"
                class="hide-below-sm">
               <img src="/assets/img/preview.png" data-src="{!! ImageHelper::preview($image->name) !!}" class="lazyload" height="512" width="380" alt="{{$project->name}}">
             </a>
-            <a href="/projekte/{{ $project->category_id }}/panoptikum!#{{str_slug($project->name)}}" 
+            <a href="/projekte/{{ $project->category_id }}/panoptikum!#{{\Str::slug($project->name)}}" 
               title="{{$project->name}}"
               class="hide-above-sm">
               <img src="/assets/img/preview.png" data-src="{!! ImageHelper::preview($image->name) !!}" class="lazyload" height="512" width="380" alt="{{$project->name}}">

@@ -77,7 +77,7 @@ class AppHelper
         if (is_array($project))
         {
             // $slug = $project['id'] .'/'.
-            //     str_slug(
+            //     \Str::slug(
             //         AppHelper::transliterate($project['name']['de']) . '-' .
             //         AppHelper::transliterate($project['location']['de']) . '-' .
             //         $project['year']
@@ -86,7 +86,7 @@ class AppHelper
         }
         else
         {
-            $slug = $project->id .'/'. str_slug(AppHelper::transliterate($project->name), '-');
+            $slug = $project->id .'/'. \Str::slug(AppHelper::transliterate($project->name), '-');
         }
         
         return $slug;

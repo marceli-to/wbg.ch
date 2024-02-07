@@ -2,7 +2,7 @@
   <div>
     <div class="box__a">
       @if (isset($elements[0]))
-        <div class="is-logo" @if ($elements[0]->image->client) data-scroll="{{ str_slug($elements[0]->image->client->name) }}"@endif>
+        <div class="is-logo" @if ($elements[0]->image->client) data-scroll="{{ \Str::slug($elements[0]->image->client->name) }}"@endif>
           @if ($elements[0]->news)
             @include('web.partials.boxes.article', array('news' => $elements[0]->news))
           @endif
@@ -22,7 +22,7 @@
   <div>
     <div class="box__a">
       @if (isset($elements[1]))
-        <div class="is-logo" @if ($elements[1]->image->client) data-scroll="{{ str_slug($elements[1]->image->client->name) }}"@endif>
+        <div class="is-logo" @if ($elements[1]->image->client) data-scroll="{{ \Str::slug($elements[1]->image->client->name) }}"@endif>
           @if ($elements[1]->news)
             @include('web.partials.boxes.article', array('news' => $elements[1]->news))
           @endif
