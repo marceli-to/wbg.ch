@@ -135,6 +135,12 @@
               Impressum
             </a>
           </li>
+          <li>
+            <a href="{{ route('profile.privacy') }}"
+               class="{{ request()->routeIs('profile.privacy') ? 'is-active' : '' }}">
+              Datenschutz
+            </a>
+          </li>
         </ul>
       </li>
     </ul>

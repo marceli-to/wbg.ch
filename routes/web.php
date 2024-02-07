@@ -30,6 +30,7 @@ Route::get('profil/kompetenzen/{slug?}', 'Frontend\ProfileController@competences
 Route::get('profil/kunden', 'Frontend\ProfileController@clients')->name('profile.clients');
 // Route::get('profil/geschichte', 'Frontend\ProfileController@history')->name('profile.history');
 Route::get('profil/impressum', 'Frontend\ProfileController@imprint')->name('profile.imprint');
+Route::get('profil/datenschutzerklaerung', 'Frontend\ProfileController@privacy')->name('profile.privacy');
 
 // Team
 Route::get('/team', 'Frontend\TeamController@index')->name('team');

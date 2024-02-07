@@ -23,6 +23,10 @@ return [
       'key' => 'impressum',
       'page' => 'Profil > Impressum'
     ],
+    // [
+    //   'key' => 'datenschutzerklaerung',
+    //   'page' => 'Profil > Datenschutzerklärung'
+    // ],
     [
       'key' => 'geschichte',
       'page' => 'Profil > Geschichte'

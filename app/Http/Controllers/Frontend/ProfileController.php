@@ -123,6 +123,14 @@ class ProfileController extends Controller
       ->withPageTitle('Impressum');
   }
 
+  public function privacy()
+  {
+    return
+      view($this->view_path . '.privacy')
+      ->withMenu($this->menuService->boot())
+      ->withPageTitle('Datenschutzerklärung');
+  }
+
   public function history()
   {
     return
