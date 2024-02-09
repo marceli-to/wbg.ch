@@ -16,7 +16,7 @@
         <p>Die Internetseiten verwenden teilweise so genannte Cookies. Cookies richten auf Ihrem Rechner keinen Schaden an und enthalten keine Viren. Cookies dienen dazu, unser Angebot nutzerfreundlicher, effektiver und sicherer zu machen. Cookies sind kleine Textdateien, die auf Ihrem Rechner abgelegt werden und die Ihr Browser speichert.</p><p>Die meisten der von uns verwendeten Cookies sind so genannte &laquo;Session-Cookies&raquo;. Sie werden nach Ende Ihres Besuchs automatisch gelöscht. Andere Cookies bleiben auf Ihrem Endgerät gespeichert, bis Sie diese löschen. Diese Cookies ermöglichen es uns, Ihren Browser beim nächsten Besuch wiederzuerkennen.</p>
         <p>Sie können Ihren Browser so einstellen, dass Sie über das Setzen von Cookies informiert werden und Cookies nur im Einzelfall erlauben, die Annahme von Cookies für bestimmte Fälle oder generell ausschliessen sowie das automatische Löschen der Cookies beim Schliessen des Browser aktivieren. Bei der Deaktivierung von Cookies kann die Funktionalität dieser Website eingeschränkt sein.</p>
         <h2>Hosting Provider &amp; Server-LogFiles</h2>
-        <p>Der Provider der Seiten erhebt und speichert automatisch Informationen in so genannten Server-Log Files, die Ihr Browser automatisch an uns übermittelt. Dies sind:</p>
+        <div>Der Provider der Seiten erhebt und speichert automatisch Informationen in so genannten Server-Log Files, die Ihr Browser automatisch an uns übermittelt. Dies sind:
         <ul>
           <li>IP-Adresse</li>
           <li>Browsertyp und Browserversion</li>
@@ -25,6 +25,7 @@
           <li>Hostname des zugreifenden Rechners</li>
           <li>Uhrzeit der Serveranfrage</li>
         </ul>
+        </div>
         <p>Diese Daten können nicht direkt bestimmten Personen zugeordnet werden. Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen. Wir behalten uns vor, diese Daten nachträglich zu prüfen, wenn uns konkrete Anhaltspunkte für eine rechtswidrige Nutzung bekannt werden.</p>
         <p>Diese Daten sowie alle Daten dieser Website werden bei unserem Hosting-Provider Hostpoint AG, 8640 Rapperswil-Jona, Schweiz gespeichert, deren Datenschutzerklärung Sie <a href="https://www.hostpoint.ch/hostpoint/kontakt-agb.html#datenschutz" target="_blank">hier</a> finden.</p>
                
@@ -56,8 +57,10 @@
       </article>
     </div>
     <article class="content-md sidebar">
-      <p>Design und Programmierung<br>WBG AG, Zürich</p>
-      <p>Fotografie<br><a href="https://sutterdaniel.ch/" target="_blank">Daniel Sutter, Zürich</a><br><a href="https://www.wyldcard.ch/" target="_blank">Marcel Renggli, Zürich</a><br>WBG AG</p>
+      <h2>Design und Programmierung</h2>
+      WBG AG, Zürich<br><br>
+      <h2>Fotografie</h2>
+      <a href="https://sutterdaniel.ch/" target="_blank">Daniel Sutter, Zürich</a><br><a href="https://www.wyldcard.ch/" target="_blank">Marcel Renggli, Zürich</a><br>WBG AG</p>
     </article>
   </div>
 </section>

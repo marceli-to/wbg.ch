@@ -6,10 +6,17 @@
 
 .legal {
 
-  h1, h2, h3 {
+
+  h1 {
+    @include font-size($fs-lg);
+    @include font-light();
+    margin-bottom: $space-lg;
+  }
+  
+  h2, h3 {
     @include font-bold();
   }
-
+  
   h2 {
     margin-bottom: $space-md;
     @include bp-sm() {
@@ -17,15 +24,14 @@
     }
   }
   
-  p, ul {
-    margin-bottom: $space-sm;
-  }
-
   ul {
-    margin-left: 0;
+    margin: 0 0 $space-sm 0;
     padding: 0;
   }
 
+  p, ul {
+    margin-bottom: $space-sm;
+  }
   li {
     display: list-item;
     list-style-type: '– ';
@@ -45,9 +51,17 @@
     &:hover {
     }
   }
-
+  .sidebar {
+    @include bp-sm() {
+      margin-top: 58px;
+    }
+  }
   .sidebar a {
     text-decoration: none !important;
+  }
+
+  .sidebar h2 {
+    margin-bottom: 0 !important;
   }
 
   .privacy {
@@ -58,7 +72,6 @@
   .toc {
     h2 {
       margin-top: $space-lg;
-      margin-bottom: 0;
     }
   }
 }

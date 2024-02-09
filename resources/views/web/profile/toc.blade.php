@@ -5,9 +5,9 @@
 <section class="site-content site-content--narrow">
   <div class="legal">
     <article class="content-md toc">
-      <h1>Allgemeine Geschäftsbedingungen der WBG AG</h1>
+      <h1>Allgemeine Geschäftsbedingungen der WBG AG, Stand Februar 2024</h1>
       <h2>Geltungsbereich</h2>
-      <p>Diese allgemeinen Geschäftsbedingungen (nachfolgend „AGB“) regeln das Vertragsverhältnis zwischen der Auftragnehmerin, der WBG AG (nachfolgend „WBG“), und der Auftraggeberin (nachfolgend „Kundin“; zusammen nachfolgend die „Parteien“). Mit der Beauftragung von WBG anerkennt die Kundin die AGB als Vertragsbestandteil an.</p>
+      <p>Diese allgemeinen Geschäftsbedingungen (nachfolgend &laquo;AGB&raquo;) regeln das Vertragsverhältnis zwischen der Auftragnehmerin, der WBG AG (nachfolgend &laquo;WBG&raquo;), und der Auftraggeberin (nachfolgend &laquo;Kundin&raquo;; zusammen nachfolgend die &laquo;Parteien&raquo;). Mit der Beauftragung von WBG anerkennt die Kundin die AGB als Vertragsbestandteil an.</p>
       <h2>Vertragsschluss</h2>
       <p>Der Vertrag kommt mit der Annahme der Offerte von WBG durch die Kundin zustande. Die Offerte ist 30 Tage gültig. Die Annahme kann schriftlich (auch per E-Mail) oder mündlich erfolgen.</p>
       <h2>Leistungsumfang und Bestellungsänderungen</h2>
@@ -49,7 +49,7 @@
       <p>WBG ist berechtigt, ihre Urheberschaft an den von ihr geschaffenen Arbeitsergebnissen in einer von ihr zu bestimmenden Form zu nennen (Namensnennungsrecht), wenn dies für das konkrete Arbeitsergebnis allgemein üblich und technisch möglich ist, der Gesamteindruck des Arbeitsergebnisses nicht beeinträchtigt wird und berechtigte Interessen der Kundin nicht verletzt werden.</p>
       <p>WBG ist berechtigt, die für die Kundin erbrachten Leistungen auf der eigenen Website, eigenen Drucksachen, auf Social Media-Plattformen oder in sonstigen Publikationen und Präsentationen als Referenzarbeiten abzubilden und auf die Zusammenarbeit mit der Kundin zu verweisen.</p>
       <h2>Vorzeitige Vertragsbeendigung und deren Rechtsfolgen</h2>
-      <p>Wird der Vertrag vorzeitig beendet, so hat WBG Anspruch auf:</p>
+      <div>Wird der Vertrag vorzeitig beendet, so hat WBG Anspruch auf:
       <ul>
         <li>
          Bezahlung der bislang erbrachten Leistungen;
@@ -61,16 +61,16 @@
           Bezahlung eines pauschalen, schadensunabhängigen Zuschlags von 10% des offerierten Honorars für den entzogenen Auftragsteil oder eines darüber hinausgehenden Betrags, wenn der Schaden nachweislich grösser ist, sofern WBG keinen Anlass zur vorzeitigen Vertragsbeendigung durch die Kundin gesetzt hat.
         </li>
       </ul>
+      </div>
       <p>Im Falle einer vorzeitigen Vertragsbeendigung bleiben die Nutzungsrechte an den bisherigen Arbeitsergebnissen sowie die Rohdaten vollumfänglich bei WBG, vorbehältlich einer anderen ausdrücklichen Abrede der Parteien.</p>
       <h2>Aufbewahrung</h2>
       <p>WBG bewahrt alle wichtigen Auftragsunterlagen für die Dauer von einem Jahr nach Ablieferung aufzubewahren (elektronisch und/oder physisch). Darüber hinaus ist WBG ohne anderslautende schriftliche Anweisung der Kundin von weitergehenden Aufbewahrungspflichten befreit.</p>
       <h2>Datenschutz</h2>
-      <p>Zwecks Auftragsabwicklung benötigt WBG von der Kundin verschiedenen Personendaten wie Firmenname, Vor- und Nachnamen der Ansprechpersonen, Adresse, Telefonnummer und E-Mailadressen. Diese Personendaten werden in Einklang mit der schweizerischen Datenschutzgesetzgebung bearbeitet und ausschliesslich zur Abwicklung des Auftrags sowie zur Kundenpflege erhoben. Die Daten werden soweit möglich nur in der Schweiz oder der EU bearbeitet und nicht an Dritte weitergegeben. Während der Aufbewahrungsdauer ergreift WBG alle technischen und organisatorischen Massnahmen, um die Daten vor widerrechtlicher und falscher Bearbeitung zu schützen. Erlaubt ist es WBG, den Namen der Kundin auf der Website in der Rubrik „Kunden“ aufzuführen. Die Kundin kann jederzeit die ihr von Gesetzes wegen zustehenden Rechte an den persönlichen Daten geltend machen. Durch die Auftragserteilung erklärt sich die Kundin mit der vorstehend genannten Verwendung ihrer Daten einverstanden. Diese Einverständniserklärung kann jederzeit und ohne Angaben von Gründen widerrufen werden (E-Mail an WBG AG, <a href="mailto:admin@wbg.ch" title="E-Mail an admin@wbg.ch senden">admin@wbg.ch</a>)</p>
+      <p>Zwecks Auftragsabwicklung benötigt WBG von der Kundin verschiedenen Personendaten wie Firmenname, Vor- und Nachnamen der Ansprechpersonen, Adresse, Telefonnummer und E-Mailadressen. Diese Personendaten werden in Einklang mit der schweizerischen Datenschutzgesetzgebung bearbeitet und ausschliesslich zur Abwicklung des Auftrags sowie zur Kundenpflege erhoben. Die Daten werden soweit möglich nur in der Schweiz oder der EU bearbeitet und nicht an Dritte weitergegeben. Während der Aufbewahrungsdauer ergreift WBG alle technischen und organisatorischen Massnahmen, um die Daten vor widerrechtlicher und falscher Bearbeitung zu schützen. Erlaubt ist es WBG, den Namen der Kundin auf der Website in der Rubrik &laquo;Kunden&raquo; aufzuführen. Die Kundin kann jederzeit die ihr von Gesetzes wegen zustehenden Rechte an den persönlichen Daten geltend machen. Durch die Auftragserteilung erklärt sich die Kundin mit der vorstehend genannten Verwendung ihrer Daten einverstanden. Diese Einverständniserklärung kann jederzeit und ohne Angaben von Gründen widerrufen werden (E-Mail an WBG AG, <a href="mailto:admin@wbg.ch" title="E-Mail an admin@wbg.ch senden">admin@wbg.ch</a>)</p>
       <h2>Schlussbestimmungen</h2>
       <p>Die teilweise Unwirksamkeit einzelner Bestimmungen dieser AGB lässt die Wirksamkeit der übrigen Bestimmungen unberührt. Die nichtige Bestimmung wird nach Treu und Glauben durch eine Bestimmung ersetzt, die der ursprünglich intendierten wirtschaftlich am nächsten kommt.</p>
       <p>WBG behält sich das Recht vor, diese AGB von Zeit zu Zeit zu überprüfen und gegebenenfalls anzupassen. Die jeweils aktuelle Version der AGB ist auf der Website von WBG abrufbar (<a href="https://wbg.ch/agb">https://wbg.ch/agb</a>)</p>
       <p>Das Vertragsverhältnis untersteht Schweizer Recht. Der ausschliessliche Gerichtsstand für allfällige Streitigkeiten aus oder im Zusammenhang mit diesem Vertrag ist Zürich.</p>
-      <p>Februar 2024</p>
     </article>
   </div>
 </section>
