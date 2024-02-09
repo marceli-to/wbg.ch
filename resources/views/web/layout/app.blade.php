@@ -129,14 +129,6 @@
               Rechtliches
             </a>
           </li>
-          @if (request()->routeIs('profile.toc'))
-            <li>
-              <a href="{{ route('profile.toc') }}"
-                class="{{ request()->routeIs('profile.toc') ? 'is-active' : '' }}">
-                AGB
-              </a>
-            </li>
-          @endif
         </ul>
       </li>
     </ul>

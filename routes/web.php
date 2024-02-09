@@ -29,7 +29,7 @@ Route::get('profil/kompetenzen', 'Frontend\ProfileController@competences')->name
 Route::get('profil/kompetenzen/{slug?}', 'Frontend\ProfileController@competences')->name('profile.competences.detail');
 Route::get('profil/kunden', 'Frontend\ProfileController@clients')->name('profile.clients');
 Route::get('profil/rechtliches', 'Frontend\ProfileController@legal')->name('profile.legal');
-Route::get('agb', 'Frontend\ProfileController@toc')->name('profile.toc');
+Route::get('agb', 'Frontend\ProfileController@toc')->name('toc');
 
 
 // Team
