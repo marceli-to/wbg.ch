@@ -43,8 +43,11 @@
     color: $color--black;
     text-decoration: underline;
     &:hover {
-      text-decoration: none;
     }
+  }
+
+  .sidebar a {
+    text-decoration: none !important;
   }
 
   .privacy {

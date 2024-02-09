@@ -55,7 +55,7 @@
   
       </article>
     </div>
-    <article class="content-md">
+    <article class="content-md sidebar">
       <p>Design und Programmierung<br>WBG AG, Zürich</p>
       <p>Fotografie<br><a href="https://sutterdaniel.ch/" target="_blank">Daniel Sutter, Zürich</a><br><a href="https://www.wyldcard.ch/" target="_blank">Marcel Renggli, Zürich</a><br>WBG AG</p>
     </article>
