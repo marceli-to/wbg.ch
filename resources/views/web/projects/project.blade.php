@@ -115,8 +115,7 @@
                     {{$relation->related->category->name}}
                   </a>
                 @endif          
-                
-                
+               
                 @if ($relation->related->previewRelatedImages->count() > 0)
                   @foreach($relation->related->previewRelatedImages as $img)
                     @if ($loop->first)

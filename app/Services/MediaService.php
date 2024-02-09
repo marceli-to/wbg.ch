@@ -465,8 +465,8 @@ class MediaService
             if ($width > 430 && $height > 280)
             {
                 $image->resize(430, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->crop('430', '280');
+                  $constraint->aspectRatio();
+                })->crop('430', '278');
             }
 
             $image->save($this->path_related . $image->basename);
