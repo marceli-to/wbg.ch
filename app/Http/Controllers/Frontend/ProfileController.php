@@ -115,28 +115,19 @@ class ProfileController extends Controller
       ->withPageTitle('Kunden');
   }
 
-  public function imprint()
+  public function legal()
   {
     return
-      view($this->view_path . '.imprint')
+      view($this->view_path . '.legal')
       ->withMenu($this->menuService->boot())
-      ->withPageTitle('Impressum');
+      ->withPageTitle('Rechtliches');
   }
 
-  public function privacy()
+  public function toc()
   {
     return
-      view($this->view_path . '.privacy')
+      view($this->view_path . '.toc')
       ->withMenu($this->menuService->boot())
-      ->withPageTitle('Datenschutzerklärung');
-  }
-
-  public function history()
-  {
-    return
-      view($this->view_path . '.history')
-      ->withMenu($this->menuService->boot())
-      ->withContent($this->content->where('key', '=', 'geschichte')->get()->first())
-      ->withPageTitle('Geschichte');
+      ->withPageTitle('AGB');
   }
 }

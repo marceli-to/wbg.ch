@@ -8,23 +8,23 @@ footer.site-footer {
     display: none;
 
     @include bp-sm() {
-        bottom: 0;
-        color: $color--red;
-        display: block;
-        @include font-size($fs-sm);
-        padding: 0 $space-md $space-lg $space-md;
-        position: fixed;
-        text-transform: uppercase;
-        z-index: 100;
+      bottom: 0;
+      color: $color--red;
+      display: block;
+      @include font-size($fs-sm);
+      padding: 0 $space-md $space-lg $space-md;
+      position: fixed;
+      text-transform: uppercase;
+      z-index: 100;
     }
 
-	@include bp-lg() {
-		padding-left: 0;
-		padding-right: 0;
+    @include bp-lg() {
+      padding-left: 0;
+      padding-right: 0;
     }
-    
+      
     a {
-        color: $color--red;
-        text-decoration: none;
+      color: $color--red;
+      text-decoration: none;
     }
 }

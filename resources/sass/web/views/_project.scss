@@ -137,8 +137,8 @@
 
       .project-relation {
         border-top: 1px solid $color--grey;
-        padding-top: $space-sm;
-        margin-bottom: $space-lg;
+        padding-top: $space-tiny;
+        margin-bottom: $space-md;
 
         @include bp-sm() {
           max-width: 240px;
@@ -146,7 +146,7 @@
 
         figure {
           display: block;
-          margin-top: $space-md;
+          margin-top: $space-xs;
 
           img {
             @extend %is-responsive;

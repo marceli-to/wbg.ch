@@ -31,8 +31,8 @@
   @extend %icon;
   @extend %icon-bg;
   background-image: url($url-icons + 'arrow-light.svg');
-  background-size: auto 11px;
+  background-size: auto 10px;
   background-position: center left;
   color: $color--black;
-  padding-left: 22px;
+  padding-left: 20px;
 }

@@ -28,9 +28,9 @@ Route::get('profil/haltung', 'Frontend\ProfileController@attitude')->name('profi
 Route::get('profil/kompetenzen', 'Frontend\ProfileController@competences')->name('profile.competences');
 Route::get('profil/kompetenzen/{slug?}', 'Frontend\ProfileController@competences')->name('profile.competences.detail');
 Route::get('profil/kunden', 'Frontend\ProfileController@clients')->name('profile.clients');
-// Route::get('profil/geschichte', 'Frontend\ProfileController@history')->name('profile.history');
-Route::get('profil/impressum', 'Frontend\ProfileController@imprint')->name('profile.imprint');
-Route::get('profil/datenschutzerklaerung', 'Frontend\ProfileController@privacy')->name('profile.privacy');
+Route::get('profil/rechtliches', 'Frontend\ProfileController@legal')->name('profile.legal');
+Route::get('profil/agb', 'Frontend\ProfileController@toc')->name('profile.toc');
+
 
 // Team
 Route::get('/team', 'Frontend\TeamController@index')->name('team');

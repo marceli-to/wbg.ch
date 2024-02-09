@@ -123,24 +123,20 @@
               Kunden
             </a>
           </li>
-          {{-- <li>
-            <a href="{{ route('profile.history') }}"
-               class="{{ request()->routeIs('profile.history') ? 'is-active' : '' }}">
-              Geschichte
-            </a>
-          </li> --}}
           <li>
-            <a href="{{ route('profile.imprint') }}"
-               class="{{ request()->routeIs('profile.imprint') ? 'is-active' : '' }}">
-              Impressum
+            <a href="{{ route('profile.legal') }}"
+               class="{{ request()->routeIs('profile.legal') ? 'is-active' : '' }}">
+              Rechtliches
             </a>
           </li>
-          <li>
-            <a href="{{ route('profile.privacy') }}"
-               class="{{ request()->routeIs('profile.privacy') ? 'is-active' : '' }}">
-              Datenschutz
-            </a>
-          </li>
+          @if (request()->routeIs('profile.toc'))
+            <li>
+              <a href="{{ route('profile.toc') }}"
+                class="{{ request()->routeIs('profile.toc') ? 'is-active' : '' }}">
+                AGB
+              </a>
+            </li>
+          @endif
         </ul>
       </li>
     </ul>
@@ -162,9 +158,11 @@
   </nav>
   @yield('content')
 </main>
+@if (!request()->routeIs('project.detail'))
 <footer class="site-footer js-footer">
   WBG AG – VISUELLE KOMMUNIKATION<br>BINZSTRASSE 39, CH-8045 ZÜRICH, +41 44 269 43 43, MAIL@WBG.CH
 </footer>
+@endif
 <script src="{{ asset('assets/js/app.min.05112019.js') }}" type="text/javascript"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QKCSHMCHVT"></script>
 <script>

@@ -55,13 +55,15 @@
   <div class="hide-below-sm">
     <div class="project-list project-list--panoptikum">
       @foreach($projects as $key => $project)
-          @foreach($project->previewImages as $image)
+        @foreach($project->previewImages as $image)
+          @if (isset($subCategories[$project->subcategory_id]))
             <figure class="project-teaser">
               <a href="/projekte/{{ $project->category_id }}/panoptikum/{{ $project->subcategory_id }}/{{ mb_strtolower($subCategories[$project->subcategory_id], 'UTF-8') }}/!#{{\Str::slug($project->name)}}" title="{{$project->name}}">
                 <img src="/assets/img/preview.png" data-src="{!! ImageHelper::preview($image->name) !!}" class="lazyload" height="512" width="380" alt="{{$project->name}}">
               </a>
             </figure>
-          @endforeach
+          @endif
+        @endforeach
       @endforeach
     </div>
   </div>

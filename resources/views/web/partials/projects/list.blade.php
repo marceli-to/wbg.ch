@@ -4,7 +4,7 @@
       @foreach($project->previewImages as $image)
         <figure class="project-teaser">
           <h2>{{ $project->name }}</h2>
-          @if ($project->category_id == 3)
+          @if ($project->category_id == 3 && isset($project->subcategory_id))
             <a href="/projekte/{{ $project->category_id }}/panoptikum/{{ $project->subcategory_id }}/{{ mb_strtolower($subCategories[$project->subcategory_id], 'UTF-8') }}/!#{{\Str::slug($project->name)}}" 
                title="{{$project->name}}"
                class="hide-below-sm">
