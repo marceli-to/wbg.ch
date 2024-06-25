@@ -51,12 +51,6 @@
             </div>
             <div class="form-row" :class="errors.description ? 'has-error': ''">
               <label>Beschreibung</label>
-              <!-- <textarea
-                @focus="removeError('description')"
-                v-model="project.description"
-                :class="errors.description ? 'has-error': ''"
-                rows="15"
-              ></textarea> -->
               <tinymce-editor
                 :init="tinyConfig"
                 v-model="project.description"
