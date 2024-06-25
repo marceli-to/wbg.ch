@@ -8,87 +8,87 @@
 /*# sourceMappingURL=skin.min.css.map */
 
 .tox-tinymce {
-    border: 2px solid #222222;
-    border-radius: 2px;
+  border: 2px solid #222222;
+  border-radius: 2px;
 }
 
 .tox:not([dir=rtl]) .tox-toolbar__group:not(:last-of-type) {
-    border-right: 2px solid #222222;
+  border-right: 2px solid #222222;
 }
 
 .tox .tox-edit-area {
-    border-top: 2px solid #222222;
+  border-top: 2px solid #222222;
 }
 
 .tox .tox-tbtn:hover:not(.tox-tbtn--disabled) {
-    background-color: #eee;
+  background-color: #eee;
 }
 
 .tox .tox-dialog {
-    border: 2px solid #222222;
+  border: 2px solid #222222;
 }
 
 .tox .tox-selectfield select,
 .tox .tox-textarea,
 .tox .tox-textfield,
 .tox .tox-toolbar-textfield {
-    background-color: transparent;
-	border-radius: 2px;
-	border: 2px solid #222222;
-    color: #222222;
-	padding: 10px;
-	position: relative;
-	outline: none !important;
+  background-color: transparent;
+border-radius: 2px;
+border: 2px solid #222222;
+  color: #222222;
+padding: 10px;
+position: relative;
+outline: none !important;
 }
 
 .tox .tox-label,
 .tox .tox-toolbar-label {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .tox .tox-form__group {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .tox .tox-button {
-    background-color: #5cb85c;
-    border-radius: 2px;
-    border: none;
+  background-color: #5cb85c;
+  border-radius: 2px;
+  border: none;
 }
 
 .tox .tox-button:hover {
-    background-color: #449d44 !important;
+  background-color: #449d44 !important;
 }
 
 .tox .tox-button--secondary {
-    background: transparent !important;
-    border: none !important;
-    font-weight: normal;
+  background: transparent !important;
+  border: none !important;
+  font-weight: normal;
 }
 
 .tox .tox-button--secondary:hover {
-    background-color: transparent !important;
-    text-decoration: underline;
+  background-color: transparent !important;
+  text-decoration: underline;
 }
 
 .tox .tox-button--icon .tox-icon svg,
 .tox .tox-button.tox-button--icon .tox-icon svg,
 .tox .tox-button.tox-button--secondary.tox-button--icon .tox-icon svg {
-    fill: #ffffff !important;
+  fill: #ffffff !important;
 }
 
 .tox .tox-selectfield select:focus,
 .tox .tox-textarea:focus,
 .tox .tox-textfield:focus {
-    border-color: #666666;
+  border-color: #666666;
 }
 
 .tox .tox-label,
 .tox .tox-toolbar-label {
-    color: #222222;
+  color: #222222;
 }
 
 .tox .tox-dialog__footer {
-    border-top: none;
-    padding: 20px 16px;
+  border-top: none;
+  padding: 20px 16px;
 }

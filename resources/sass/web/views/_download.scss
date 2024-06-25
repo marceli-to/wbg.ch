@@ -1,0 +1,43 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: views/download
+ * -----------------------------------------------------------------------------
+ */
+
+ .download {
+  align-items: flex-start;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 300px;
+  padding: 30px 30px 20px 30px;
+  position: relative;
+  min-width: 500px;
+}
+
+.download h1 {
+  @include font-size($fs-sm);
+  color: #000000;
+}
+
+.download h2 {
+  margin-bottom: 8px;
+}
+.download a {
+  @include font-size($fs-lg);
+  @include font-light();
+  color: $color--black;
+  text-decoration: none;
+}
+
+.download footer {
+  color: $color--red;
+  @include font-size($fs-sm);
+  text-transform: uppercase;
+   
+  a {
+    color: $color--red;
+    text-decoration: none;
+  }
+}

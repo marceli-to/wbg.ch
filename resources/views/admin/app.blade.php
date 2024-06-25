@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>wbg.ch - Administration</title>
 <link href="{{ mix('assets/admin/css/app.css') }}" type="text/css" rel="stylesheet" />
+<script src="{{ asset('assets/admin/js/tinymce/tinymce.min.js') }}"></script>
 <meta name="csrf-token" value="{{ csrf_token() }}" />
 </head>
 <body>
