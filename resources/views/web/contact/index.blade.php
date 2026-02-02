@@ -24,13 +24,13 @@
       </a>
     </figure>
   </div>
-  <div class="jobs">
+  {{-- <div class="jobs">
     @foreach($jobs as $j)
       <article>
         <h2>{{$j->title}}</h2>
         {!! $j->text !!}
       </article>
     @endforeach
-  </div>
+  </div> --}}
 </section>
 @endsection

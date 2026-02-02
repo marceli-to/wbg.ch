@@ -6,35 +6,44 @@
 
 .jobs {
   article {
-    border-top: 1px solid $color--grey;
-    padding-top: $space-md;
-    padding-bottom: $space-xl;
+    border-top: 0 !important;
+    padding-top: $space-sm;
+    padding-bottom: 0 !important;
 
-    &:first-of-type {
-      border-top: none;
-      padding-top: 0;
-      @include bp-sm() {
-        border-top: 1px solid $color--grey;
-        padding-top: $space-md;
+    @include bp-md() {
+      padding-top: 0 !important;
+    }
+
+
+    br.hide-on-sm {
+      display: none;
+      @include bp-md() {
+        display: block;
+      }
+    }
+
+    span.hide-on-md {
+      display: inline;
+      @include bp-md() {
+        display: none;
       }
     }
 
     h2 {
-      @include font-bold();
-      margin-bottom: $space-md;
-      @include bp-sm() {
-        margin-bottom: $space-sm;
-      }
+      @include font-light();
+      @include font-size($fs-lg);
+      margin-bottom: $space-lg;
+    }
+
+    p {
+      margin-bottom: $space-sm;
     }
 
     a {
       color: $color--black;
       text-decoration: none;
     }
-    
-    p {
-      margin-bottom: 0 !important;
-    }
+
 
     ul, li {
       margin: 0;

@@ -58,13 +58,13 @@
             </a>
           </li>
 
-          {{-- <li>
+          <li>
             <a href="{{ route('jobs') }}"
                 title="Jobs"
                 class="{{ request()->routeIs('jobs') ? 'is-active' : ''}}">
                 Jobs
             </a>
-          </li> --}}
+          </li>
         </ul>
       </nav>
     </div>

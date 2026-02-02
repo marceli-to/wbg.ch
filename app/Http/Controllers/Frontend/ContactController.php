@@ -25,11 +25,11 @@ class ContactController extends Controller
   public function index()
   {
 
-    $jobs = $this->job->published()->orderBy('order', 'ASC')->get();
+    // $jobs = $this->job->published()->orderBy('order', 'ASC')->get();
 
     return 
       view($this->view_path . '.index')
-      ->withJobs($jobs)
+      //->withJobs($jobs)
       ->withMenu($this->menuService->boot())
       ->withPageTitle('Kontakt');
   }
