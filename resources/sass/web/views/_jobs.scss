@@ -30,13 +30,19 @@
     }
 
     h2 {
-      @include font-light();
+      @include font-regular();
       @include font-size($fs-lg);
       margin-bottom: $space-lg;
     }
 
     p {
+      @include font-light();
+      @include font-size($fs-lg);
       margin-bottom: $space-sm;
+    }
+
+    p:first-child {
+      margin-bottom: 0 !important;
     }
 
     a {
