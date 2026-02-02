@@ -57,7 +57,6 @@
                Team
             </a>
           </li>
-
           <li>
             <a href="{{ route('jobs') }}"
                 title="Jobs"
@@ -137,11 +136,11 @@
         <a href="{{ route('team') }}" class="{{ request()->routeIs('team') ? 'is-active' : '' }}">Team</a>
       </li>
     </ul>
-    {{-- <ul class="hide-md">
+    <ul class="hide-md">
       <li>
         <a href="{{ route('jobs') }}" class="{{ request()->routeIs('jobs') ? 'is-active' : '' }}">Jobs</a>
       </li>
-    </ul> --}}
+    </ul>
     <ul class="hide-md">
       <li>
         <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'is-active' : '' }}">Kontakt</a>
