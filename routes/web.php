@@ -42,7 +42,7 @@ Route::get('/kontakt', 'Frontend\ContactController@index')->name('contact');
 Route::get('/newsletter/send', 'Frontend\NewsletterController@send')->name('newsletter');
 
 // Jobs
-Route::get('/jobs', 'Frontend\JobsController@index')->name('jobs');
+// Route::get('/jobs', 'Frontend\JobsController@index')->name('jobs');
 
 /**
  * Image routes
