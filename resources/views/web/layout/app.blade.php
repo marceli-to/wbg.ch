@@ -57,13 +57,6 @@
                Team
             </a>
           </li>
-          {{-- <li>
-            <a href="{{ route('jobs') }}"
-                title="Jobs"
-                class="{{ request()->routeIs('jobs') ? 'is-active' : ''}}">
-                Jobs
-            </a>
-          </li> --}}
         </ul>
       </nav>
     </div>
