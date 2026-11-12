@@ -31,6 +31,7 @@ class HomeController extends Controller
             'layout',
             'elements' => fn ($q) => $q->where('environment', 'production')->orderBy('position'),
             'elements.projectimage.project',
+            'elements.projectimage.client',
             'elements.news.competence',
         ])
             ->orderBy('order')

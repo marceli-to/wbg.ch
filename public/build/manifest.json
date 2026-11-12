@@ -383,7 +383,7 @@
     ]
   },
   "resources/js/web/app.js": {
-    "file": "assets/app-DPBvrMTj.js",
+    "file": "assets/app-Bvyz0sDi.js",
     "name": "app",
     "src": "resources/js/web/app.js",
     "isEntry": true,
@@ -401,7 +401,7 @@
     "isEntry": true
   },
   "resources/sass/web/app.scss": {
-    "file": "assets/app-DcZs5g6J.css",
+    "file": "assets/app-CMtAVOtm.css",
     "name": "app",
     "names": [
       "app.css"

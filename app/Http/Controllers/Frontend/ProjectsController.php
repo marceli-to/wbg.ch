@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Helpers\AppHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Grid;
@@ -9,6 +10,7 @@ use App\Models\Project;
 use App\Models\ProjectImage;
 use App\Services\MenuService;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class ProjectsController extends Controller
@@ -53,6 +55,7 @@ class ProjectsController extends Controller
             'metaDescription' => config('seo.descriptions.'.strtolower($category->name)),
             'isPanoptikum' => false,
             'projects' => $projects,
+            'canonical' => AppHelper::canonical('projekte/'.$category->id.'/'.Str::slug($category->name)),
         ];
 
         if ($categoryId == Category::PANOPTIKUM_ID) {
@@ -97,6 +100,7 @@ class ProjectsController extends Controller
             ])->all(),
             'metaDescription' => config('seo.descriptions.'.strtolower($category->name).'_'.strtolower(Category::SUBCATEGORIES[$subcategory])),
             'pageTitle' => $category->name,
+            'canonical' => AppHelper::canonical('projekte/'.$category->id.'/'.Str::slug($category->name).'/'.$subcategory.'/'.Str::slug(Category::SUBCATEGORIES[$subcategory])),
         ]);
     }
 
@@ -130,6 +134,7 @@ class ProjectsController extends Controller
             'browse' => $this->getProjectNav($project->id),
             'pageTitle' => $project->category->name,
             'ogImage' => $ogImage,
+            'canonical' => AppHelper::canonical('projekt/'.AppHelper::slug($project)),
         ]);
     }
 

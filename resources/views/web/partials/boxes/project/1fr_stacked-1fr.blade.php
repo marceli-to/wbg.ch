@@ -22,7 +22,7 @@
             {{-- <picture>
               <source media="(min-width: 1024px)" data-srcset="{!! ImageHelper::get($elements[1]->image->name, 'sm') !!}" srcset="/assets/img/preview.png">        
               <source media="(min-width: 720px)" data-srcset="{!! ImageHelper::get($elements[1]->image->name, 'sm') !!}" srcset="/assets/img/preview.png">
-              <img src="/assets/img/preview.png" data-src="{!! ImageHelper::get($elements[1]->image->name, 'sm') !!}" alt="{{$elements[1]->image->caption}}" title="{{$elements[1]->image->caption}}"  height="430" width="280" class="is-responsive lazyload">
+              <img src="/assets/img/preview.png" data-src="{!! ImageHelper::get($elements[1]->image->name, 'sm') !!}" alt="{{ $elements[1]->image->caption ?: $elements[1]->image->client?->name ?: $elements[1]->image->project?->name }}" title="{{$elements[1]->image->caption}}"  height="430" width="280" class="is-responsive lazyload">
             </picture> --}}
             @include('web.partials.boxes.teaser-project', array('teaser' => $elements[1]->image, 'image_attribute' => 'height="430" width="280"', 'image_size' => 'md'))
           @endif

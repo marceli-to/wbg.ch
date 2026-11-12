@@ -48,16 +48,27 @@ var Menu = (function() {
         $(selectors.body).on('click', selectors.btnSub, function(){
             _toggleSub($(this));
         });
+
+        // Elements with role="button" are expected to react to the space key
+        $(selectors.body).on('keydown', selectors.btnMenu + ',' + selectors.btnSub, function(e){
+            if (e.key === ' ') {
+                e.preventDefault();
+                $(this).trigger('click');
+            }
+        });
     };
 
     var _toggle = function() {
         $(selectors.menu).toggleClass(classes.visible);
         $(selectors.btnMenu).toggleClass(classes.active);
         $(selectors.html).toggleClass(classes.hasMenu);
+        $(selectors.btnMenu).attr('aria-expanded', $(selectors.menu).hasClass(classes.visible) ? 'true' : 'false');
     };
 
     var _toggleSub = function(btn) {
-        $(btn).next('ul').toggle();
+        var list = $(btn).next('ul');
+        list.toggle();
+        $(btn).attr('aria-expanded', list.is(':visible') ? 'true' : 'false');
     };
 
 

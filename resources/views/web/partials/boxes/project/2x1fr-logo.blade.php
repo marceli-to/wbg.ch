@@ -9,10 +9,10 @@
           @if ($elements[0]->image)
             @if ($elements[0]->image->url)
               <a href="{{$elements[0]->image->url}}" {!! AppHelper::linkTarget($elements[0]->image->url) !!} title="{{$elements[0]->image->caption}}">
-                <img class="lazyload" data-src="{!! ImageHelper::get($elements[0]->image->name, 'md') !!}" height="280" width="430" alt="{{$elements[0]->image->caption}}">
+                <img class="lazyload" data-src="{!! ImageHelper::get($elements[0]->image->name, 'md') !!}" height="280" width="430" alt="{{ $elements[0]->image->caption ?: $elements[0]->image->client?->name ?: $elements[0]->image->project?->name }}">
               </a>
             @else
-              <img class="lazyload" data-src="{!! ImageHelper::get($elements[0]->image->name, 'md') !!}" height="280" width="430" alt="{{$elements[0]->image->caption}}">
+              <img class="lazyload" data-src="{!! ImageHelper::get($elements[0]->image->name, 'md') !!}" height="280" width="430" alt="{{ $elements[0]->image->caption ?: $elements[0]->image->client?->name ?: $elements[0]->image->project?->name }}">
             @endif
           @endif
         </div>
@@ -29,10 +29,10 @@
           @if ($elements[1]->image)
             @if ($elements[1]->image->url)
               <a href="{{$elements[1]->image->url}}" {!! AppHelper::linkTarget($elements[1]->image->url) !!} title="{{$elements[1]->image->caption}}">
-                <img class="lazyload" data-src="{!! ImageHelper::get($elements[1]->image->name, 'md') !!}" height="280" width="430" alt="{{$elements[1]->image->caption}}">
+                <img class="lazyload" data-src="{!! ImageHelper::get($elements[1]->image->name, 'md') !!}" height="280" width="430" alt="{{ $elements[1]->image->caption ?: $elements[1]->image->client?->name ?: $elements[1]->image->project?->name }}">
               </a>
             @else
-              <img class="lazyload" data-src="{!! ImageHelper::get($elements[1]->image->name, 'md') !!}" height="280" width="430" alt="{{$elements[1]->image->caption}}">
+              <img class="lazyload" data-src="{!! ImageHelper::get($elements[1]->image->name, 'md') !!}" height="280" width="430" alt="{{ $elements[1]->image->caption ?: $elements[1]->image->client?->name ?: $elements[1]->image->project?->name }}">
             @endif
           @endif
         </div>

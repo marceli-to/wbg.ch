@@ -4,6 +4,7 @@ use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProfileController;
 use App\Http\Controllers\Frontend\ProjectsController;
+use App\Http\Controllers\Frontend\SeoController;
 use App\Http\Controllers\Frontend\TeamController;
 use App\Http\Controllers\MediaController;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,10 @@ Route::get('agb', [ProfileController::class, 'toc'])->name('toc');
 // Team & contact
 Route::get('team', [TeamController::class, 'index'])->name('team');
 Route::get('kontakt', [ContactController::class, 'index'])->name('contact');
+
+// Machine readable
+Route::get('sitemap.xml', [SeoController::class, 'sitemap']);
+Route::get('llms.txt', [SeoController::class, 'llms']);
 
 /*
 |--------------------------------------------------------------------------

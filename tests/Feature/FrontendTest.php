@@ -101,6 +101,32 @@ class FrontendTest extends TestCase
         $this->get("/projekt/{$a->id}/alpha")->assertOk()->assertDontSee("/projekt/{$draft->id}/", false);
     }
 
+    public function test_sitemap_and_llms_txt_list_published_projects_only(): void
+    {
+        $category = Category::create(['name' => 'Print', 'publish' => 1, 'order' => 1]);
+        $this->project(['name' => 'Öffentlich', 'category_id' => $category->id, 'publish' => 1, 'order' => 1, 'is_brands' => 0]);
+        $this->project(['name' => 'Entwurf', 'category_id' => $category->id, 'publish' => 0, 'order' => 2, 'is_brands' => 0]);
+
+        $this->get('/sitemap.xml')
+            ->assertOk()
+            ->assertHeader('Content-Type', 'application/xml; charset=UTF-8')
+            ->assertSee('/projekt/', false)
+            ->assertSee('oeffentlich', false)
+            ->assertDontSee('entwurf', false);
+
+        $this->get('/llms.txt')->assertOk()->assertSee('Öffentlich')->assertDontSee('Entwurf');
+    }
+
+    public function test_project_page_has_canonical_url_with_correct_slug(): void
+    {
+        $category = Category::create(['name' => 'Print', 'publish' => 1, 'order' => 1]);
+        $project = $this->project(['name' => 'Haus Capitol', 'category_id' => $category->id, 'publish' => 1, 'order' => 1, 'is_brands' => 0]);
+
+        $this->get("/projekt/{$project->id}/irgendwas")
+            ->assertOk()
+            ->assertSee('<link rel="canonical" href="'.config('app.url').'/projekt/'.$project->id.'/haus-capitol">', false);
+    }
+
     /**
      * Create a project; category and client are mandatory in the schema.
      */

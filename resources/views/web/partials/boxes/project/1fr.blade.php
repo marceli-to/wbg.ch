@@ -10,7 +10,7 @@
             {{-- <picture>
               <source media="(min-width: 1024px)" data-srcset="{!! ImageHelper::get($elements[0]->image->name, 'lg') !!}" srcset="/assets/img/preview.png">        
               <source media="(min-width: 720px)" data-srcset="{!! ImageHelper::get($elements[0]->image->name, 'md') !!}" srcset="/assets/img/preview.png">
-              <img src="/assets/img/preview.png" data-src="{!! ImageHelper::get($elements[0]->image->name, 'sm') !!}" alt="{{$elements[0]->image->caption}}" title="{{$elements[0]->image->caption}}"  height="430" width="280" class="is-responsive lazyload">
+              <img src="/assets/img/preview.png" data-src="{!! ImageHelper::get($elements[0]->image->name, 'sm') !!}" alt="{{ $elements[0]->image->caption ?: $elements[0]->image->client?->name ?: $elements[0]->image->project?->name }}" title="{{$elements[0]->image->caption}}"  height="430" width="280" class="is-responsive lazyload">
             </picture> --}}
             @include('web.partials.boxes.teaser-project', array('teaser' => $elements[0]->image, 'image_attribute' => 'height="560" width="860"', 'image_size' => 'lg'))
           @endif

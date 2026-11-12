@@ -32,20 +32,20 @@
             <div class="competence__media">
               @if ($competence->id == 4)
                 <figure class="media-digital-online">
-                  <div><img src="/assets/media/WBG_Digital-und-Online.svg" height="200" width="200" title="Digital und Online"></div>
+                  <div><img src="/assets/media/WBG_Digital-und-Online.svg" height="200" width="200" title="Digital und Online" alt="Digital und Online"></div>
                 </figure>
               @else
                 @foreach($competence->media as $media)
                   @if ($loop->count > 1)
                     @if($loop->first)
                       <a href="{!! ImageHelper::get($media->name, 'lg') !!}" title="{{ $media->caption }}" data-fancybox="gallery">
-                        <img src="{!! ImageHelper::get($media->name, 'lg') !!}" height="560" width="430" alt="{{ $media->caption }}">
+                        <img src="{!! ImageHelper::get($media->name, 'lg') !!}" height="560" width="430" alt="{{ $media->caption ?: $competence->title }}">
                       </a>
                     @else
                       <a href="{!! ImageHelper::get($media->name, 'lg') !!}" data-fancybox="gallery"></a>
                     @endif
                   @else
-                    <img src="{!! ImageHelper::get($media->name, 'lg') !!}" height="560" width="430" alt="{{ $media->caption }}">
+                    <img src="{!! ImageHelper::get($media->name, 'lg') !!}" height="560" width="430" alt="{{ $media->caption ?: $competence->title }}">
                   @endif
                 @endforeach
               @endif

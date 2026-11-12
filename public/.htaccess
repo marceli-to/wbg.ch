@@ -5,6 +5,10 @@
 
     RewriteEngine On
 
+    # Canonical host: redirect www.wbg.ch to wbg.ch
+    RewriteCond %{HTTP_HOST} ^www\.wbg\.ch$ [NC]
+    RewriteRule ^(.*)$ https://wbg.ch/$1 [R=301,L]
+
     # Never serve scripts or markup from the user upload storage
     RewriteRule ^storage/.*\.(php[0-9]?|phtml|phar|pht|cgi|pl|py|sh|html?|svg|js)$ - [F,L,NC]
 

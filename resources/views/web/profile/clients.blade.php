@@ -14,23 +14,21 @@
                 <a 
                   href="/projekte/{{ $client->project->category_id }}/panoptikum/{{ $client->project->subcategory_id }}/-/!#{{\Str::slug($client->project->name)}}"
                   title="{{$client->project->name}}"
-                  rel="canonical"
                   class="hide-below-sm">
                   {{$client->name}}@if ($client->location), {{$client->location}} @endif
                 </a>
                 <a 
                   href="/projekte/{{ $client->project->category_id }}/panoptikum!#{{\Str::slug($client->project->name)}}"
                   title="{{$client->project->name}}"
-                  rel="canonical"
                   class="hide-above-sm">
                   {{$client->name}}@if ($client->location), {{$client->location}} @endif
                 </a>
               @elseif ($client->project->is_brands)
-                <a href="/projekt/{!! AppHelper::slug($client->project) !!}/!#{{\Str::slug($client->name)}}" title="{{$client->project->name}}" rel="canonical">
+                <a href="/projekt/{!! AppHelper::slug($client->project) !!}/!#{{\Str::slug($client->name)}}" title="{{$client->project->name}}">
                   {{$client->name}}@if ($client->location), {{$client->location}} @endif
                 </a>
               @else
-                <a href="/projekt/{!! AppHelper::slug($client->project) !!}" title="{{$client->project->name}}" rel="canonical">
+                <a href="/projekt/{!! AppHelper::slug($client->project) !!}" title="{{$client->project->name}}">
                   {{$client->name}}@if ($client->location), {{$client->location}} @endif
                 </a>
               @endif
