@@ -91,6 +91,16 @@ class FrontendTest extends TestCase
         $this->get('/agb')->assertSee('Zweites Projekt');
     }
 
+    public function test_relations_to_unpublished_projects_are_hidden(): void
+    {
+        $category = Category::create(['name' => 'Print', 'publish' => 1, 'order' => 1]);
+        $a = $this->project(['name' => 'Alpha', 'category_id' => $category->id, 'publish' => 1, 'order' => 1, 'is_brands' => 0]);
+        $draft = $this->project(['name' => 'Entwurf', 'category_id' => $category->id, 'publish' => 0, 'order' => 2, 'is_brands' => 0]);
+        $a->relations()->create(['related_project_id' => $draft->id]);
+
+        $this->get("/projekt/{$a->id}/alpha")->assertOk()->assertDontSee("/projekt/{$draft->id}/", false);
+    }
+
     /**
      * Create a project; category and client are mandatory in the schema.
      */

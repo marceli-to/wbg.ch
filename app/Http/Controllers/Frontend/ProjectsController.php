@@ -109,6 +109,8 @@ class ProjectsController extends Controller
             ->with([
                 'client',
                 'category',
+                // Only link related projects that are publicly visible
+                'relations' => fn ($q) => $q->whereHas('related', fn ($q) => $q->published()),
                 'relations.related.category',
                 'relations.related.images',
                 'relations.related.previewRelatedImages',

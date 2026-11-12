@@ -38,7 +38,10 @@ class ProfileController extends Controller
 
     public function clients(): View
     {
-        $clients = Client::published()->with('project')->orderBy('name')->get();
+        $clients = Client::published()
+            ->with(['project' => fn ($q) => $q->published()])
+            ->orderBy('name')
+            ->get();
 
         $clientList = [];
         foreach ($clients as $c) {
