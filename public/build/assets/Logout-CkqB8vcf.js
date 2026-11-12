@@ -1,0 +1,1 @@
+import{P as e,_ as t,j as n}from"./api-BR0qpcim.js";import{r,t as i}from"./main-DZcZBthr.js";var a={__name:`Logout`,setup(a){let o=i(),s=r();return n(async()=>{await o.logout(),s.replace({name:`login`})}),(n,r)=>(e(),t(`div`))}};export{a as default};

@@ -1,30 +1,21 @@
 <template>
   <div>
-    <div class="form-row" v-if="asset == null">
-      <label for="document">{{labelNew}}</label>
-      <vue-dropzone
-        ref="dropzone"
-        id="dropzone"
-        :options="dropzoneConfig"
-        @vdropzone-complete="afterUpload"
-      ></vue-dropzone>
-      <span class="bubble is-restriction">{{labelRestrictions}}</span>
+    <div class="form-row" v-if="!modelValue">
+      <label>{{ labelNew }}</label>
+      <file-uploader @uploaded="(file) => emit('update:modelValue', file.name)" />
+      <span class="bubble is-restriction">{{ labelRestrictions }}</span>
     </div>
-    <div class="form-row" v-if="asset">
-      <label>{{labelExisting}}</label>
+    <div class="form-row" v-else>
+      <label>{{ labelExisting }}</label>
       <div class="dropzone-existing-assets">
         <div>
-          <figure :class="[assetType == 'image' ? 'is-image' : '', 'dz-existing-asset']">
-            <a :href="getAssetUri(asset)" target="_blank" class="dz-file-preview">
-              <img :src="getAssetSource(asset)" height="300" width="300">
+          <figure class="is-image dz-existing-asset">
+            <a :href="media.size(modelValue, 'sm')" target="_blank" class="dz-file-preview">
+              <img :src="media.thumbnail(modelValue)" height="300" width="300" alt="" />
             </a>
             <div class="dz-toolbar">
-              <a :href="getAssetUri(asset)" target="_blank" class="icon-external-link icon-mini"></a>
-              <a
-                href="javascript:;"
-                class="icon-trash icon-mini"
-                @click.prevent="deleteUpload(asset,$event)"
-              ></a>
+              <a :href="media.size(modelValue, 'sm')" target="_blank" class="icon-external-link icon-mini" title="Öffnen"></a>
+              <a href="#" class="icon-trash icon-mini" title="Löschen" @click.prevent="remove($event)"></a>
             </div>
           </figure>
         </div>
@@ -32,57 +23,28 @@
     </div>
   </div>
 </template>
-<script>
-import vue2Dropzone from "vue2-dropzone";
-import dropzoneConfig from "@/config/dropzoneconfig.js";
+<script setup>
+import FileUploader from '@/components/ui/FileUploader.vue';
+import api from '@/lib/api';
+import { confirmDelete, media, withLoading } from '@/lib/helpers';
 
-export default {
-  components: {
-    vueDropzone: vue2Dropzone
-  },
+/**
+ * Single image (e.g. team portrait). v-model is the file name.
+ */
+const props = defineProps({
+  modelValue: { type: String, default: null },
+  deleteUrl: { type: Function, required: true }, // (name) => endpoint
+  labelNew: { type: String, default: 'Bild hochladen' },
+  labelExisting: { type: String, default: 'Vorhandenes Bild' },
+  labelRestrictions: { type: String, default: 'jpg, png | max. 20 MB' },
+});
+const emit = defineEmits(['update:modelValue']);
 
-  props: {
-    labelNew: String,
-    labelExisting: String,
-    labelRestrictions: String,
-    asset: String,
-    assetType: String,
-    acceptedFiles: String,
-    maxFiles: Number,
-    maxFilesize: Number,
-    uploadUrl: String
-  },
-
-  data() {
-    return {
-      dropzoneConfig: dropzoneConfig
-    };
-  },
-
-  created() {
-    this.dropzoneConfig.url = this.uploadUrl;
-    this.dropzoneConfig.acceptedFiles = this.acceptedFiles;
-    this.dropzoneConfig.maxFiles = this.maxFiles;
-    this.dropzoneConfig.maxFilesize = this.maxFilesize;
-  },
-
-  methods: {
-    afterUpload(asset) {
-      this.$refs.dropzone.removeFile(asset);
-      this.$parent.afterUpload(asset);
-    },
-
-    deleteUpload(asset,event) {
-      this.$parent.deleteUpload(asset,event);
-    },
-
-    getAssetUri(asset) {
-      return `/media/${asset}/sm`;
-    },
-
-    getAssetSource(asset) {
-      return `/media/thumbnail/${asset}`;
-    }
-  }
-};
+function remove(event) {
+  if (!confirmDelete()) return;
+  return withLoading(event, async () => {
+    await api.delete(props.deleteUrl(props.modelValue));
+    emit('update:modelValue', null);
+  });
+}
 </script>

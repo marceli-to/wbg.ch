@@ -67,6 +67,8 @@
 
 @import 'components/overlay/global';
 @import 'components/images';
+@import 'components/uploader';
+@import 'components/editor';
 @import 'components/tables/global';
 @import 'components/pagination/global';
 
@@ -114,3 +116,6 @@
 
 // Vendor - Draggable
 @import 'vendor/draggable';
+
+// Vendor - Cropper
+@import 'vendor/cropper';

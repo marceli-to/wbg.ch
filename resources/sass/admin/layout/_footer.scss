@@ -70,7 +70,7 @@ footer.form-footer {
 
         .icon-delete {
             @include background-default();
-            background-image: url($url-icons +'x-circle.svg');
+            background-image: url($url-icons + 'x-circle.svg');
             background-size: 24px auto;
             background-position: center center;
             height: 46px;

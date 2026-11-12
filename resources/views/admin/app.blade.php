@@ -3,15 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
 <title>wbg.ch - Administration</title>
-<link href="{{ mix('assets/admin/css/app.css') }}" type="text/css" rel="stylesheet" />
-<script src="{{ asset('assets/admin/js/tinymce/tinymce.min.js') }}"></script>
-<meta name="csrf-token" value="{{ csrf_token() }}" />
+@vite(['resources/sass/admin/app.scss', 'resources/js/admin/main.js'])
 </head>
 <body>
-<div id="app">
-    <app-component></app-component>
-</div>
-<script src="{{ mix('assets/admin/js/app.js') }}" type="text/javascript"></script>
+<div id="app"></div>
 </body>
 </html>

@@ -1,0 +1,1 @@
+import{L as e,P as t,_ as n,m as r}from"./api-BR0qpcim.js";var i=(e,t)=>{let n=e.__vccOpts||e;for(let[e,r]of t)n[e]=r;return n},a={},o={class:`container`},s={class:`content`,role:`main`};function c(i,a){return t(),n(`div`,o,[r(`main`,s,[r(`div`,null,[e(i.$slots,`default`)])])])}var l=i(a,[[`render`,c]]);export{l as t};

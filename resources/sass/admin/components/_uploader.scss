@@ -1,0 +1,66 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/uploader (components/ui/FileUploader.vue)
+ * -----------------------------------------------------------------------------
+ */
+
+.uploader {
+    .dropzone {
+        min-height: 120px;
+        outline: none;
+
+        &:focus-visible {
+            box-shadow: 0 0 0 3px rgba($color--dark, .2);
+        }
+
+        &.dz-drag-hover {
+            background-color: $color--light-grey;
+        }
+    }
+}
+
+.uploader-queue {
+    list-style: none;
+    margin: 10px 0 0 0;
+    padding: 0;
+
+    li {
+        align-items: center;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 2fr auto;
+        grid-gap: 15px;
+        @include font-size($fs-xs);
+        padding: 6px 0;
+
+        &.has-error {
+            color: $color--danger;
+        }
+    }
+
+    &__name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__progress {
+        background-color: $color--light-grey;
+        display: block;
+        height: 6px;
+        position: relative;
+
+        span {
+            background-color: $color--dark;
+            display: block;
+            height: 100%;
+            transition: width .1s linear;
+        }
+    }
+
+    &__remove {
+        color: $color--danger;
+        font-size: 20px;
+        line-height: 1;
+        text-decoration: none;
+    }
+}
