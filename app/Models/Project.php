@@ -1,10 +1,20 @@
 <?php
 namespace App\Models;
 
+use App\Services\MenuService;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+    /**
+     * The navigation menu is cached; rebuild it whenever this model changes.
+     */
+    protected static function booted(): void
+    {
+        static::saved(fn () => MenuService::flush());
+        static::deleted(fn () => MenuService::flush());
+    }
+
     protected $table = 'projects';
 
     protected $fillable = [
@@ -88,6 +98,6 @@ class Project extends Model
 
     public function scopePublished($query)
     {
-        return $query->where('publish', '=', '1');
+        return $query->where($query->qualifyColumn('publish'), '=', 1);
     }
 }

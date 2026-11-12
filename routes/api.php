@@ -1,191 +1,138 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ClientController;
+use App\Http\Controllers\Admin\CompetenceController;
+use App\Http\Controllers\Admin\CompetenceMediaController;
+use App\Http\Controllers\Admin\ContentController;
+use App\Http\Controllers\Admin\GridController;
+use App\Http\Controllers\Admin\GridElementController;
+use App\Http\Controllers\Admin\HomeGridController;
+use App\Http\Controllers\Admin\HomeGridElementController;
+use App\Http\Controllers\Admin\JobController;
+use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\ProjectImageController;
+use App\Http\Controllers\Admin\ProjectRelationController;
+use App\Http\Controllers\Admin\TeamController;
+use App\Http\Controllers\Admin\UploadController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes
+| Admin API
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| Loaded with the "web" middleware group and the /api prefix (see
+| bootstrap/app.php): session cookie auth + CSRF (X-XSRF-TOKEN header).
+|
+| Conventions
+|   GET    list            -> JSON array
+|   GET    show            -> JSON object
+|   POST   store           -> created object (201)
+|   PUT    update          -> updated object
+|   DELETE destroy         -> 204
+|   PATCH  …/{id}/{flag}   -> {"value": 0|1}   (toggles a boolean flag)
+|   POST   …/{id}/clone    -> cloned object (201)
+|   PUT    …/order         -> 204, body: {"items": [{"id": 1, "order": 0}, …]}
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('login', [AuthController::class, 'login'])->middleware('throttle:login');
+
+Route::middleware('auth')->group(function () {
+
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::get('user', [AuthController::class, 'user']);
+
+    // Uploads
+    Route::post('uploads/image', [UploadController::class, 'image']);
+    Route::post('uploads/document', [UploadController::class, 'document']);
+
+    // Team
+    Route::put('team/order', [TeamController::class, 'order']);
+    Route::delete('team/media/{filename}', [TeamController::class, 'destroyMedia'])->where('filename', '[A-Za-z0-9._-]+');
+    Route::patch('team/{team}/publish', [TeamController::class, 'togglePublish']);
+    Route::post('team/{team}/clone', [TeamController::class, 'clone']);
+    Route::apiResource('team', TeamController::class)->parameters(['team' => 'team']);
+
+    // Clients
+    Route::patch('clients/{client}/publish', [ClientController::class, 'togglePublish']);
+    Route::post('clients/{client}/clone', [ClientController::class, 'clone']);
+    Route::apiResource('clients', ClientController::class);
+
+    // Categories
+    Route::get('categories/subcategories', [CategoryController::class, 'subcategories']);
+    Route::put('categories/order', [CategoryController::class, 'order']);
+    Route::patch('categories/{category}/publish', [CategoryController::class, 'togglePublish']);
+    Route::post('categories/{category}/clone', [CategoryController::class, 'clone']);
+    Route::apiResource('categories', CategoryController::class);
+
+    // Competences
+    Route::put('competences/order', [CompetenceController::class, 'order']);
+    Route::patch('competences/{competence}/publish', [CompetenceController::class, 'togglePublish']);
+    Route::post('competences/{competence}/clone', [CompetenceController::class, 'clone']);
+    Route::apiResource('competences', CompetenceController::class);
+    Route::delete('competence-media/{filename}', [CompetenceMediaController::class, 'destroy'])->where('filename', '[A-Za-z0-9._-]+');
+    Route::patch('competence-media/{media}/publish', [CompetenceMediaController::class, 'togglePublish']);
+
+    // Projects
+    Route::put('projects/order', [ProjectController::class, 'order']);
+    Route::patch('projects/{project}/publish', [ProjectController::class, 'togglePublish']);
+    Route::post('projects/{project}/clone', [ProjectController::class, 'clone']);
+    Route::apiResource('projects', ProjectController::class);
+
+    // Project relations
+    Route::get('projects/{project}/relations', [ProjectRelationController::class, 'index']);
+    Route::post('projects/{project}/relations', [ProjectRelationController::class, 'store']);
+    Route::delete('project-relations/{relation}', [ProjectRelationController::class, 'destroy']);
+
+    // Project images
+    Route::get('projects/{project}/images', [ProjectImageController::class, 'index']);
+    Route::put('project-images/order', [ProjectImageController::class, 'order']);
+    Route::post('project-images/crop', [ProjectImageController::class, 'crop']);
+    Route::delete('project-images/cropped/{filename}', [ProjectImageController::class, 'destroyCropped'])->where('filename', '[A-Za-z0-9._-]+');
+    Route::delete('project-images/{filename}', [ProjectImageController::class, 'destroy'])->where('filename', '[A-Za-z0-9._-]+');
+    Route::patch('project-images/{image}/{flag}', [ProjectImageController::class, 'toggle'])->whereIn('flag', ['publish', 'is_preview', 'is_preview_related']);
+
+    // Project grids
+    Route::get('grid-layouts', [GridController::class, 'layouts']);
+    Route::get('projects/{project}/grids', [GridController::class, 'index']);
+    Route::post('projects/{project}/grids', [GridController::class, 'store']);
+    Route::put('grids/order', [GridController::class, 'order']);
+    Route::delete('grids/{grid}', [GridController::class, 'destroy']);
+    Route::get('grids/{grid}/elements', [GridElementController::class, 'index']);
+    Route::post('grids/{grid}/elements', [GridElementController::class, 'store']);
+    Route::delete('grid-elements/{element}', [GridElementController::class, 'destroy']);
+
+    // Home grids
+    Route::get('home-grid-layouts', [HomeGridController::class, 'layouts']);
+    Route::get('home-grids', [HomeGridController::class, 'index']);
+    Route::post('home-grids', [HomeGridController::class, 'store']);
+    Route::put('home-grids/order', [HomeGridController::class, 'order']);
+    Route::post('home-grids/deploy', [HomeGridController::class, 'deploy']);
+    Route::post('home-grids/reset', [HomeGridController::class, 'reset']);
+    Route::delete('home-grids/{grid}', [HomeGridController::class, 'destroy']);
+    Route::get('home-grids/{grid}/elements', [HomeGridElementController::class, 'index']);
+    Route::post('home-grids/{grid}/elements', [HomeGridElementController::class, 'store']);
+    Route::delete('home-grid-elements/{element}', [HomeGridElementController::class, 'destroy']);
+
+    // News
+    Route::patch('news/{news}/publish', [NewsController::class, 'togglePublish']);
+    Route::post('news/{news}/clone', [NewsController::class, 'clone']);
+    Route::apiResource('news', NewsController::class)->parameters(['news' => 'news']);
+
+    // Jobs
+    Route::put('jobs/order', [JobController::class, 'order']);
+    Route::patch('jobs/{job}/publish', [JobController::class, 'togglePublish']);
+    Route::post('jobs/{job}/clone', [JobController::class, 'clone']);
+    Route::apiResource('jobs', JobController::class);
+
+    // Static content
+    Route::get('contents/keys', [ContentController::class, 'keys']);
+    Route::patch('contents/{content}/publish', [ContentController::class, 'togglePublish']);
+    Route::apiResource('contents', ContentController::class);
 });
 
-Route::middleware('auth:api')->group(function() {
-    
-    /**
-     * Team routes
-     */
-
-    Route::get('team/get', 'Backend\Team\TeamController@get');
-    Route::post('team/create', 'Backend\Team\TeamController@store');
-    Route::get('team/edit/{id}', 'Backend\Team\TeamController@edit');
-    Route::post('team/update/{id}', 'Backend\Team\TeamController@update');
-    Route::get('team/clone/{id}', 'Backend\Team\TeamController@clone');
-    Route::get('team/status/{id}', 'Backend\Team\TeamController@status');
-    Route::delete('team/destroy/{id}', 'Backend\Team\TeamController@destroy');
-    Route::post('team/order', 'Backend\Team\TeamController@order');
-    Route::delete('team/delete/file/{file}', 'Backend\Team\TeamController@unlink');
-
-    /**
-     * Client routes
-     */
-
-    Route::get('clients/get', 'Backend\Client\ClientController@get');
-    Route::post('client/create', 'Backend\Client\ClientController@store');
-    Route::get('client/edit/{id}', 'Backend\Client\ClientController@edit');
-    Route::post('client/update/{id}', 'Backend\Client\ClientController@update');
-    Route::get('client/clone/{id}', 'Backend\Client\ClientController@clone');
-    Route::get('client/status/{id}', 'Backend\Client\ClientController@status');
-    Route::delete('client/destroy/{id}', 'Backend\Client\ClientController@destroy');
-
-    /**
-     * Category routes
-     */
-
-    Route::get('categories/get', 'Backend\Category\CategoryController@get');
-    Route::get('subcategories/get', 'Backend\Category\CategoryController@getSubcategories');
-    Route::post('category/create', 'Backend\Category\CategoryController@store');
-    Route::get('category/edit/{id}', 'Backend\Category\CategoryController@edit');
-    Route::post('category/update/{id}', 'Backend\Category\CategoryController@update');
-    Route::get('category/clone/{id}', 'Backend\Category\CategoryController@clone');
-    Route::get('category/status/{id}', 'Backend\Category\CategoryController@status');
-    Route::post('category/order', 'Backend\Category\CategoryController@order');
-    Route::delete('category/destroy/{id}', 'Backend\Category\CategoryController@destroy');
-
-    /**
-     * Competence routes
-     */
-
-    Route::get('competences/get', 'Backend\Competence\CompetenceController@get');
-    Route::post('competence/create', 'Backend\Competence\CompetenceController@store');
-    Route::get('competence/edit/{id}', 'Backend\Competence\CompetenceController@edit');
-    Route::post('competence/update/{id}', 'Backend\Competence\CompetenceController@update');
-    Route::get('competence/clone/{id}', 'Backend\Competence\CompetenceController@clone');
-    Route::get('competence/status/{id}', 'Backend\Competence\CompetenceController@status');
-    Route::post('competence/order', 'Backend\Competence\CompetenceController@order');
-    Route::delete('competence/destroy/{id}', 'Backend\Competence\CompetenceController@destroy');
-    Route::delete('competence/media/delete/{file}', 'Backend\Competence\CompetenceMediaController@unlink');
-    Route::get('competence/media/status/{id}', 'Backend\Competence\CompetenceMediaController@status');
- 
-    /**
-     * Project routes
-     */
-    Route::get('projects/get', 'Backend\Project\ProjectController@all');
-    Route::get('projects/fetch/{publish?}/{order?}', 'Backend\Project\ProjectController@fetch');
-    Route::get('project/get/{id}', 'Backend\Project\ProjectController@get');
-    Route::post('project/create', 'Backend\Project\ProjectController@store');
-    Route::get('project/edit/{id}', 'Backend\Project\ProjectController@edit');
-    Route::post('project/update/{id}', 'Backend\Project\ProjectController@update');
-    Route::get('project/clone/{id}', 'Backend\Project\ProjectController@clone');
-    Route::get('project/status/{id}', 'Backend\Project\ProjectController@status');
-    Route::post('project/order', 'Backend\Project\ProjectController@order');
-    Route::delete('project/destroy/{id}', 'Backend\Project\ProjectController@destroy');
-
-    Route::get('project/relations/get/{projectId}', 'Backend\Project\ProjectRelationController@get');
-    Route::post('project/relation/create', 'Backend\Project\ProjectRelationController@store');
-    Route::delete('project/relation/destroy/{id}', 'Backend\Project\ProjectRelationController@delete');
-
-    Route::get('project/image/get/{projectId}', 'Backend\Project\ProjectImageController@get');
-    Route::delete('project/image/delete/{file}', 'Backend\Project\ProjectImageController@delete');
-    Route::delete('project/image/delete/cropped/{file}', 'Backend\Project\ProjectImageController@deleteCropped');
-    Route::get('project/image/status/{id}', 'Backend\Project\ProjectImageController@status');
-    Route::get('project/image/preview/{id}', 'Backend\Project\ProjectImageController@preview');
-    Route::get('project/image/related/{id}', 'Backend\Project\ProjectImageController@related');
-    Route::post('project/image/order', 'Backend\Project\ProjectImageController@order');
-    Route::post('project/image/crop', 'Backend\Project\ProjectImageController@crop');
-
-    Route::get('project/grids/{id}', 'Backend\Project\GridController@get');
-    Route::post('project/grids/order', 'Backend\Project\GridController@order');
-    Route::get('project/grid/store/{projectId}/{layoutId}', 'Backend\Project\GridController@store');
-    Route::delete('project/grid/delete/{id}', 'Backend\Project\GridController@destroy');
-    Route::get('project/grid/layouts', 'Backend\Project\GridLayoutController@get');
-    Route::get('project/grid/images/{gridId}', 'Backend\Project\GridElementController@get');
-    Route::post('project/grid/image/store', 'Backend\Project\GridElementController@storeImage');
-    Route::delete('project/grid/image/delete/{id}', 'Backend\Project\GridElementController@destroyImage');
-
-    Route::post('project/grid/article/store', 'Backend\Project\GridElementController@storeArticle');
-    Route::delete('project/grid/article/delete/{id}', 'Backend\Project\GridElementController@destroyArticle');
-
-
-    /**
-     * Home Grid routes
-     */
-    Route::get('home/grids', 'Backend\Home\HomeGridController@get');
-    Route::get('home/grids/deploy', 'Backend\Home\HomeGridController@deploy');
-    Route::get('home/grids/reset', 'Backend\Home\HomeGridController@reset');
-    Route::post('home/grids/order', 'Backend\Home\HomeGridController@order');
-    Route::get('home/grid/store/{layoutId}', 'Backend\Home\HomeGridController@store');
-    Route::delete('home/grid/delete/{id}', 'Backend\Home\HomeGridController@destroy');
-    Route::get('home/grid/layout/fetch', 'Backend\Home\HomeGridLayoutController@fetch');
-    Route::post('home/grid/element/store', 'Backend\Home\HomeGridElementController@store');
-    Route::delete('home/grid/element/delete/{id}', 'Backend\Home\HomeGridElementController@destroy');
-    Route::get('home/grid/element/get/{id}', 'Backend\Home\HomeGridElementController@get');
-
-    /**
-     * News routes
-     */
-    Route::get('news/get', 'Backend\News\NewsController@get');
-    Route::post('news/create', 'Backend\News\NewsController@store');
-    Route::get('news/edit/{id}', 'Backend\News\NewsController@edit');
-    Route::post('news/update/{id}', 'Backend\News\NewsController@update');
-    Route::get('news/clone/{id}', 'Backend\News\NewsController@clone');
-    Route::get('news/status/{id}', 'Backend\News\NewsController@status');
-    Route::delete('news/destroy/{id}', 'Backend\News\NewsController@destroy');
-
-
-    /**
-     * Job routes
-     */
-    Route::get('jobs/get', 'Backend\Job\JobController@get');
-    Route::post('job/create', 'Backend\Job\JobController@store');
-    Route::get('job/edit/{id}', 'Backend\Job\JobController@edit');
-    Route::post('job/update/{id}', 'Backend\Job\JobController@update');
-    Route::get('job/clone/{id}', 'Backend\Job\JobController@clone');
-    Route::get('job/status/{id}', 'Backend\Job\JobController@status');
-    Route::post('job/order', 'Backend\Job\JobController@order');
-    Route::delete('job/destroy/{id}', 'Backend\Job\JobController@destroy');
-
-    /**
-     * Content routes
-     */
-    Route::get('contents/get', 'Backend\Content\ContentController@get');
-    Route::post('content/create', 'Backend\Content\ContentController@store');
-    Route::get('content/edit/{id}', 'Backend\Content\ContentController@edit');
-    Route::post('content/update/{id}', 'Backend\Content\ContentController@update');
-    Route::get('content/status/{id}', 'Backend\Content\ContentController@status');
-    Route::get('content/get/keys', 'Backend\Content\ContentController@keys');
-    Route::delete('content/destroy/{id}', 'Backend\Content\ContentController@destroy');
-
-
-    /**
-     * Media routes
-     */
-
-    Route::post('media/upload','MediaController@upload');
-    Route::post('media/upload/document','MediaController@uploadDocument');
-    Route::get('media/source/{file}', 'MediaController@source');
-    Route::get('media/{file}/{size?}', 'MediaController@resize');
-
-});
-
-Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
-    Route::post('login', 'AuthController@login')->middleware('throttle:login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
-});
-
-Route::fallback(function(){
-    return response()->json(
-        ['message' => 'Page Not Found. If error persists, contact m@marceli.to'],
-        404
-    );
-});
-
+Route::fallback(fn () => response()->json(['message' => 'Not Found.'], 404));

@@ -1,133 +1,71 @@
 <?php
+
 namespace App\Http\Controllers\Frontend;
+
 use App\Http\Controllers\Controller;
-
-use App\Services\MenuService;
-use App\Services\MediaService;
-
-use App\Models\Competence;
-use App\Models\CompetenceMedia;
-use App\Models\Client;
-use App\Models\Content;
 use App\Models\Category;
-
-use Illuminate\Http\Request;
+use App\Models\Client;
+use App\Models\Competence;
+use App\Models\Content;
+use App\Services\MenuService;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-  // Services
-  protected $menuService;
+    protected string $view_path = 'web.profile';
 
-  // Models
-  protected $client;
-  protected $competence;
-  protected $competenceMedia;
-  protected $content;
-  protected $category;
+    public function __construct(private MenuService $menuService) {}
 
-  // View path
-  protected $view_path = 'web.profile';
-
-  /**
-   * Constructor
-   * 
-   * @param MediaService $mediaService
-   * @param Client $client
-   * @param Competence $competence
-   * @param CompetenceMedia $competenceMedia
-   * @param Content $content
-   * @param Category $category
-   */
-
-  public function __construct(
-    MediaService $mediaService,
-    Client $client,
-    Competence $competence,
-    CompetenceMedia $competenceMedia,
-    MenuService $menuService,
-    Content $content,
-    Category $category
-  )
-  {
-    $this->mediaService     = $mediaService;
-    $this->client           = $client;
-    $this->competence       = $competence;
-    $this->content          = $content;
-    $this->competenceMedia  = $competenceMedia;
-    $this->menuService      = $menuService;
-    $this->category         = $category;
-  }
-
-  public function index()
-  {
-    return view(
-      $this->view_path . '.index',
-      [
-        'menu' => $this->menuService->boot(),
-      ]
-    );
-  }
-
-  public function attitude()
-  {
-    return
-      view($this->view_path . '.attitude')
-      ->withMenu($this->menuService->boot())
-      ->withContent($this->content->where('key', '=', 'haltung')->get()->first())
-      ->withPageTitle('Haltung');
-  }
-
-  public function competences()
-  {
-    $competences = $this->competence->published()
-                                    ->with('category')
-                                    ->with('media')
-                                    ->orderBy('order', 'ASC')
-                                    ->get();
-
-    return
-      view($this->view_path . '.competences')
-      ->withMenu($this->menuService->boot())
-      ->withCompetences($competences)
-      ->withContent($this->content->where('key', '=', 'kompetenzen')->get()->first())
-      ->withCategory($this->category)
-      ->withPageTitle('Kompetenzen');
-  }
-
-  public function clients()
-  {
-    $clients = $this->client->published()->with('project')->orderBy('name')->get();
-    $client_list = [];
-
-    if ($clients)
+    public function attitude(): View
     {
-      foreach($clients as $c)
-      {
-        $key = (is_numeric(substr($c->name, 0,1))) ? '0–9' : substr($c->name, 0,1);
-        $client_list[$key][] = $c;
-      }
+        return view($this->view_path.'.attitude', [
+            'menu' => $this->menuService->boot(),
+            'content' => Content::where('key', 'haltung')->first(),
+            'pageTitle' => 'Haltung',
+        ]);
     }
-    
-    return
-      view($this->view_path . '.clients')
-      ->withMenu($this->menuService->boot())
-      ->withClients($client_list)
-      ->withPageTitle('Kunden');
-  }
 
-  public function legal()
-  {
-    return
-      view($this->view_path . '.legal')
-      ->withMenu($this->menuService->boot())
-      ->withPageTitle('Rechtliches');
-  }
+    public function competences(): View
+    {
+        return view($this->view_path.'.competences', [
+            'menu' => $this->menuService->boot(),
+            'competences' => Competence::published()->with('category', 'media')->orderBy('order')->get(),
+            'content' => Content::where('key', 'kompetenzen')->first(),
+            'category' => new Category,
+            'pageTitle' => 'Kompetenzen',
+        ]);
+    }
 
-  public function toc()
-  {
-    return
-      view($this->view_path . '.toc')
-      ->withMenu($this->menuService->boot())
-      ->withPageTitle('AGB');
-  }
+    public function clients(): View
+    {
+        $clients = Client::published()->with('project')->orderBy('name')->get();
+
+        $clientList = [];
+        foreach ($clients as $c) {
+            $key = is_numeric(substr($c->name, 0, 1)) ? '0–9' : substr($c->name, 0, 1);
+            $clientList[$key][] = $c;
+        }
+
+        return view($this->view_path.'.clients', [
+            'menu' => $this->menuService->boot(),
+            'clients' => $clientList,
+            'pageTitle' => 'Kunden',
+        ]);
+    }
+
+    public function legal(): View
+    {
+        return view($this->view_path.'.legal', [
+            'menu' => $this->menuService->boot(),
+            'pageTitle' => 'Rechtliches',
+        ]);
+    }
+
+    public function toc(): View
+    {
+        return view($this->view_path.'.toc', [
+            'menu' => $this->menuService->boot(),
+            'pageTitle' => 'AGB',
+        ]);
+    }
 }

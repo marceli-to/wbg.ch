@@ -1,83 +1,49 @@
 <?php
+
 namespace App\Http\Controllers\Frontend;
+
 use App\Http\Controllers\Controller;
-
-use App\Services\MediaService;
-use App\Services\MenuService;
-
-use App\Models\Project;
 use App\Models\Content;
 use App\Models\HomeGrid;
-use App\Models\HomeGridElement;
-
-use Illuminate\Http\Request;
+use App\Services\MenuService;
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {
+    public function __construct(private MenuService $menuService) {}
 
-  // Services
-  protected $menuService;
-  protected $mediaService;
-
-  // Models
-  protected $project;
-  protected $homeGrid;
-  protected $content;
-
-  // View path
-  protected $view_path = 'web.home';
-
-  // Key for content
-  protected $content_key = 'home';
-
-  public function __construct(
-    MenuService $menuService,
-    MediaService $mediaService,
-    Project $project,
-    HomeGrid $homeGrid,
-    HomeGridElement $homeGridElement,
-    Content $content
-  )
-  {
-    $this->project          = $project;
-    $this->homeGrid         = $homeGrid;
-    $this->homeGridElement  = $homeGridElement;
-    $this->menuService      = $menuService;
-    $this->content          = $content;
-  }
-
-  public function index()
-  {
-    return
-      view($this->view_path . '.index')
-      ->withMenu($this->menuService->boot())
-      ->withGrids($this->getGrids())
-      ->withIntro($this->content->where('key', '=', $this->content_key)->get()->first())
-      ->withPageTitle('Home');
-  }
-
-  /**
-   * Return grids
-   */
-
-  private function getGrids()
-  {
-    $grids = $this->homeGrid->with('layout')
-                            ->with('elements.projectimage.project')
-                            ->with('elements.news.competence')
-                            ->orderBy('order')
-                            ->get();
-    
-    $home_grids = [];
-    foreach($grids as $g)
+    public function index(): View
     {
-        $home_grids[$g->id]['key'] = $g->layout->key;
-
-        // Filter by environment & sort by position
-        $sorted = $g->elements->where('environment', 'production')->sortBy('position');
-        $home_grids[$g->id]['elements'] = $sorted->values()->all();
+        return view('web.home.index', [
+            'menu' => $this->menuService->boot(),
+            'grids' => $this->getGrids(),
+            'intro' => Content::where('key', 'home')->first(),
+            'pageTitle' => 'Home',
+        ]);
     }
 
-    return $home_grids;
-  }
+    /**
+     * Home grid rows with their live (production) elements, sorted by position.
+     */
+    private function getGrids(): array
+    {
+        $grids = HomeGrid::with([
+            'layout',
+            'elements' => fn ($q) => $q->where('environment', 'production')->orderBy('position'),
+            'elements.projectimage.project',
+            'elements.news.competence',
+        ])
+            ->orderBy('order')
+            ->get();
+
+        $rows = [];
+        foreach ($grids as $g) {
+            $rows[$g->id] = [
+                'key' => $g->layout->key,
+                'elements' => $g->elements->all(),
+            ];
+        }
+
+        return $rows;
+    }
 }

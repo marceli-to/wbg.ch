@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="{{config('seo.title')}}">
 <meta name="csrf-token" value="{{ csrf_token() }}" />
 <meta name="format-detection" content="telephone=no">
-<link href="{{ mix('assets/css/app.css') }}" type="text/css" rel="stylesheet" />
+@vite('resources/sass/web/app.scss')
 <script src="{{ asset('assets/js/modernizr.min.js') }}"></script>
 </head>
 <body>
@@ -142,7 +142,7 @@
   WBG AG – VISUELLE KOMMUNIKATION<br>BINZSTRASSE 39, CH-8045 ZÜRICH, +41 44 269 43 43, MAIL@WBG.CH
 </footer>
 @endif
-<script src="{{ asset('assets/js/app.min.05112019.js') }}" type="text/javascript"></script>
+@vite('resources/js/web/app.js')
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QKCSHMCHVT"></script>
 <script>
  window.dataLayer = window.dataLayer || [];

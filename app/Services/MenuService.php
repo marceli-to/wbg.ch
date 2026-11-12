@@ -3,11 +3,14 @@ namespace App\Services;
 
 use App\Models\Project;
 use App\Models\Category;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
 class MenuService
 {
+  private const CACHE_KEY = 'menu.projects';
+
   // Menu item active class
   protected $active = 'is-active';
 
@@ -43,72 +46,84 @@ class MenuService
 
   private function getProjects($projectId = NULL, $categoryId = NULL, $subcategoryId = NULL)
   {
-    // Get projects
-    $projects = $this->project->published()
-                              ->with('category')
-                              ->orderBy('order')
-                              ->get()
-                              ->groupBy('category.id');
-
-    // Get project
-    $project = $this->project->find($projectId);
-    
-    // Get categories
-    $categories = $this->category->published()
-                                 ->orderBy('order')
-                                 ->get();
-
-    // Menu
     $menu = [];
-    foreach($categories as $k => $c)
+    foreach ($this->projectTree() as $c)
     {
       $menu_items = [];
 
-      if (isset($projects[$c->id]))
+      if ($c['id'] == Category::PANOPTIKUM_ID)
       {
-        // Special case 'Panoptikum'
-        if ($c->id == $this->category->panoptikumId)
+        // Special case 'Panoptikum': list subcategories instead of projects
+        foreach ($c['projects'] as $p)
         {
-          foreach($projects[$c->id] as $p)
+          if ($p['subcategory_id'])
           {
-            if ($p->subcategory_id)
-            {
-              $menu_items[$p->subcategory_id] = [
-                'id'        => array_search($p->subcategory_id, $this->category->subcategories),
-                'name'      => $this->category->subcategories[$p->subcategory_id],
-                'slug'      => '/projekte/3/panoptikum/' . $p->subcategory_id . '/' . \Str::slug($this->category->subcategories[$p->subcategory_id]),
-                'is-active' => $subcategoryId == $p->subcategory_id ? TRUE : FALSE,
-              ];
-            }
-          }
-
-          $menu_items = collect($menu_items)->sortBy('name')->toArray();
-        }
-        else
-        {
-          foreach($projects[$c->id] as $p)
-          {
-            $menu_items[] = [
-              'id'        => $p->id,
-              'name'      => $p->name,
-              'slug'      => '/projekt/' . $p->id . '/' . \Str::slug($p->name),
-              'is-active' => $projectId == $p->id ? TRUE : FALSE,
+            $name = Category::SUBCATEGORIES[$p['subcategory_id']];
+            $menu_items[$p['subcategory_id']] = [
+              'id'        => $p['subcategory_id'],
+              'name'      => $name,
+              'slug'      => '/projekte/3/panoptikum/' . $p['subcategory_id'] . '/' . \Str::slug($name),
+              'is-active' => $subcategoryId == $p['subcategory_id'],
             ];
           }
         }
 
-        $menu[] = [
-          'category'  => $c->name,
-          'id'        => $c->id,
-          'slug'      => '/projekte/' . $c->id . '/' . \Str::slug($c->name),
-          'is-active' => ($categoryId == $c->id || ($project && $project->category_id == $c->id)) ? TRUE : FALSE,
-          'items'     => $menu_items
-        ];
+        $menu_items = collect($menu_items)->sortBy('name')->toArray();
       }
+      else
+      {
+        foreach ($c['projects'] as $p)
+        {
+          $menu_items[] = [
+            'id'        => $p['id'],
+            'name'      => $p['name'],
+            'slug'      => '/projekt/' . $p['id'] . '/' . \Str::slug($p['name']),
+            'is-active' => $projectId == $p['id'],
+          ];
+        }
+      }
+
+      $menu[] = [
+        'category'  => $c['name'],
+        'id'        => $c['id'],
+        'slug'      => '/projekte/' . $c['id'] . '/' . \Str::slug($c['name']),
+        'is-active' => $categoryId == $c['id'],
+        'items'     => $menu_items
+      ];
     }
     return $menu;
   }
 
+  /**
+   * Published categories (that have published projects) with their
+   * published projects. Cached until a project or category changes.
+   */
+  private function projectTree(): array
+  {
+    return Cache::rememberForever(self::CACHE_KEY, function () {
+      $projects = $this->project->published()
+                                ->orderBy('order')
+                                ->get(['id', 'name', 'category_id', 'subcategory_id'])
+                                ->groupBy('category_id');
+
+      return $this->category->published()
+                            ->orderBy('order')
+                            ->get(['id', 'name'])
+                            ->filter(fn ($c) => isset($projects[$c->id]))
+                            ->map(fn ($c) => [
+                              'id'       => $c->id,
+                              'name'     => $c->name,
+                              'projects' => $projects[$c->id]->map->only('id', 'name', 'subcategory_id')->values()->all(),
+                            ])
+                            ->values()
+                            ->all();
+    });
+  }
+
+  public static function flush(): void
+  {
+    Cache::forget(self::CACHE_KEY);
+  }
 
   /**
    * Build about menu

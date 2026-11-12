@@ -20,6 +20,6 @@ class Job extends Model
 
   public function scopePublished($query)
   {
-    return $query->where('publish', '=', '1');
+    return $query->where($query->qualifyColumn('publish'), '=', 1);
   }
 }

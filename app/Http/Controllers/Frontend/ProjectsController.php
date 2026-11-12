@@ -1,287 +1,223 @@
 <?php
+
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Services\MediaService;
-use App\Services\MenuService;
-
+use App\Models\Category;
+use App\Models\Grid;
 use App\Models\Project;
 use App\Models\ProjectImage;
-use App\Models\Grid;
-use App\Models\Category;
-
-use Illuminate\Http\Request;
+use App\Services\MenuService;
+use Illuminate\Support\Collection;
+use Illuminate\View\View;
 
 class ProjectsController extends Controller
 {
-  // Services
-  protected $mediaService;
-  protected $menuService;
+    protected string $view_path = 'web.projects';
 
-  // Models
-  protected $project;
-  protected $projectImage;
-  protected $grid;
-  protected $category;
+    public function __construct(private MenuService $menuService) {}
 
-  // View path
-  protected $view_path = 'web.projects';
-
-  public function __construct(
-    MediaService $mediaService,
-    MenuService $menuService,
-    Project $project,
-    ProjectImage $projectImage,
-    Grid $grid,
-    Category $category
-  )
-  {
-    $this->project      = $project;
-    $this->projectImage = $projectImage;
-    $this->grid         = $grid;
-    $this->category     = $category;
-    $this->menuService  = $menuService;
-  }
-
-  /**
-   * List all projects
-   * 
-   */
-  public function projects()
-  {
-    $projects = $this->project->published()
-                              ->with('previewImages')
-                              ->orderBy('order')
-                              ->get();
-
-    return
-      view($this->view_path . '.index')
-      ->withMenu($this->menuService->boot())
-      ->withSubCategories($this->category->subcategories)
-      ->withProjects($projects->shuffle()->all())
-      ->withPageTitle('Projekte');
-  }
-
-  /**
-   * List all projects by category
-   * 
-   */
-  public function category($categoryId = NULL, $slug = NULL)
-  {
-    $category = $this->category->findOrFail($categoryId);
-    $projects = $this->project->published()
-                              ->with('previewImages')
-                              ->where('category_id', '=', $categoryId)
-                              ->orderBy('order')
-                              ->get();
-
-    if ($categoryId == $this->category->panoptikumId)
+    /**
+     * List all projects
+     */
+    public function projects(): View
     {
-      $data = [];
-      foreach($projects as $project)
-      {
-        $data[] = [
-          'title' => $project->name,
-          'grid'  => $this->getProjectGrid($project->id)
+        $projects = Project::published()
+            ->with('previewImages')
+            ->orderBy('order')
+            ->get();
+
+        return view($this->view_path.'.index', [
+            'menu' => $this->menuService->boot(),
+            'subCategories' => Category::SUBCATEGORIES,
+            'projects' => $projects->shuffle()->all(),
+            'pageTitle' => 'Projekte',
+        ]);
+    }
+
+    /**
+     * List all projects of a category
+     */
+    public function category(int $categoryId, ?string $slug = null): View
+    {
+        $category = Category::findOrFail($categoryId);
+        $projects = Project::published()
+            ->with('previewImages')
+            ->where('category_id', $categoryId)
+            ->orderBy('order')
+            ->get();
+
+        $data = [
+            'menu' => $this->menuService->boot(null, $categoryId),
+            'pageTitle' => $category->name,
+            'metaDescription' => config('seo.descriptions.'.strtolower($category->name)),
+            'isPanoptikum' => false,
+            'projects' => $projects,
         ];
-      }
-      return
-        view($this->view_path . '.category')
-        ->withMenu($this->menuService->boot(NULL, $categoryId))
-        ->withProjects($projects->shuffle())
-        ->withMobileProjects($data)
-        ->withPageTitle('Panoptikum')
-        ->withSubCategories($this->category->subcategories)
-        ->withMetaDescription(config('seo.descriptions.' . strtolower($category->name)))
-        ->withIsPanoptikum(TRUE);
-    }
 
-    return 
-      view($this->view_path . '.category')
-      ->withMenu($this->menuService->boot(NULL, $categoryId))
-      ->withProjects($projects)
-      ->withPageTitle($category->name)
-      ->withMetaDescription(config('seo.descriptions.' . strtolower($category->name)))
-      ->withIsPanoptikum(FALSE);
-  }
+        if ($categoryId == Category::PANOPTIKUM_ID) {
+            $grids = $this->getProjectGrids($projects->pluck('id'));
 
-  /**
-   * List all projects by subcategory
-   * 
-   */
-  public function subcategory(
-    $category = NULL,
-    $categorySlug = NULL,
-    $subcategory = NULL,
-    $subcategorySlug = NULL
-  )
-  {
-    $category = $this->category->findOrFail($category);
-    $projects = $this->project->published()
-                              ->with('previewImages')
-                              ->where('category_id', '=', $category->id)
-                              ->where('subcategory_id', '=', $subcategory)
-                              ->orderBy('order')
-                              ->get();
-
-    $data = [];
-    foreach($projects as $project)
-    {
-      $data[] = [
-        'title' => $project->name, // $this->category->subcategories[$subcategory],
-        'grid'  => $this->getProjectGrid($project->id)
-      ];
-    }
-
-    return
-      view($this->view_path . '.subcategory')
-      ->withMenu($this->menuService->boot(NULL, $category->id, $subcategory))
-      ->withProjects($data)
-      ->withMetaDescription(config('seo.descriptions.' . strtolower($category->name) . '_' . strtolower($this->category->subcategories[$subcategory])))
-      ->withPageTitle($category->name);
-  }
-
-  /**
-   * Show a resource
-   * 
-   * @param int $id
-   * @param int $slug
-   */
-  public function project($id = NULL, $slug = NULL)
-  {
-    $project = $this->project->published()
-                             ->with('client')
-                             ->with('category')
-                             ->with('relations.related.images')
-                             ->with('relations.related.previewRelatedImages')
-                             ->findOrFail($id);
-    // Open graph image (first active image)
-    $og_image = $this->projectImage->where('project_id', '=', $id)
-                                   ->where('publish', '=', 1)
-                                   ->where('is_preview', '=', 1)
-                                   ->get()
-                                   ->first();
-
-    return
-      view($this->view_path . '.project')
-      ->withMenu($this->menuService->boot($id, $project->category_id))
-      ->withProject($project)
-      ->withGrids($this->getProjectGrid($id, $project->is_brands))
-      ->withBrowse($this->getProjectNav($project->id))
-      ->withPageTitle($project->category->name)
-      ->withOgImage($og_image ? $og_image->name : null);
-  }
-
-  /**
-   * Get the grid elements for a project
-   * 
-   * @param int $projectId
-   */
-  protected function getProjectGrid($projectId, $isBrands = FALSE)
-  {
-    $grids = $this->grid->byProject($projectId)
-                        ->with('layout')
-                        ->with('elements.news.competence')
-                        ->with('elements.image.client')
-                        ->orderBy('order')
-                        ->get();
-
-    // Projects containing logos will be display completely random
-    if ($isBrands)
-    {
-      $elements = [];
-      foreach($grids as $g)
-      {
-        foreach($g->elements as $element)
-        {
-          $elements[] = $element;
+            $data = array_merge($data, [
+                'projects' => $projects->shuffle(),
+                'mobileProjects' => $projects->map(fn (Project $project) => [
+                    'title' => $project->name,
+                    'grid' => $grids[$project->id] ?? [],
+                ])->all(),
+                'pageTitle' => 'Panoptikum',
+                'subCategories' => Category::SUBCATEGORIES,
+                'isPanoptikum' => true,
+            ]);
         }
-      }
-     
-      $elements = collect($elements)->shuffle()->chunk(2);
-      $project_grids = [];
-      foreach($elements as $key => $element)
-      {
-        $project_grids[$key]['key'] = '2x1fr-logo';
-        if ($element->count() == 1)
-        {
-          $project_grids[$key]['elements'][0] = $element->first();
+
+        return view($this->view_path.'.category', $data);
+    }
+
+    /**
+     * List all projects of a (Panoptikum) subcategory
+     */
+    public function subcategory(int $category, ?string $categorySlug, int $subcategory): View
+    {
+        $category = Category::findOrFail($category);
+        abort_unless(isset(Category::SUBCATEGORIES[$subcategory]), 404);
+
+        $projects = Project::published()
+            ->where('category_id', $category->id)
+            ->where('subcategory_id', $subcategory)
+            ->orderBy('order')
+            ->get();
+
+        $grids = $this->getProjectGrids($projects->pluck('id'));
+
+        return view($this->view_path.'.subcategory', [
+            'menu' => $this->menuService->boot(null, $category->id, $subcategory),
+            'projects' => $projects->map(fn (Project $project) => [
+                'title' => $project->name,
+                'grid' => $grids[$project->id] ?? [],
+            ])->all(),
+            'metaDescription' => config('seo.descriptions.'.strtolower($category->name).'_'.strtolower(Category::SUBCATEGORIES[$subcategory])),
+            'pageTitle' => $category->name,
+        ]);
+    }
+
+    /**
+     * Show a project
+     */
+    public function project(int $id): View
+    {
+        $project = Project::published()
+            ->with([
+                'client',
+                'category',
+                'relations.related.category',
+                'relations.related.images',
+                'relations.related.previewRelatedImages',
+            ])
+            ->findOrFail($id);
+
+        // Open graph image (first published preview image)
+        $ogImage = ProjectImage::where('project_id', $id)
+            ->where('publish', 1)
+            ->where('is_preview', 1)
+            ->value('name');
+
+        return view($this->view_path.'.project', [
+            'menu' => $this->menuService->boot($id, $project->category_id),
+            'project' => $project,
+            'grids' => $this->getProjectGrids(collect([$id]), (bool) $project->is_brands)[$id] ?? [],
+            'browse' => $this->getProjectNav($project->id),
+            'pageTitle' => $project->category->name,
+            'ogImage' => $ogImage,
+        ]);
+    }
+
+    /**
+     * Grid rows (with their elements) for several projects in one go.
+     *
+     * @return array<int, array> keyed by project id
+     */
+    protected function getProjectGrids(Collection $projectIds, bool $isBrands = false): array
+    {
+        $grids = Grid::whereIn('project_id', $projectIds)
+            ->with(['layout', 'elements.news.competence', 'elements.image.client', 'elements.image.project'])
+            ->orderBy('order')
+            ->get()
+            ->groupBy('project_id');
+
+        $result = [];
+        foreach ($grids as $projectId => $projectGrids) {
+            $result[$projectId] = $isBrands
+                ? $this->brandGrid($projectGrids)
+                : $this->sortedGrid($projectGrids);
         }
-        else
-        {
-          $project_grids[$key]['elements'][0] = $element->first();
-          $project_grids[$key]['elements'][1] = $element->last();
+
+        return $result;
+    }
+
+    /**
+     * Regular grid: rows keyed by grid id, elements sorted by position.
+     */
+    private function sortedGrid(Collection $grids): array
+    {
+        $rows = [];
+        foreach ($grids as $g) {
+            $rows[$g->id] = [
+                'key' => $g->layout->key,
+                'elements' => $g->elements->sortBy('position')->values()->all(),
+            ];
         }
-      }
+
+        return $rows;
     }
-    else
+
+    /**
+     * Logo projects: all elements shuffled into rows of two.
+     */
+    private function brandGrid(Collection $grids): array
     {
-      $project_grids = [];
-      foreach($grids as $g)
-      {
-        $project_grids[$g->id]['key'] = $g->layout->key;
-  
-        // Sort elements by position or shuffle them
-        $sorted = $g->elements->sortBy('position');
-        $project_grids[$g->id]['elements'] = $sorted->values()->all();
-      }
+        $rows = [];
+        $chunks = $grids->flatMap->elements->shuffle()->chunk(2);
+        foreach ($chunks as $key => $chunk) {
+            $rows[$key] = [
+                'key' => '2x1fr-logo',
+                'elements' => $chunk->values()->all(),
+            ];
+        }
+
+        return $rows;
     }
 
-    return $project_grids;
-  }
-
-  /**
-   * Get the prev/next element
-   * 
-   * @param int $projectId
-   */
-
-  protected function getProjectNav($projectId = NULL)
-  {
-    $categories = $this->category->published()
-                                 ->where('id', '!=', $this->category->panoptikumId)
-                                 ->orderBy('order')
-                                 ->get();
-
-    foreach($categories as $category)
+    /**
+     * Previous/next project, in menu order (categories excl. Panoptikum,
+     * then projects), wrapping around at both ends.
+     *
+     * @return array{prev: ?Project, next: ?Project}
+     */
+    protected function getProjectNav(int $projectId): array
     {
-      $projects[] = $this->project->published()
-                                  ->where('category_id', '=', $category->id)
-                                  ->orderBy('order')
-                                  ->get();
-    }
+        $ids = Project::published()
+            ->join('categories', 'categories.id', '=', 'projects.category_id')
+            ->where('categories.publish', 1)
+            ->where('categories.id', '!=', Category::PANOPTIKUM_ID)
+            ->orderBy('categories.order')
+            ->orderBy('projects.order')
+            ->pluck('projects.id')
+            ->map(fn ($id) => (int) $id)
+            ->values();
 
-    $project_keys = [];
-    foreach($projects as $project)
-    {
-      foreach($project as $p)
-      {
-        $project_keys[] = (int) $p->id;
-      }
-    }
+        if ($ids->isEmpty()) {
+            return ['prev' => null, 'next' => null];
+        }
 
-    // Get current key
-    $key = array_search($projectId, $project_keys);
+        $last = $ids->count() - 1;
+        $key = $ids->search($projectId);
+        $key = $key === false ? 0 : $key;
 
-    if ($key == 0)
-    {
-      $prevId = end($project_keys);
-      $nextId = $project_keys[$key+1];
-    }
-    else if ($key == count($project_keys) - 1)
-    {
-      $prevId = $project_keys[$key-1];
-      $nextId = $project_keys[0];
-    }
-    else
-    {
-      $prevId = $project_keys[$key-1];
-      $nextId = $project_keys[$key+1];
-    }
+        $prevId = $ids[$key === 0 ? $last : $key - 1];
+        $nextId = $ids[$key === $last ? 0 : $key + 1];
 
-    return [
-      'prev' => $this->project->find($prevId),
-      'next' => $this->project->find($nextId)
-    ];
-  }
+        $projects = Project::whereKey([$prevId, $nextId])->get()->keyBy('id');
+
+        return ['prev' => $projects[$prevId] ?? null, 'next' => $projects[$nextId] ?? null];
+    }
 }

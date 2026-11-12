@@ -1,36 +1,20 @@
 <?php
+
 namespace App\Http\Controllers\Frontend;
+
 use App\Http\Controllers\Controller;
 use App\Services\MenuService;
-use App\Models\Job;
-use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ContactController extends Controller
 {
-  // Services
-  protected $menuService;
+    public function __construct(private MenuService $menuService) {}
 
-  // View path
-  protected $view_path = 'web.contact';
-
-  // Model
-  protected $job;
-
-  public function __construct(MenuService $menuService, Job $job)
-  {
-    $this->menuService = $menuService;
-    $this->job = $job;
-  }
-
-  public function index()
-  {
-
-    // $jobs = $this->job->published()->orderBy('order', 'ASC')->get();
-
-    return 
-      view($this->view_path . '.index')
-      //->withJobs($jobs)
-      ->withMenu($this->menuService->boot())
-      ->withPageTitle('Kontakt');
-  }
+    public function index(): View
+    {
+        return view('web.contact.index', [
+            'menu' => $this->menuService->boot(),
+            'pageTitle' => 'Kontakt',
+        ]);
+    }
 }

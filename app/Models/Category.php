@@ -1,10 +1,20 @@
 <?php
 namespace App\Models;
 
+use App\Services\MenuService;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+    /**
+     * The navigation menu is cached; rebuild it whenever this model changes.
+     */
+    protected static function booted(): void
+    {
+        static::saved(fn () => MenuService::flush());
+        static::deleted(fn () => MenuService::flush());
+    }
+
     protected $table = 'categories';
 
     protected $fillable = [
@@ -13,13 +23,18 @@ class Category extends Model
         'publish'
     ];
 
-    public $subcategories = [
+    /** Fixed subcategories of the "Panoptikum" category. */
+    public const SUBCATEGORIES = [
         1 => 'Archiv',
         2 => 'Digital',
-        3 => 'Wettbewerb'
+        3 => 'Wettbewerb',
     ];
 
-    public $panoptikumId = 3;
+    public const PANOPTIKUM_ID = 3;
+
+    public $subcategories = self::SUBCATEGORIES;
+
+    public $panoptikumId = self::PANOPTIKUM_ID;
 
     /**
      * Relation 'competence'
@@ -38,6 +53,6 @@ class Category extends Model
 
     public function scopePublished($query)
     {
-        return $query->where('publish', '=', '1');
+        return $query->where($query->qualifyColumn('publish'), '=', 1);
     }
 }

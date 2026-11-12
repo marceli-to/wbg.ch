@@ -2,626 +2,307 @@
 
 namespace App\Services;
 
-use Illuminate\Http\Request;
-use Intervention\Image\ImageManager;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
+use Intervention\Image\Alignment;
+use Intervention\Image\Exceptions\DecoderException;
+use Intervention\Image\Interfaces\ImageInterface;
+use Intervention\Image\Laravel\Facades\Image;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * Stores uploaded images/documents and generates the processed image sizes.
+ *
+ * Processed images are written to storage/app/public/media/images/processed/{size}
+ * and are then served statically (see ImageHelper). The PHP routes only kick
+ * in for the very first request of a size.
+ */
 class MediaService
 {
-    /**
-     * Path for source files
-     */
-    protected $path_source;
+    /** JPEG quality used for processed images (Intervention v2 default). */
+    private const QUALITY = 90;
 
-    /**
-     * Path for uploads
-     */
-    protected $path_uploads;
+    /** Bounding box (px) per responsive size; scaled along the longer side. */
+    private const MAX = [
+        'sm' => 500,
+        'md' => 1200,
+        'lg' => 2000,
+        'source' => 3000,
+    ];
 
-    /**
-     * Path for preview images
-     */
-    protected $path_preview;
+    private const THUMB_SIZE = 200;
 
-    /**
-     * Path for related images
-     */
-    protected $path_related;
+    private const XS_HEIGHT = 120;
 
-    /**
-     * Path for small images
-     */
-    protected $path_xsmall;
+    private string $root;
 
-    /**
-     * Path for small images
-     */
-    protected $path_small;
-
-    /**
-     * Path for medium images
-     */
-    protected $path_medium;
-
-    /**
-     * Path for large images
-     */
-    protected $path_large;
-
-    /**
-     * Path for extra large images
-     */
-    protected $path_xlarge;
-
-    /**
-     * Path for thumbnails
-     */
-    protected $path_thumbs;
-
-    /**
-     * Size for square thumbnails
-     */
-    protected $size_thumbs = 200;
-
-    /**
-     * Size for square small images
-     */    
-    protected $size_sm = 600;
-
-    /**
-     * Maximum width for extra small landscape images
-     */    
-    protected $max_width_xs = 160;    
-
-    /**
-     * Maximum height for extra small portrait images
-     */    
-    protected $max_height_xs = 120;
-
-    /**
-     * Maximum width for small landscape images
-     */    
-    protected $max_width_sm = 500;    
-
-    /**
-     * Maximum height for small portrait images
-     */    
-    protected $max_height_sm = 500;
-
-    /**
-     * Maximum width for small landscape images
-     */    
-    protected $max_width_md = 1200;    
-
-    /**
-     * Maximum height for small portrait images
-     */    
-    protected $max_height_md = 1200;
-
-    /**
-     * Maximum width for large landscape images
-     */    
-    protected $max_width_lg = 2000;
-
-    /**
-     * Maximum height for large portrait images
-     */    
-    protected $max_height_lg = 2000;
-
-    /**
-     * Maximum width for source images
-     */    
-    protected $max_width_source = 3000;    
-
-    /**
-     * Maximum height for source images
-     */    
-    protected $max_height_source = 3000;
-
-    /**
-     * Image prefix
-     */
-    protected $prefix = 'wbg.ch';
-    
     public function __construct()
     {
-        $this->path_source      = storage_path('app/public/media/images/source/');
-        $this->path_processed   = storage_path('app/public/media/images/processed/');
-        $this->path_downloads   = storage_path('app/public/media/downloads');
-        $this->path_uploads     = storage_path('app/public/tmp/uploads');
-        $this->path_lg          = $this->path_processed . 'lg/';
-        $this->path_md          = $this->path_processed . 'md/';
-        $this->path_sm          = $this->path_processed . 'sm/';
-        $this->path_xs          = $this->path_processed . 'xs/';
-        $this->path_thumbs      = $this->path_processed . 'thumbs/';
-        $this->path_preview     = $this->path_processed . 'preview/';
-        $this->path_related     = $this->path_processed . 'related/';
-        $this->_mkdir();
+        $this->root = storage_path('app/public/media');
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Uploads
+    |--------------------------------------------------------------------------
+    */
+
     /**
-     * Upload the specified resource.
+     * Store an uploaded image, downscale the source and create its thumbnail.
      *
-     * @return array
+     * @return array{name: string, filetype: string}
      */
-
-    public function upload(Request $request)
+    public function upload(UploadedFile $file): array
     {
-        $file = $request->file('file');
-        $name = $this->_safeName($file);
-        $file->move($this->path_source, $name);
+        $name = $this->safeName($file);
+        $file->move($this->dir('source'), $name);
 
-        // Get file extension to store in media model
-        $filetype = \File::extension($this->path_source . $name);
+        try {
+            $this->resizeSource($name);
+            $this->generate($name, 'thumbs');
+        } catch (DecoderException $e) {
+            // Not a decodable image, whatever its mime type claimed
+            $this->delete($name);
 
-        // Create thumbnail for preview
-        $this->thumbnail($name);
+            throw ValidationException::withMessages(['file' => 'Die Datei ist kein gültiges Bild.']);
+        }
 
-        // Resize file and save as source
-        $this->resize($name, 'source');
-
-        return ['name' => $name, 'filetype' => $filetype];
+        return ['name' => $name, 'filetype' => pathinfo($name, PATHINFO_EXTENSION)];
     }
 
     /**
-     * Upload the specified resource.
+     * Store an uploaded document (pdf).
      *
-     * @return array
+     * @return array{name: string, filetype: string}
      */
-
-    public function uploadDocument(Request $request)
+    public function uploadDocument(UploadedFile $file): array
     {
-        $file = $request->file('file');
-        $name = $this->_safeName($file);
-        $file->move($this->path_downloads, $name);
+        $name = $this->safeName($file);
+        $file->move($this->dir('downloads'), $name);
 
-        // Get file extension to store in media model
-        $filetype = \File::extension($this->path_downloads . $name);
+        return ['name' => $name, 'filetype' => pathinfo($name, PATHINFO_EXTENSION)];
+    }
 
-        return ['name' => $name, 'filetype' => $filetype];
+    /*
+    |--------------------------------------------------------------------------
+    | Serving (fallback routes)
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Return a processed image, generating it first if needed.
+     *
+     * @param  string  $size  thumbs|xs|sm|md|lg|preview|related
+     */
+    public function serve(string $image, string $size): BinaryFileResponse
+    {
+        $image = $this->filename($image);
+        $path = $this->dir($size).$image;
+
+        if (! File::exists($path)) {
+            if (! File::exists($this->dir('source').$image)) {
+                throw new NotFoundHttpException;
+            }
+            $this->generate($image, $size);
+        }
+
+        return response()->file($path);
     }
 
     /**
-     * Generate a thumbnail image.
-     * 
-     * @param  str $image
-     * @return \Illuminate\Http\Response
+     * Return the (already downscaled) source image.
      */
-
-    public function thumbnail($image = NULL)
+    public function source(string $image): BinaryFileResponse
     {
-        if (!File::exists($this->path_thumbs . $image))
-        {
-            $image = \Image::make($this->path_source . $image)->fit($this->size_thumbs);
-            $image->save($this->path_thumbs . $image->basename);
-            return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
+        $path = $this->dir('source').$this->filename($image);
+
+        if (! File::exists($path)) {
+            throw new NotFoundHttpException;
         }
-        else
-        {
-            $filename = $image;
-            $img = \Image::cache(function($image) use ($filename) {
-                return $image->make($this->path_thumbs . $filename);
-            }, 300, false);
-            return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
-        }
+
+        return response()->file($path);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Processing
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Generate one processed size of a source image.
+     */
+    public function generate(string $image, string $size): void
+    {
+        $image = $this->filename($image);
+        $img = Image::decodePath($this->dir('source').$image);
+
+        match ($size) {
+            'thumbs' => $img->cover(self::THUMB_SIZE, self::THUMB_SIZE),
+            'xs' => $img->scale(height: self::XS_HEIGHT),
+            'sm', 'md', 'lg' => $this->fitLongSide($img, self::MAX[$size]),
+            'preview' => $this->preview($img),
+            'related' => $this->related($img),
+        };
+
+        $img->save($this->dir($size).$image, quality: self::QUALITY);
     }
 
     /**
-     * Resize an image.
-     * 
-     * @param  str $image
-     * @param  str $size
-     * @return \Illuminate\Http\Response
+     * Crop a source image into a new file.
+     *
+     * @param  array{image: string, coords?: array{w: float, h: float, x: float, y: float}}  $data
+     * @return array{name: string}
      */
-
-    public function resize($image, $size = 'sm')
+    public function crop(array $data): array
     {
-        if ($image != NULL)
-        {
-            // Generate small images
-            if ($size == 'xs')
-            {
-                if (!File::exists($this->path_xs . $image))
-                {
-                    // Create image instance
-                    $image = \Image::make($this->path_source . $image);
-                    
-                    // Resize image
-                    $image->resize(null, $this->max_height_xs, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
+        $source = $this->filename($data['image']);
+        $img = Image::decodePath($this->dir('source').$source);
 
-                    $image->save($this->path_xs . $image->basename);
-                    return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
-                }
-                else
-                {   
-                    $filename = $image;
-                    $img = \Image::cache(function($image) use ($filename) {
-                        return $image->make($this->path_xs . $filename);
-                    }, 300, false);
-                    
-                    return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
-                }
-            }
+        if (! empty($data['coords'])) {
+            $c = $data['coords'];
+            $img->crop((int) floor($c['w']), (int) floor($c['h']), (int) floor($c['x']), (int) floor($c['y']));
+        }
 
-            // Generate small images
-            if ($size == 'sm')
-            {
-                if (!File::exists($this->path_sm . $image))
-                {
-                    // Create image instance
-                    $image = \Image::make($this->path_source . $image);
+        // Replace the unique id prefix of the original name with a new one
+        $name = uniqid().'_'.$this->stripPrefix($source);
+        $img->save($this->dir('source').$name, quality: 100);
 
-                    // Get width and height
-                    $width  = $image->getWidth();
-                    $height = $image->getHeight();
-                    
-                    // Resize landscape image
-                    if ($width > $height && $width >= $this->max_width_sm)
-                    {
-                        $image->resize($this->max_width_sm, null, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                    }
-                    else if ($height >= $this->max_height_sm)
-                    {
-                        $image->resize(null, $this->max_height_sm, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                    }
+        return ['name' => $name];
+    }
 
-                    $image->save($this->path_sm . $image->basename);
-                    return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
-                }
-                else
-                {   
-                    $filename = $image;
-                    $img = \Image::cache(function($image) use ($filename) {
-                        return $image->make($this->path_sm . $filename);
-                    }, 300, false);
-                    
-                    return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
-                }
-            }
+    /**
+     * Copy a source image under a new unique name.
+     */
+    public function clone(?string $image): ?string
+    {
+        if (! $image) {
+            return null;
+        }
 
-            // Generate medium images
-            if ($size == 'md')
-            {
-                if (!File::exists($this->path_md . $image))
-                {
-                    // Create image instance
-                    $image = \Image::make($this->path_source . $image);
+        $image = $this->filename($image);
+        $name = uniqid().'_'.$image;
+        File::copy($this->dir('source').$image, $this->dir('source').$name);
 
-                    // Get width and height
-                    $width  = $image->getWidth();
-                    $height = $image->getHeight();
-                    
-                    // Resize landscape image
-                    if ($width > $height && $width >= $this->max_width_md)
-                    {
-                        $image->resize($this->max_width_md, null, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                    }
-                    else if ($height >= $this->max_height_md)
-                    {
-                        $image->resize(null, $this->max_height_md, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                    }
+        return $name;
+    }
 
-                    $image->save($this->path_md . $image->basename);
-                    return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
-                }
-                else
-                {   
-                    $filename = $image;
-                    $img = \Image::cache(function($image) use ($filename) {
-                        return $image->make($this->path_md . $filename);
-                    }, 300, false);
-                    
-                    return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
-                }
-            }
+    /**
+     * Delete a file and all of its processed versions.
+     */
+    public function delete(?string $filename): void
+    {
+        if (! $filename) {
+            return;
+        }
 
-            // Generate large images
-            if ($size == 'lg')
-            {
-                if (!File::exists($this->path_lg . $image))
-                {
-                    // Create image instance
-                    $image = \Image::make($this->path_source . $image);
+        $filename = $this->filename($filename);
 
-                    // Get width and height
-                    $width  = $image->getWidth();
-                    $height = $image->getHeight();
-                    
-                    // Resize landscape image
-                    if ($width > $height && $width >= $this->max_width_lg)
-                    {
-                        $image->resize($this->max_width_lg, null, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                    }
-                    else if ($height >= $this->max_height_lg)
-                    {
-                        $image->resize(null, $this->max_height_lg, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                    }
-
-                    $image->save($this->path_lg . $image->basename);
-                    return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
-                }
-                else
-                {   
-                    $filename = $image;
-                    $img = \Image::cache(function($image) use ($filename) {
-                        return $image->make($this->path_lg . $filename);
-                    }, 300, false);
-                    
-                    return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
-                }
-            }
-
-            // Resize source images
-            if ($size == 'source')
-            {
-                // Create image instance
-                $image = \Image::make($this->path_source . $image);
-
-                // Get width and height
-                $width  = $image->getWidth();
-                $height = $image->getHeight();
-                
-                // Resize landscape image
-                if ($width > $height && $width >= $this->max_width_source)
-                {
-                    $image->resize($this->max_width_source, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
-                }
-                else if ($height >= $this->max_height_source)
-                {
-                    $image->resize(null, $this->max_height_source, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
-                }
-
-                $image->save($this->path_source . $image->basename, 100);
-                return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
-            }
+        foreach (['source', 'downloads', 'thumbs', 'xs', 'sm', 'md', 'lg', 'preview', 'related'] as $dir) {
+            File::delete($this->dir($dir).$filename);
         }
     }
 
-    public function crop($data)
+    /*
+    |--------------------------------------------------------------------------
+    | Helpers
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Downscale the stored source to at most 3000px on the long side.
+     */
+    private function resizeSource(string $name): void
     {
-        // Create intervention image
-        if (isset($data['image']))
-        {
-            $image = \Image::make($this->path_source . $data['image']);
+        $img = Image::decodePath($this->dir('source').$name);
+        $this->fitLongSide($img, self::MAX['source']);
+        $img->save($this->dir('source').$name, quality: 100);
+    }
 
-            // Create new filename by removing existing unique id first
-            $name = substr($image->filename, 14, strlen($image->filename));
+    /**
+     * Scale landscape images by width and portrait images by height, once
+     * that side reaches $max (mirrors the original v2 behaviour).
+     */
+    private function fitLongSide(ImageInterface $img, int $max): void
+    {
+        $width = $img->width();
+        $height = $img->height();
 
-            // Add cropped prefix & unique id
-            $name = uniqid() . '_' . $name . '.' . $image->extension;
-    
-            // Crop (w, h, x, y)
-            if (!empty($data['coords']))
-            {
-                $c = $data['coords'];
-                $image->crop(floor($c['w']), floor($c['h']), floor($c['x']), floor($c['y']));
-            }
-
-            // Save the image
-            $image->save($this->path_source . $name, 100);
-
-            return ['name' => $name];
+        if ($width > $height && $width >= $max) {
+            $img->scale(width: $max);
+        } elseif ($height >= $max) {
+            $img->scale(height: $max);
         }
     }
 
-    public function preview($image)
+    /** Project list preview: 694px high, centre-cropped to 456×614. */
+    private function preview(ImageInterface $img): void
     {
-        if ($image != NULL && File::exists($this->path_preview . $image))
-        {
-            return \Response::make(File::get($this->path_preview . $image), 200, ['Content-Type' => File::mimeType($this->path_preview . $image)]);
-        }
-
-        if ($image != NULL && File::exists($this->path_source . $image))
-        {
-            // Create image instance
-            $image = \Image::make($this->path_source . $image);
-
-            // Get width and height
-            $width  = $image->getWidth();
-            $height = $image->getHeight();
-            
-            // Resize landscape image
-            if ($height >= 694)
-            {
-                $image->resize(null, 694, function ($constraint) {
-                  $constraint->aspectRatio();
-                })->crop('456', '614');
-            }
-
-            $image->save($this->path_preview . $image->basename);
-            return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
+        if ($img->height() >= 694) {
+            $img->scale(height: 694);
+            $img->crop(456, 614, alignment: Alignment::CENTER);
         }
     }
 
-    public function related($image)
+    /** Related project teaser: 430px wide, centre-cropped to 430×278. */
+    private function related(ImageInterface $img): void
     {
-        if ($image != NULL && File::exists($this->path_related . $image))
-        {
-            return \Response::make(File::get($this->path_related . $image), 200, ['Content-Type' => File::mimeType($this->path_related . $image)]);
-        }
-
-        if ($image != NULL && File::exists($this->path_source . $image))
-        {
-            // Create image instance
-            $image = \Image::make($this->path_source . $image);
-
-            // Get width and height
-            $width  = $image->getWidth();
-            $height = $image->getHeight();
-
-            // Resize & Crop
-            if ($width > 430 && $height > 280)
-            {
-                $image->resize(430, null, function ($constraint) {
-                  $constraint->aspectRatio();
-                })->crop('430', '278');
-            }
-
-            $image->save($this->path_related . $image->basename);
-            return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
+        if ($img->width() > 430 && $img->height() > 280) {
+            $img->scale(width: 430);
+            $img->crop(430, 278, alignment: Alignment::CENTER);
         }
     }
 
     /**
-     * Return the source of an image.
-     * 
-     * @param  str $image
-     * @return \Illuminate\Http\Response
+     * Unique, sanitized filename with an extension derived from the detected
+     * mime type (never from the client supplied name).
      */
-
-    public function source($image = NULL)
-    {
-        if (File::exists($this->path_source . $image))
-        {
-            $filename = $image;
-            $img = \Image::cache(function($image) use ($filename) {
-                return $image->make($this->path_source . $filename);
-            }, 300, false);
-            return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
-        }
-    }
-
-    /**
-     * Delete a file from the storage, including all subfolders
-     * 
-     * @param str $filename
-     */
-
-    public function delete($filename)
-    {
-        $directories = Storage::allDirectories('public');
-        foreach($directories as $d)
-        {
-            // Delete file from all folders
-            Storage::delete($d . '/'. $filename);
-        }
-    }
-
-    /**
-     * Build a unique, sanitized filename whose extension is derived from the
-     * file's detected mime type, never from the client supplied name.
-     */
-
-    private function _safeName($file)
+    private function safeName(UploadedFile $file): string
     {
         $base = pathinfo(trim($file->getClientOriginalName()), PATHINFO_FILENAME);
-        $base = $this->_sanitizeFilename(str_replace('.', '-', $base));
-        $ext  = $file->guessExtension();
-        $ext  = $ext === 'jpeg' ? 'jpg' : $ext;
-        return uniqid() . '_' . ($base ?: 'file') . '.' . $ext;
+        $base = Str::slug(str_replace('.', '-', $base)) ?: 'file';
+        $ext = $file->guessExtension();
+        $ext = $ext === 'jpeg' ? 'jpg' : $ext;
+
+        return uniqid().'_'.$base.'.'.$ext;
     }
 
     /**
-     * Sanitize a string
-     *
-     * @param str $string
-     * @param boolean  $force_lowercase - Force the string to lowercase?
-     * @param boolean  $anal - If set to *true*, will remove all non-alphanumeric characters.
+     * Remove the "{uniqid}_" prefix from a stored filename.
      */
-
-    private function _sanitizeFilename($string, $force_lowercase = true, $anal = true)
+    private function stripPrefix(string $name): string
     {
-        $strip = array("~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "=", "+", "[", "{", "]", "}", "\\", "|", ";", ":", "\"", "'", "&#8216;", "&#8217;", "&#8220;", "&#8221;", "&#8211;", "&#8212;", "â€”", "â€“", ",", "<", ">", "/", "?");
-        $clean = trim(str_replace($strip, "", strip_tags($string)));
-        $clean = preg_replace('/\s+/', "-", $clean);
-        $clean = ($anal) ? preg_replace("/[^a-zA-Z0-9._\-]/", "", $clean) : $clean ;
-        return ($force_lowercase) ? (function_exists('mb_strtolower')) ? mb_strtolower($clean, 'UTF-8') : strtolower($clean) : $clean;
+        return preg_replace('/^[0-9a-f]{13}_/', '', $name);
     }
 
     /**
-     * Clone an image in the source folder
+     * Reject anything that is not a plain filename (no paths).
      */
-
-    public function clone($image)
+    private function filename(string $name): string
     {
-      if ($image != NULL)
-      {
-        $name = uniqid() . '_' . $image;
-        File::copy($this->path_source . $image, $this->path_source . $name);
+        if ($name !== basename($name) || ! preg_match('/^[A-Za-z0-9._-]+$/', $name) || str_starts_with($name, '.')) {
+            throw new NotFoundHttpException;
+        }
+
         return $name;
-      }
     }
 
     /**
-     * Create directories
-     * 
+     * Absolute directory for a storage bucket, created on demand.
      */
-
-    private function _mkdir()
+    private function dir(string $bucket): string
     {
-        if (!File::isDirectory($this->path_uploads))
-        {
-            File::makeDirectory($this->path_uploads, 0775, true, true);
-        }
+        $dir = match ($bucket) {
+            'source' => $this->root.'/images/source/',
+            'downloads' => $this->root.'/downloads/',
+            'thumbs', 'xs', 'sm', 'md', 'lg', 'preview', 'related' => $this->root.'/images/processed/'.$bucket.'/',
+        };
 
-        if (!File::isDirectory($this->path_downloads))
-        {
-            File::makeDirectory($this->path_downloads, 0775, true, true);
-        }
-        
-        if (!File::isDirectory($this->path_source))
-        {
-            File::makeDirectory($this->path_source, 0775, true, true);
-        }
-        
-        if (!File::isDirectory($this->path_processed))
-        {
-            File::makeDirectory($this->path_processed, 0775, true, true);
-        }
+        File::ensureDirectoryExists($dir, 0775);
 
-        if (!File::isDirectory($this->path_thumbs))
-        {
-            File::makeDirectory($this->path_thumbs, 0775, true, true);
-        }
-
-        if (!File::isDirectory($this->path_preview))
-        {
-            File::makeDirectory($this->path_preview, 0775, true, true);
-        }
-
-        if (!File::isDirectory($this->path_related))
-        {
-            File::makeDirectory($this->path_related, 0775, true, true);
-        }
-
-        if (!File::isDirectory($this->path_xs))
-        {
-            File::makeDirectory($this->path_xs, 0775, true, true);
-        }
-
-        if (!File::isDirectory($this->path_sm))
-        {
-            File::makeDirectory($this->path_sm, 0775, true, true);
-        }
-
-        if (!File::isDirectory($this->path_md))
-        {
-            File::makeDirectory($this->path_md, 0775, true, true);
-        }
-
-        if (!File::isDirectory($this->path_lg))
-        {
-            File::makeDirectory($this->path_lg, 0775, true, true);
-        }
+        return $dir;
     }
 }

@@ -1,18 +1,13 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-require('./bootstrap');
+// jQuery must be global before the vendor plugins run
+import './jquery.js';
 
 // Plugins
-require('./vendor/lazysizes.js');
-require('./vendor/scrollTo.js');
-require('./vendor/fancybox.js');
+import './vendor/lazysizes.js';
+import './vendor/scrollTo.js';
+import './vendor/fancybox.js';
 
 // Modules
-require('./modules/menu.js');
-require('./modules/project.js');
-require('./modules/competences.js');
-require('./modules/fancybox.js');
+import './modules/menu.js';
+import './modules/project.js';
+import './modules/competences.js';
+import './modules/fancybox.js';

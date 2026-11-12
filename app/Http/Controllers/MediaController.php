@@ -2,58 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\MediaService;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
+/**
+ * Public image routes. They generate a processed size on first request;
+ * afterwards ImageHelper links straight to the static file.
+ */
 class MediaController extends Controller
 {
-    protected $mediaService;
+    public function __construct(private MediaService $media) {}
 
-    public function __construct(MediaService $service)
+    public function thumbnail(string $file): BinaryFileResponse
     {
-        $this->mediaService = $service;
-    }
-    
-    public function upload(Request $request)
-    {
-        $request->validate([
-            'file' => ['required', 'file', 'mimes:jpg,jpeg,png', 'max:20480'],
-        ]);
-        $media = $this->mediaService->upload($request);
-        return response()->json($media, 200);
+        return $this->media->serve($file, 'thumbs');
     }
 
-    public function uploadDocument(Request $request)
+    public function preview(string $file): BinaryFileResponse
     {
-        $request->validate([
-            'file' => ['required', 'file', 'mimes:pdf', 'max:20480'],
-        ]);
-        $media = $this->mediaService->uploadDocument($request);
-        return response()->json($media, 200);
-    }
-    
-    public function thumbnail($image = NULL)
-    {
-        return $this->mediaService->thumbnail($image);
+        return $this->media->serve($file, 'preview');
     }
 
-    public function preview($image = NULL)
+    public function related(string $file): BinaryFileResponse
     {
-        return $this->mediaService->preview($image);
+        return $this->media->serve($file, 'related');
     }
 
-    public function related($image = NULL)
+    public function source(string $file): BinaryFileResponse
     {
-        return $this->mediaService->related($image);
+        return $this->media->source($file);
     }
 
-    public function source($image = NULL)
+    public function resize(string $file, string $size = 'sm'): BinaryFileResponse
     {
-        return $this->mediaService->source($image);
-    }
-
-    public function resize($image, $size = 'sm')
-    {
-        return $this->mediaService->resize($image, $size);
+        return $this->media->serve($file, $size);
     }
 }

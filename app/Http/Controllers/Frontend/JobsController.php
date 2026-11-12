@@ -1,23 +1,23 @@
 <?php
+
 namespace App\Http\Controllers\Frontend;
+
 use App\Http\Controllers\Controller;
 use App\Services\MenuService;
+use Illuminate\View\View;
 
+/**
+ * Currently not routed (see routes/web.php).
+ */
 class JobsController extends Controller
 {
-  protected $menuService;
-  protected $view_path = 'web.jobs';
+    public function __construct(private MenuService $menuService) {}
 
-  public function __construct(MenuService $menuService)
-  {
-    $this->menuService = $menuService;
-  }
-
-  public function index()
-  {
-    return
-      view($this->view_path . '.index')
-      ->withMenu($this->menuService->boot())
-      ->withPageTitle('Jobs');
-  }
+    public function index(): View
+    {
+        return view('web.jobs.index', [
+            'menu' => $this->menuService->boot(),
+            'pageTitle' => 'Jobs',
+        ]);
+    }
 }
