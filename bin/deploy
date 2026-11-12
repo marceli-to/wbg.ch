@@ -35,6 +35,9 @@ trap 'rm -rf "$BUILD"' EXIT
 echo "→ Exporting $REV"
 git archive HEAD | tar -x -C "$BUILD"
 echo "$REV" > "$BUILD/REVISION"
+# mktemp creates the dir with 0700; rsync -a would copy that onto the
+# server's project root and lock the web server out.
+chmod 755 "$BUILD"
 
 echo "→ Uploading to $DEPLOY_HOST:$DEPLOY_PATH"
 rsync -az --delete \
