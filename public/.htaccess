@@ -5,6 +5,9 @@
 
     RewriteEngine On
 
+    # Never serve scripts or markup from the user upload storage
+    RewriteRule ^storage/.*\.(php[0-9]?|phtml|phar|pht|cgi|pl|py|sh|html?|svg|js)$ - [F,L,NC]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

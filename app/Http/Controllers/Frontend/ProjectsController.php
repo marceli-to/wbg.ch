@@ -149,7 +149,8 @@ class ProjectsController extends Controller
    */
   public function project($id = NULL, $slug = NULL)
   {
-    $project = $this->project->with('client')
+    $project = $this->project->published()
+                             ->with('client')
                              ->with('category')
                              ->with('relations.related.images')
                              ->with('relations.related.previewRelatedImages')

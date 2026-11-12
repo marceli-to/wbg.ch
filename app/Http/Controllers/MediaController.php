@@ -16,12 +16,18 @@ class MediaController extends Controller
     
     public function upload(Request $request)
     {
+        $request->validate([
+            'file' => ['required', 'file', 'mimes:jpg,jpeg,png', 'max:20480'],
+        ]);
         $media = $this->mediaService->upload($request);
         return response()->json($media, 200);
     }
 
     public function uploadDocument(Request $request)
     {
+        $request->validate([
+            'file' => ['required', 'file', 'mimes:pdf', 'max:20480'],
+        ]);
         $media = $this->mediaService->uploadDocument($request);
         return response()->json($media, 200);
     }

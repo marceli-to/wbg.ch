@@ -38,9 +38,6 @@ Route::get('/team', 'Frontend\TeamController@index')->name('team');
 Route::get('/kontakt', 'Frontend\ContactController@index')->name('contact');
 
 
-// Newsletter
-Route::get('/newsletter/send', 'Frontend\NewsletterController@send')->name('newsletter');
-
 // Jobs
 // Route::get('/jobs', 'Frontend\JobsController@index')->name('jobs');
 
@@ -61,21 +58,6 @@ Route::middleware('cache.headers:public;max_age=2628000;etag')->group(function()
  */
 
 
-Route::get('/artisan/cache', function () {
-	Artisan::call('cache:clear');
-});
-
-Route::get('/artisan/config', function () {
-	Artisan::call('config:clear');
-});
-
-Route::get('/artisan/view', function () {
-	Artisan::call('view:clear');
-});
-
-Route::get('/artisan/symlink', function () {
-	Artisan::call('storage:link');
-});
 
 
 Route::view('admin', 'admin.app');

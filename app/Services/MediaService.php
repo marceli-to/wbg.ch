@@ -150,8 +150,7 @@ class MediaService
     public function upload(Request $request)
     {
         $file = $request->file('file');
-        $name = $this->_sanitizeFilename(trim($file->getClientOriginalName()));
-        $name = uniqid() . '_' . $name;
+        $name = $this->_safeName($file);
         $file->move($this->path_source, $name);
 
         // Get file extension to store in media model
@@ -175,8 +174,7 @@ class MediaService
     public function uploadDocument(Request $request)
     {
         $file = $request->file('file');
-        $name = $this->_sanitizeFilename(trim($file->getClientOriginalName()));
-        $name = uniqid() . '_' . $name;
+        $name = $this->_safeName($file);
         $file->move($this->path_downloads, $name);
 
         // Get file extension to store in media model
@@ -428,7 +426,12 @@ class MediaService
 
     public function preview($image)
     {
-        if ($image != NULL)
+        if ($image != NULL && File::exists($this->path_preview . $image))
+        {
+            return \Response::make(File::get($this->path_preview . $image), 200, ['Content-Type' => File::mimeType($this->path_preview . $image)]);
+        }
+
+        if ($image != NULL && File::exists($this->path_source . $image))
         {
             // Create image instance
             $image = \Image::make($this->path_source . $image);
@@ -452,7 +455,12 @@ class MediaService
 
     public function related($image)
     {
-        if ($image != NULL)
+        if ($image != NULL && File::exists($this->path_related . $image))
+        {
+            return \Response::make(File::get($this->path_related . $image), 200, ['Content-Type' => File::mimeType($this->path_related . $image)]);
+        }
+
+        if ($image != NULL && File::exists($this->path_source . $image))
         {
             // Create image instance
             $image = \Image::make($this->path_source . $image);
@@ -507,6 +515,20 @@ class MediaService
             // Delete file from all folders
             Storage::delete($d . '/'. $filename);
         }
+    }
+
+    /**
+     * Build a unique, sanitized filename whose extension is derived from the
+     * file's detected mime type, never from the client supplied name.
+     */
+
+    private function _safeName($file)
+    {
+        $base = pathinfo(trim($file->getClientOriginalName()), PATHINFO_FILENAME);
+        $base = $this->_sanitizeFilename(str_replace('.', '-', $base));
+        $ext  = $file->guessExtension();
+        $ext  = $ext === 'jpeg' ? 'jpg' : $ext;
+        return uniqid() . '_' . ($base ?: 'file') . '.' . $ext;
     }
 
     /**
