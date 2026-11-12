@@ -1,5 +1,9 @@
 <?php
 
+use App\Helpers\AppHelper;
+use App\Helpers\ImageHelper;
+use Illuminate\Support\Facades\Facade;
+
 return [
 
     /*
@@ -123,6 +127,19 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Basic Auth (non-production only)
+    |--------------------------------------------------------------------------
+    |
+    | Protects staging environments, see App\Http\Middleware\ProtectNonProduction.
+    |
+    */
+
+    'basic_auth' => [
+        'user' => env('BASIC_AUTH_USER'),
+        'password' => env('BASIC_AUTH_PASSWORD'),
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -133,9 +150,9 @@ return [
     |
     */
 
-    'aliases' => Illuminate\Support\Facades\Facade::defaultAliases()->merge([
-        'AppHelper' => App\Helpers\AppHelper::class,
-        'ImageHelper' => App\Helpers\ImageHelper::class,
+    'aliases' => Facade::defaultAliases()->merge([
+        'AppHelper' => AppHelper::class,
+        'ImageHelper' => ImageHelper::class,
     ])->toArray(),
 
 ];

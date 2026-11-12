@@ -174,6 +174,7 @@
 </footer>
 @endif
 @vite('resources/js/web/app.js')
+@production
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QKCSHMCHVT"></script>
 <script>
  window.dataLayer = window.dataLayer || [];
@@ -181,6 +182,7 @@
  gtag('js', new Date());
  gtag('config', 'G-QKCSHMCHVT');
 </script>
+@endproduction
 </body>
 <!-- made with ❤ by marceli.to -->
 </html>

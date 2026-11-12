@@ -43,3 +43,6 @@ public/aporta
 INSTALL.txt
 # Production data copies (never commit)
 /_prod/
+
+# Deploy targets (contain hosts/paths)
+/deploy/*.env

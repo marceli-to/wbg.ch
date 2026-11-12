@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+#
+# Deploy the committed HEAD to a server.
+#
+#   bin/deploy staging
+#
+# Reads deploy/<target>.env (see deploy/staging.env.example).
+# Only committed files are deployed (git archive), never local changes.
+# The server keeps its own .env, storage/ and public/storage.
+#
+set -euo pipefail
+
+TARGET="${1:-}"
+if [[ -z "$TARGET" ]]; then
+  echo "usage: bin/deploy <target>   (e.g. staging)" >&2
+  exit 1
+fi
+
+cd "$(dirname "$0")/.."
+CONFIG="deploy/${TARGET}.env"
+[[ -f "$CONFIG" ]] || { echo "Missing $CONFIG (copy deploy/${TARGET}.env.example)" >&2; exit 1; }
+# shellcheck disable=SC1090
+source "$CONFIG"
+: "${DEPLOY_HOST:?}" "${DEPLOY_PATH:?}" "${DEPLOY_PHP:=php}" "${DEPLOY_COMPOSER:=composer}"
+
+if [[ -n "$(git status --porcelain)" ]]; then
+  echo "Working tree is not clean. Commit first; only HEAD is deployed." >&2
+  exit 1
+fi
+
+REV="$(git rev-parse --short HEAD)"
+BUILD="$(mktemp -d)"
+trap 'rm -rf "$BUILD"' EXIT
+
+echo "→ Exporting $REV"
+git archive HEAD | tar -x -C "$BUILD"
+echo "$REV" > "$BUILD/REVISION"
+
+echo "→ Uploading to $DEPLOY_HOST:$DEPLOY_PATH"
+rsync -az --delete \
+  --exclude='/.env' \
+  --exclude='/storage/' \
+  --exclude='/vendor/' \
+  --exclude='/public/storage' \
+  --exclude='/bootstrap/cache/*.php' \
+  --exclude='/tests/' \
+  --exclude='/deploy/' \
+  "$BUILD/" "$DEPLOY_HOST:$DEPLOY_PATH/"
+
+echo "→ Installing on server"
+ssh "$DEPLOY_HOST" bash -se <<REMOTE
+set -euo pipefail
+cd "$DEPLOY_PATH"
+mkdir -p storage/app/public storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache
+[[ -f .env ]] || { echo "No .env on server: create it from .env.example first" >&2; exit 1; }
+$DEPLOY_PHP $DEPLOY_COMPOSER install --no-dev --optimize-autoloader --no-interaction --no-progress
+$DEPLOY_PHP artisan down --retry=15 || true
+$DEPLOY_PHP artisan migrate --force
+$DEPLOY_PHP artisan optimize:clear
+$DEPLOY_PHP artisan optimize
+[[ -L public/storage ]] || $DEPLOY_PHP artisan storage:link
+$DEPLOY_PHP artisan up
+echo "Deployed $REV"
+REMOTE
